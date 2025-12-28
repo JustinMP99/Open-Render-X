@@ -3,13 +3,16 @@ cmake_minimum_required(VERSION 3.10.0)
 project(OpenRenderX VERSION 0.1.0 LANGUAGES C CXX)
 
 # Find Packages
-find_package(glfw3 REQUIRED)
-find_package(OpenGL REQUIRED)
+if(APPLE)
+    find_package(glfw3 REQUIRED)
+    find_package(OpenGL REQUIRED)
+endif()
 
 # Add Source Files
 add_executable(OpenRenderX 
 Content/Source/glad.c
 Content/Source/Engine.cpp
+Content/Source/Graphics.cpp
 Content/main.cpp
 )
 
