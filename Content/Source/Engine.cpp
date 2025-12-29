@@ -86,6 +86,13 @@ bool Engine::Initialize()
         std::cout << "Failed to create window!" << std::endl;
         return false;
     }
+
+    if (!renderer.Initialize(window))
+    {
+        std::cout << "Failed to initialize renderer!" << std::endl;
+        return false;
+    }
+
     return true;
 }
 
@@ -95,9 +102,8 @@ void Engine::Loop()
     while (glfwWindowShouldClose(window) == false)
     {
 
-        
 
-        graphics.Render();
+        renderer.Render();
 
         glfwPollEvents();
     }

@@ -7,6 +7,8 @@ class Graphics
   private:
 
   GLFWwindow* window;
+  int width;
+  int height;
 
   public:
 

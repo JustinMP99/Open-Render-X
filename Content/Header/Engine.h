@@ -14,7 +14,7 @@ GLFWwindow* window;
 unsigned int width = 640;
 unsigned int height = 480;
 
-Graphics graphics;
+Graphics renderer;
 
 //Temp object mesh data
 GLuint VAO;
