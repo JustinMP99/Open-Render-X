@@ -13,6 +13,7 @@ add_executable(OpenRenderX
 Content/Source/glad.c
 Content/Source/Engine.cpp
 Content/Source/Graphics.cpp
+Content/Source/Vertex.cpp
 Content/main.cpp
 )
 
@@ -20,7 +21,7 @@ Content/main.cpp
 set(GLAD_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/Additional/include/glad")
 set(GLFW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/Additional/include/GLFW")
 set(KHR_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/Additional/include/KHR")
-#set(GLM_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Additional/include/glm")
+set(GLM_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Additional/include/glm")
 #set(FRAG_DIR "${CMAKE_SOURCE_DIR}/Source/Shaders/Fragment Shaders")
 
 # set(IMGUI_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/Additional/include/imgui")
