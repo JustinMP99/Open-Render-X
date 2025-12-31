@@ -1,6 +1,8 @@
 
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 class Graphics
 {
@@ -11,6 +13,10 @@ class Graphics
   int height;
 
   public:
+
+  Graphics();
+  Graphics(int width, int height);
+  ~Graphics();
 
   bool Initialize(GLFWwindow* win);
 

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 
+//#include "../Globals.h"
 #include "Graphics.h"
 #include "Vertex.h"
 
@@ -11,8 +12,8 @@ class Engine
 
 private:
 GLFWwindow* window;
-unsigned int width = 640;
-unsigned int height = 480;
+unsigned int width = 1290;;
+unsigned int height = 720;
 
 Graphics renderer;
 
@@ -28,7 +29,19 @@ GLuint shaderProgram;
 GLuint vertexShader;
 GLuint fragmentShader;
 
+const char* windowsTitle = "Open Render X - OpenGL - Windows";
+const char* appleTitle = "Open Render X - OpenGL - MacOS";
+
+//File Paths
+
+//MacOS
+
+
+//Windows
+
 private:
+
+std::string LoadShaderAsString(const std::string& filename);
 
 bool CreateTriangle();
 

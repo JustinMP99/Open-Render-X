@@ -9,7 +9,8 @@ if(APPLE)
 endif()
 
 # Add Source Files
-add_executable(OpenRenderX 
+add_executable(
+        OpenRenderX
 Content/Source/glad.c
 Content/Source/Engine.cpp
 Content/Source/Graphics.cpp

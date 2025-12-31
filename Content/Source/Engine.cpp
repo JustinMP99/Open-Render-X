@@ -1,9 +1,33 @@
 #include "../Header/Engine.h"
+#include <fstream>
+
+#include "../Globals.h"
 
 //PRIVATE 
+std::string Engine::LoadShaderAsString(const std::string& filename)
+{
+    std::string result = "";
+    std::string line = "";
+    std::ifstream shaderFile(filename.c_str());
+    //std::ifstream shaderFile;
+    shaderFile.open(filename);
+    if (!shaderFile.is_open())
+    {
+        throw std::runtime_error("Failed to open shader file: " + filename);
+    }
+    if (shaderFile.is_open())
+    {
+        while (std::getline(shaderFile, line))
+        {
+            result += line + "\n";
+        }
+        shaderFile.close();
+    }
+    return result;
+}
+
 bool Engine::CreateTriangle()
 {
-
     //create vertices
     Vertex top;
     top.position = glm::vec3(0.0f, 0.5f, 0.0f);
@@ -81,11 +105,13 @@ bool Engine::CreateWindow(int width, int height, const char* title)
 
 bool Engine::Initialize()
 {
-    if (!CreateWindow(width, height, "OpenRenderX"))
+    if (!CreateWindow(width,  height,  appleTitle))
     {
         std::cout << "Failed to create window!" << std::endl;
         return false;
     }
+
+    renderer = Graphics(width, height);
 
     if (!renderer.Initialize(window))
     {
