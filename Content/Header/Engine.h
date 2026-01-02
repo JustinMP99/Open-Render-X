@@ -18,16 +18,16 @@ unsigned int height = 720;
 Graphics renderer;
 
 //Temp object mesh data
-GLuint VAO;
-GLuint VBO;
-GLuint EBO;
+unsigned int VAO;
+unsigned int VBO;
+unsigned int EBO;
 std::vector<Vertex> vertices;
 std::vector<unsigned int> indices;
 
 //Temp object material data
 GLuint shaderProgram;
-GLuint vertexShader;
-GLuint fragmentShader;
+GLuint fallback_VShader;
+GLuint fallback_FShader;
 
 const char* windowsTitle = "Open Render X - OpenGL - Windows";
 const char* appleTitle = "Open Render X - OpenGL - MacOS";
@@ -35,13 +35,18 @@ const char* appleTitle = "Open Render X - OpenGL - MacOS";
 //File Paths
 
 //MacOS
-
+const char* fallbackVertexPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert";
+    const char* fallbackFragmentPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag";
 
 //Windows
 
 private:
 
 std::string LoadShaderAsString(const std::string& filename);
+
+    bool CreateVertexShader(unsigned int &shader, const char* shaderPath);
+
+    bool CreateFragmentShader(unsigned int &shader, const char* shaderPath);
 
 bool CreateTriangle();
 

@@ -32,9 +32,6 @@ set(GLFW_LIBRARY "${CMAKE_SOURCE_DIR}/Additional/Library/glfw3.lib")
 
 # Include Directories
 target_include_directories(OpenRenderX PRIVATE
-    # ${KHR_INCLUDE_DIR}
-    # ${GLFW_INCLUDE_DIR}
-    # ${GLAD_INCLUDE_DIR}
     "${CMAKE_SOURCE_DIR}/Additional/include"
 )
 
