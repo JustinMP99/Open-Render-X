@@ -3,7 +3,6 @@
 #include <iostream>
 #include <vector>
 
-//#include "../Globals.h"
 #include "Graphics.h"
 #include "Vertex.h"
 
@@ -11,9 +10,9 @@ class Engine
 {
 
 private:
-GLFWwindow* window;
-unsigned int width = 1290;;
-unsigned int height = 720;
+GLFWwindow* window; ///< Pointer to the window that is created by GLFW
+unsigned int width = 1290;;///< The width of the window
+unsigned int height = 720; ///< The height of the window
 
 Graphics renderer;
 
@@ -35,41 +34,37 @@ const char* appleTitle = "Open Render X - OpenGL - MacOS";
 //File Paths
 
 //MacOS
-const char* fallbackVertexPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert";
-    const char* fallbackFragmentPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag";
+const char* fallbackVertexPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
+    const char* fallbackFragmentPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
 
 //Windows
 
 private:
 
-    /// <summary>
     ///Loads the passed in shader file into a string to be compiled for use in rendering
-    /// </summary>
 std::string LoadShaderAsString(const std::string& filename);
 
+    /// Creates a vertex shader using the passed in shader and shader path
     bool CreateVertexShader(unsigned int &shader, const char* shaderPath);
 
+    /// Creates a fragment shader using the passed in shader and shader path
     bool CreateFragmentShader(unsigned int &shader, const char* shaderPath);
 
+    /// Creates a triangle to be rendered
 bool CreateTriangle();
 
+    /// Creates the window for the render engine
 bool CreateWindow(int width, int height, const char* title);
 
 public:
 
-    ///<summary>
     /// Initializes engine by creating window, renderer, shaders, textures and any desired objects
-    ///</summary>
 bool Initialize();
 
-    ///<summary>
     /// Where the rendering and input handling occurs
-    ///</summary>
 void Loop();
 
-    ///<summary>
     /// Releases all memory taken by the program
-    ///</summary>
 bool Shutdown();
 
 };

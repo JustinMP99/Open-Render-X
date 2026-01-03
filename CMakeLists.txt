@@ -22,7 +22,7 @@ Content/main.cpp
 set(GLAD_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/Additional/include/glad")
 set(GLFW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/Additional/include/GLFW")
 set(KHR_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/Additional/include/KHR")
-set(GLM_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Additional/include/glm")
+set(GLM_INCLUDE_DIR "Content/Additional/include/glm")
 #set(FRAG_DIR "${CMAKE_SOURCE_DIR}/Source/Shaders/Fragment Shaders")
 
 # set(IMGUI_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/Additional/include/imgui")
@@ -32,7 +32,7 @@ set(GLFW_LIBRARY "${CMAKE_SOURCE_DIR}/Additional/Library/glfw3.lib")
 
 # Include Directories
 target_include_directories(OpenRenderX PRIVATE
-    "${CMAKE_SOURCE_DIR}/Additional/include"
+    "${CMAKE_SOURCE_DIR}/Content/Additional/include"
 )
 
 target_link_libraries(OpenRenderX PRIVATE glfw OpenGL::GL)

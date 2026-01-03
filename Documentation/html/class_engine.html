@@ -94,54 +94,70 @@ $(function(){initNavTree('class_engine.html','','class_engine-members'); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a11baa1640d1f89e3cf8d1887a9621032" id="r_a11baa1640d1f89e3cf8d1887a9621032"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a11baa1640d1f89e3cf8d1887a9621032">Initialize</a> ()</td></tr>
-<tr class="memdesc:a11baa1640d1f89e3cf8d1887a9621032"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes engine by creating window, renderer, shaders, textures and any desired objects /summary&gt;.  <br /></td></tr>
-<tr class="memitem:adcacda15ea7fe19fac794b438fc37501" id="r_adcacda15ea7fe19fac794b438fc37501"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adcacda15ea7fe19fac794b438fc37501">Loop</a> ()</td></tr>
+<tr class="memitem:a11baa1640d1f89e3cf8d1887a9621032" id="r_a11baa1640d1f89e3cf8d1887a9621032"><td class="memItemLeft" align="right" valign="top"><a id="a11baa1640d1f89e3cf8d1887a9621032" name="a11baa1640d1f89e3cf8d1887a9621032"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Initialize</b> ()</td></tr>
+<tr class="memdesc:a11baa1640d1f89e3cf8d1887a9621032"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes engine by creating window, renderer, shaders, textures and any desired objects. <br /></td></tr>
+<tr class="memitem:adcacda15ea7fe19fac794b438fc37501" id="r_adcacda15ea7fe19fac794b438fc37501"><td class="memItemLeft" align="right" valign="top"><a id="adcacda15ea7fe19fac794b438fc37501" name="adcacda15ea7fe19fac794b438fc37501"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Loop</b> ()</td></tr>
+<tr class="memdesc:adcacda15ea7fe19fac794b438fc37501"><td class="mdescLeft">&#160;</td><td class="mdescRight">Where the rendering and input handling occurs. <br /></td></tr>
 <tr class="memitem:aae631a2f67136552836a172b1b5c9dd8" id="r_aae631a2f67136552836a172b1b5c9dd8"><td class="memItemLeft" align="right" valign="top"><a id="aae631a2f67136552836a172b1b5c9dd8" name="aae631a2f67136552836a172b1b5c9dd8"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>Shutdown</b> ()</td></tr>
+<tr class="memdesc:aae631a2f67136552836a172b1b5c9dd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases all memory taken by the program. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ad9129d41518c3c81187fff1ae2f1145b" id="r_ad9129d41518c3c81187fff1ae2f1145b"><td class="memItemLeft" align="right" valign="top"><a id="ad9129d41518c3c81187fff1ae2f1145b" name="ad9129d41518c3c81187fff1ae2f1145b"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>LoadShaderAsString</b> (const std::string &amp;filename)</td></tr>
+<tr class="memdesc:ad9129d41518c3c81187fff1ae2f1145b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the passed in shader file into a string to be compiled for use in rendering. <br /></td></tr>
+<tr class="memitem:a451e6745ecec96a1f4774b6c3cfceda6" id="r_a451e6745ecec96a1f4774b6c3cfceda6"><td class="memItemLeft" align="right" valign="top"><a id="a451e6745ecec96a1f4774b6c3cfceda6" name="a451e6745ecec96a1f4774b6c3cfceda6"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>CreateVertexShader</b> (unsigned int &amp;shader, const char *shaderPath)</td></tr>
+<tr class="memdesc:a451e6745ecec96a1f4774b6c3cfceda6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a vertex shader using the passed in shader and shader path. <br /></td></tr>
+<tr class="memitem:a8c70f71282f4d8ae38f26de75e1dc4c5" id="r_a8c70f71282f4d8ae38f26de75e1dc4c5"><td class="memItemLeft" align="right" valign="top"><a id="a8c70f71282f4d8ae38f26de75e1dc4c5" name="a8c70f71282f4d8ae38f26de75e1dc4c5"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>CreateFragmentShader</b> (unsigned int &amp;shader, const char *shaderPath)</td></tr>
+<tr class="memdesc:a8c70f71282f4d8ae38f26de75e1dc4c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fragment shader using the passed in shader and shader path. <br /></td></tr>
+<tr class="memitem:a983e8e9414f26d98645236ee670ae74e" id="r_a983e8e9414f26d98645236ee670ae74e"><td class="memItemLeft" align="right" valign="top"><a id="a983e8e9414f26d98645236ee670ae74e" name="a983e8e9414f26d98645236ee670ae74e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>CreateTriangle</b> ()</td></tr>
+<tr class="memitem:a0aa2f952fb6a7406d71ed66c1803dd86" id="r_a0aa2f952fb6a7406d71ed66c1803dd86"><td class="memItemLeft" align="right" valign="top"><a id="a0aa2f952fb6a7406d71ed66c1803dd86" name="a0aa2f952fb6a7406d71ed66c1803dd86"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>CreateWindow</b> (int width, int height, const char *title)</td></tr>
+<tr class="memdesc:a0aa2f952fb6a7406d71ed66c1803dd86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the window for the render engine. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ae045425baa2fd8b0667b603bc413b333" id="r_ae045425baa2fd8b0667b603bc413b333"><td class="memItemLeft" align="right" valign="top"><a id="ae045425baa2fd8b0667b603bc413b333" name="ae045425baa2fd8b0667b603bc413b333"></a>
+GLFWwindow *&#160;</td><td class="memItemRight" valign="bottom"><b>window</b></td></tr>
+<tr class="memitem:ab2392ed9d614c550bc7563ce324b752e" id="r_ab2392ed9d614c550bc7563ce324b752e"><td class="memItemLeft" align="right" valign="top"><a id="ab2392ed9d614c550bc7563ce324b752e" name="ab2392ed9d614c550bc7563ce324b752e"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>width</b> = 1290</td></tr>
+<tr class="memitem:af540753bb1982a10e35072b24b5b4852" id="r_af540753bb1982a10e35072b24b5b4852"><td class="memItemLeft" align="right" valign="top"><a id="af540753bb1982a10e35072b24b5b4852" name="af540753bb1982a10e35072b24b5b4852"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>height</b> = 720</td></tr>
+<tr class="memitem:aca2a2cb33f7752795c142518ee30952a" id="r_aca2a2cb33f7752795c142518ee30952a"><td class="memItemLeft" align="right" valign="top"><a id="aca2a2cb33f7752795c142518ee30952a" name="aca2a2cb33f7752795c142518ee30952a"></a>
+<a class="el" href="class_graphics.html">Graphics</a>&#160;</td><td class="memItemRight" valign="bottom"><b>renderer</b></td></tr>
+<tr class="memitem:ada7fff8e195b7ba22201109917ae9a2e" id="r_ada7fff8e195b7ba22201109917ae9a2e"><td class="memItemLeft" align="right" valign="top"><a id="ada7fff8e195b7ba22201109917ae9a2e" name="ada7fff8e195b7ba22201109917ae9a2e"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>VAO</b></td></tr>
+<tr class="memitem:a5035358d845fbb471ca57402a57164c5" id="r_a5035358d845fbb471ca57402a57164c5"><td class="memItemLeft" align="right" valign="top"><a id="a5035358d845fbb471ca57402a57164c5" name="a5035358d845fbb471ca57402a57164c5"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>VBO</b></td></tr>
+<tr class="memitem:a50d22510d44ae4a50eeccecf12475ff7" id="r_a50d22510d44ae4a50eeccecf12475ff7"><td class="memItemLeft" align="right" valign="top"><a id="a50d22510d44ae4a50eeccecf12475ff7" name="a50d22510d44ae4a50eeccecf12475ff7"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>EBO</b></td></tr>
+<tr class="memitem:a184851d6a5b1198abde4ec99bcb15352" id="r_a184851d6a5b1198abde4ec99bcb15352"><td class="memItemLeft" align="right" valign="top"><a id="a184851d6a5b1198abde4ec99bcb15352" name="a184851d6a5b1198abde4ec99bcb15352"></a>
+std::vector&lt; <a class="el" href="class_vertex.html">Vertex</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>vertices</b></td></tr>
+<tr class="memitem:ab92045bdfc94fc38698c728d3ff6e27c" id="r_ab92045bdfc94fc38698c728d3ff6e27c"><td class="memItemLeft" align="right" valign="top"><a id="ab92045bdfc94fc38698c728d3ff6e27c" name="ab92045bdfc94fc38698c728d3ff6e27c"></a>
+std::vector&lt; unsigned int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>indices</b></td></tr>
+<tr class="memitem:a61463023cb8c376fa653dc4c79288b25" id="r_a61463023cb8c376fa653dc4c79288b25"><td class="memItemLeft" align="right" valign="top"><a id="a61463023cb8c376fa653dc4c79288b25" name="a61463023cb8c376fa653dc4c79288b25"></a>
+GLuint&#160;</td><td class="memItemRight" valign="bottom"><b>shaderProgram</b></td></tr>
+<tr class="memitem:af54cbe3315108a85d1258006d13b3869" id="r_af54cbe3315108a85d1258006d13b3869"><td class="memItemLeft" align="right" valign="top"><a id="af54cbe3315108a85d1258006d13b3869" name="af54cbe3315108a85d1258006d13b3869"></a>
+GLuint&#160;</td><td class="memItemRight" valign="bottom"><b>fallback_VShader</b></td></tr>
+<tr class="memitem:a4d3718d5d92496a88a94dd4d92000f7e" id="r_a4d3718d5d92496a88a94dd4d92000f7e"><td class="memItemLeft" align="right" valign="top"><a id="a4d3718d5d92496a88a94dd4d92000f7e" name="a4d3718d5d92496a88a94dd4d92000f7e"></a>
+GLuint&#160;</td><td class="memItemRight" valign="bottom"><b>fallback_FShader</b></td></tr>
+<tr class="memitem:a759ab6a8e3f316f68e405531564d8b9e" id="r_a759ab6a8e3f316f68e405531564d8b9e"><td class="memItemLeft" align="right" valign="top"><a id="a759ab6a8e3f316f68e405531564d8b9e" name="a759ab6a8e3f316f68e405531564d8b9e"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>windowsTitle</b> = &quot;Open Render X - OpenGL - Windows&quot;</td></tr>
+<tr class="memitem:ac3836b459fe537e3f191cc92a5ea7f43" id="r_ac3836b459fe537e3f191cc92a5ea7f43"><td class="memItemLeft" align="right" valign="top"><a id="ac3836b459fe537e3f191cc92a5ea7f43" name="ac3836b459fe537e3f191cc92a5ea7f43"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>appleTitle</b> = &quot;Open Render X - OpenGL - MacOS&quot;</td></tr>
+<tr class="memitem:a7834cb07a170c31fa7f6b17e6308ffee" id="r_a7834cb07a170c31fa7f6b17e6308ffee"><td class="memItemLeft" align="right" valign="top"><a id="a7834cb07a170c31fa7f6b17e6308ffee" name="a7834cb07a170c31fa7f6b17e6308ffee"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>fallbackVertexPath</b> = &quot;/Users/justinphilie/Documents/Projects/<a class="el" href="class_graphics.html">Graphics</a>/Open-Render-X/Content/Shaders/<a class="el" href="class_vertex.html">Vertex</a>/FallbackVertex.vert&quot;</td></tr>
+<tr class="memitem:a983f48f64681299e4a50b44a77915205" id="r_a983f48f64681299e4a50b44a77915205"><td class="memItemLeft" align="right" valign="top"><a id="a983f48f64681299e4a50b44a77915205" name="a983f48f64681299e4a50b44a77915205"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>fallbackFragmentPath</b> = &quot;/Users/justinphilie/Documents/Projects/<a class="el" href="class_graphics.html">Graphics</a>/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag&quot;</td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a11baa1640d1f89e3cf8d1887a9621032" name="a11baa1640d1f89e3cf8d1887a9621032"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a11baa1640d1f89e3cf8d1887a9621032">&#9670;&#160;</a></span>Initialize()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Engine::Initialize </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initializes engine by creating window, renderer, shaders, textures and any desired objects /summary&gt;. </p>
-<p>summary&gt; Where the rendering and input handling occurs /summary&gt; </p>
-
-</div>
-</div>
-<a id="adcacda15ea7fe19fac794b438fc37501" name="adcacda15ea7fe19fac794b438fc37501"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adcacda15ea7fe19fac794b438fc37501">&#9670;&#160;</a></span>Loop()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Engine::Loop </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>summary&gt; Releases all memory taken by the program /summary&gt; </p>
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>Content/Header/<a class="el" href="_engine_8h_source.html">Engine.h</a></li>
-<li>Content/Source/<b>Engine.cpp</b></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
