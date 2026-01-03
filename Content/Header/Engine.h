@@ -42,6 +42,9 @@ const char* fallbackVertexPath = "/Users/justinphilie/Documents/Projects/Graphic
 
 private:
 
+    /// <summary>
+    ///Loads the passed in shader file into a string to be compiled for use in rendering
+    /// </summary>
 std::string LoadShaderAsString(const std::string& filename);
 
     bool CreateVertexShader(unsigned int &shader, const char* shaderPath);
@@ -54,10 +57,19 @@ bool CreateWindow(int width, int height, const char* title);
 
 public:
 
+    ///<summary>
+    /// Initializes engine by creating window, renderer, shaders, textures and any desired objects
+    ///</summary>
 bool Initialize();
 
+    ///<summary>
+    /// Where the rendering and input handling occurs
+    ///</summary>
 void Loop();
 
+    ///<summary>
+    /// Releases all memory taken by the program
+    ///</summary>
 bool Shutdown();
 
 };

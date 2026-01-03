@@ -8,8 +8,8 @@ std::string Engine::LoadShaderAsString(const std::string& filename)
 {
     std::string result = "";
     std::string line = "";
-    std::ifstream shaderFile(filename.c_str());
-    //std::ifstream shaderFile;
+    //std::ifstream shaderFile(filename.c_str());
+    std::ifstream shaderFile;
     shaderFile.open(filename);
     if (!shaderFile.is_open())
     {
@@ -48,12 +48,10 @@ bool Engine::CreateVertexShader(unsigned int &shader, const char *shaderPath)
 
 bool Engine::CreateFragmentShader(unsigned int &shader, const char *shaderPath)
 {
-
     std::string fragShader = LoadShaderAsString(shaderPath);
     const char* fShader = fragShader.c_str();
     int success;
     char infoLog[512];
-
     shader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(shader, 1, &fShader, nullptr);
     glCompileShader(shader);
