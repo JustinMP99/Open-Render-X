@@ -1,0 +1,102 @@
+\doxysection{Engine Class Reference}
+\hypertarget{class_engine}{}\label{class_engine}\index{Engine@{Engine}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_engine_a11baa1640d1f89e3cf8d1887a9621032}\label{class_engine_a11baa1640d1f89e3cf8d1887a9621032} 
+bool {\bfseries Initialize} ()
+\begin{DoxyCompactList}\small\item\em Initializes engine by creating window, renderer, shaders, textures and any desired objects. \end{DoxyCompactList}\item 
+\Hypertarget{class_engine_adcacda15ea7fe19fac794b438fc37501}\label{class_engine_adcacda15ea7fe19fac794b438fc37501} 
+void {\bfseries Loop} ()
+\begin{DoxyCompactList}\small\item\em Where the rendering and input handling occurs. \end{DoxyCompactList}\item 
+\Hypertarget{class_engine_aae631a2f67136552836a172b1b5c9dd8}\label{class_engine_aae631a2f67136552836a172b1b5c9dd8} 
+bool {\bfseries Shutdown} ()
+\begin{DoxyCompactList}\small\item\em Releases all memory taken by the program. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_engine_ad9129d41518c3c81187fff1ae2f1145b}\label{class_engine_ad9129d41518c3c81187fff1ae2f1145b} 
+std\+::string {\bfseries Load\+Shader\+As\+String} (const std\+::string \&filename)
+\begin{DoxyCompactList}\small\item\em Loads the passed in shader file into a string to be compiled for use in rendering. \end{DoxyCompactList}\item 
+\Hypertarget{class_engine_a451e6745ecec96a1f4774b6c3cfceda6}\label{class_engine_a451e6745ecec96a1f4774b6c3cfceda6} 
+bool {\bfseries Create\+Vertex\+Shader} (unsigned int \&shader, const char \texorpdfstring{$\ast$}{*}shader\+Path)
+\begin{DoxyCompactList}\small\item\em Creates a vertex shader using the passed in shader and shader path. \end{DoxyCompactList}\item 
+\Hypertarget{class_engine_a8c70f71282f4d8ae38f26de75e1dc4c5}\label{class_engine_a8c70f71282f4d8ae38f26de75e1dc4c5} 
+bool {\bfseries Create\+Fragment\+Shader} (unsigned int \&shader, const char \texorpdfstring{$\ast$}{*}shader\+Path)
+\begin{DoxyCompactList}\small\item\em Creates a fragment shader using the passed in shader and shader path. \end{DoxyCompactList}\item 
+\Hypertarget{class_engine_a983e8e9414f26d98645236ee670ae74e}\label{class_engine_a983e8e9414f26d98645236ee670ae74e} 
+bool {\bfseries Create\+Triangle} ()
+\begin{DoxyCompactList}\small\item\em Creates a triangle to be rendered. \end{DoxyCompactList}\item 
+\Hypertarget{class_engine_a0aa2f952fb6a7406d71ed66c1803dd86}\label{class_engine_a0aa2f952fb6a7406d71ed66c1803dd86} 
+bool {\bfseries Create\+Window} (int width, int \mbox{\hyperlink{class_engine_af540753bb1982a10e35072b24b5b4852}{height}}, const char \texorpdfstring{$\ast$}{*}title)
+\begin{DoxyCompactList}\small\item\em Creates the window for the render engine. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_engine_ae045425baa2fd8b0667b603bc413b333}\label{class_engine_ae045425baa2fd8b0667b603bc413b333} 
+GLFWwindow \texorpdfstring{$\ast$}{*} {\bfseries window}
+\begin{DoxyCompactList}\small\item\em Pointer to the window that is created by GLFW. \end{DoxyCompactList}\item 
+\Hypertarget{class_engine_ab2392ed9d614c550bc7563ce324b752e}\label{class_engine_ab2392ed9d614c550bc7563ce324b752e} 
+unsigned int {\bfseries width} = 1290
+\item 
+unsigned int \mbox{\hyperlink{class_engine_af540753bb1982a10e35072b24b5b4852}{height}} = 720
+\begin{DoxyCompactList}\small\item\em The width of the window. \end{DoxyCompactList}\item 
+\Hypertarget{class_engine_aca2a2cb33f7752795c142518ee30952a}\label{class_engine_aca2a2cb33f7752795c142518ee30952a} 
+\mbox{\hyperlink{class_graphics}{Graphics}} {\bfseries renderer}
+\item 
+\Hypertarget{class_engine_ada7fff8e195b7ba22201109917ae9a2e}\label{class_engine_ada7fff8e195b7ba22201109917ae9a2e} 
+unsigned int {\bfseries VAO}
+\item 
+\Hypertarget{class_engine_a5035358d845fbb471ca57402a57164c5}\label{class_engine_a5035358d845fbb471ca57402a57164c5} 
+unsigned int {\bfseries VBO}
+\item 
+\Hypertarget{class_engine_a50d22510d44ae4a50eeccecf12475ff7}\label{class_engine_a50d22510d44ae4a50eeccecf12475ff7} 
+unsigned int {\bfseries EBO}
+\item 
+\Hypertarget{class_engine_a184851d6a5b1198abde4ec99bcb15352}\label{class_engine_a184851d6a5b1198abde4ec99bcb15352} 
+std\+::vector$<$ \mbox{\hyperlink{class_vertex}{Vertex}} $>$ {\bfseries vertices}
+\item 
+\Hypertarget{class_engine_ab92045bdfc94fc38698c728d3ff6e27c}\label{class_engine_ab92045bdfc94fc38698c728d3ff6e27c} 
+std\+::vector$<$ unsigned int $>$ {\bfseries indices}
+\item 
+\Hypertarget{class_engine_a61463023cb8c376fa653dc4c79288b25}\label{class_engine_a61463023cb8c376fa653dc4c79288b25} 
+GLuint {\bfseries shader\+Program}
+\item 
+\Hypertarget{class_engine_af54cbe3315108a85d1258006d13b3869}\label{class_engine_af54cbe3315108a85d1258006d13b3869} 
+GLuint {\bfseries fallback\+\_\+\+VShader}
+\item 
+\Hypertarget{class_engine_a4d3718d5d92496a88a94dd4d92000f7e}\label{class_engine_a4d3718d5d92496a88a94dd4d92000f7e} 
+GLuint {\bfseries fallback\+\_\+\+FShader}
+\item 
+\Hypertarget{class_engine_a759ab6a8e3f316f68e405531564d8b9e}\label{class_engine_a759ab6a8e3f316f68e405531564d8b9e} 
+const char \texorpdfstring{$\ast$}{*} {\bfseries windows\+Title} = "{}Open Render X -\/ Open\+GL -\/ Windows"{}
+\item 
+\Hypertarget{class_engine_ac3836b459fe537e3f191cc92a5ea7f43}\label{class_engine_ac3836b459fe537e3f191cc92a5ea7f43} 
+const char \texorpdfstring{$\ast$}{*} {\bfseries apple\+Title} = "{}Open Render X -\/ Open\+GL -\/ Mac\+OS"{}
+\item 
+\Hypertarget{class_engine_a7834cb07a170c31fa7f6b17e6308ffee}\label{class_engine_a7834cb07a170c31fa7f6b17e6308ffee} 
+const char \texorpdfstring{$\ast$}{*} {\bfseries fallback\+Vertex\+Path} = "{}/Users/justinphilie/Documents/Projects/\mbox{\hyperlink{class_graphics}{Graphics}}/Open-\/Render-\/X/Content/Shaders/\mbox{\hyperlink{class_vertex}{Vertex}}/Fallback\+Vertex.\+vert"{}
+\begin{DoxyCompactList}\small\item\em The path to the fallback vertex shader on mac\+OS. \end{DoxyCompactList}\item 
+\Hypertarget{class_engine_a983f48f64681299e4a50b44a77915205}\label{class_engine_a983f48f64681299e4a50b44a77915205} 
+const char \texorpdfstring{$\ast$}{*} {\bfseries fallback\+Fragment\+Path} = "{}/Users/justinphilie/Documents/Projects/\mbox{\hyperlink{class_graphics}{Graphics}}/Open-\/Render-\/X/Content/Shaders/Fragment/Fallback\+Frag.\+frag"{}
+\begin{DoxyCompactList}\small\item\em The path to the fallback fragment shader on mac\+OS. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_af540753bb1982a10e35072b24b5b4852}\index{Engine@{Engine}!height@{height}}
+\index{height@{height}!Engine@{Engine}}
+\doxysubsubsection{\texorpdfstring{height}{height}}
+{\footnotesize\ttfamily \label{class_engine_af540753bb1982a10e35072b24b5b4852} 
+unsigned int Engine\+::height = 720\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The width of the window. 
+
+The height of the window 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/justinphilie/\+Documents/\+Projects/\+Graphics/\+Open-\/\+Render-\/\+X/\+Content/\+Header/Engine.\+h\end{DoxyCompactItemize}

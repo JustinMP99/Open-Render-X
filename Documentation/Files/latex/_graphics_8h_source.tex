@@ -1,0 +1,34 @@
+\doxysection{Graphics.\+h}
+\hypertarget{_graphics_8h_source}{}\label{_graphics_8h_source}\index{/Users/justinphilie/Documents/Projects/Graphics/Open-\/Render-\/X/Content/Header/Graphics.h@{/Users/justinphilie/Documents/Projects/Graphics/Open-\/Render-\/X/Content/Header/Graphics.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <GLFW/glfw3.h>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <glm/gtc/matrix\_transform.hpp>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <glm/gtc/type\_ptr.hpp>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }Graphics}
+\DoxyCodeLine{00008\ \{}
+\DoxyCodeLine{00009\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \ \ GLFWwindow*\ window;}
+\DoxyCodeLine{00012\ \ \ \textcolor{keywordtype}{int}\ width;}
+\DoxyCodeLine{00013\ \ \ \textcolor{keywordtype}{int}\ height;}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ Graphics();}
+\DoxyCodeLine{00018\ \ \ Graphics(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height);}
+\DoxyCodeLine{00019\ \ \ \string~Graphics();}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \textcolor{keywordtype}{bool}\ Initialize(GLFWwindow*\ win);}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \textcolor{keywordtype}{void}\ Render();}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \textcolor{keywordtype}{bool}\ Shutdown();}
+\DoxyCodeLine{00026\ \ \ \ \ }
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \};}
+
+\end{DoxyCode}

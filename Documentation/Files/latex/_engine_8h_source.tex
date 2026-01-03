@@ -1,0 +1,68 @@
+\doxysection{Engine.\+h}
+\hypertarget{_engine_8h_source}{}\label{_engine_8h_source}\index{/Users/justinphilie/Documents/Projects/Graphics/Open-\/Render-\/X/Content/Header/Engine.h@{/Users/justinphilie/Documents/Projects/Graphics/Open-\/Render-\/X/Content/Header/Engine.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#include\ <glad/glad.h>}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <GLFW/glfw3.h>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Graphics.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Vertex.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_engine}{Engine}}}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00013\ GLFWwindow*\ \mbox{\hyperlink{class_engine_ae045425baa2fd8b0667b603bc413b333}{window}};\ }
+\DoxyCodeLine{00014\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ width\ =\ 1290;;}
+\DoxyCodeLine{00015\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_engine_af540753bb1982a10e35072b24b5b4852}{height}}\ =\ 720;\ }
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \mbox{\hyperlink{class_graphics}{Graphics}}\ renderer;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{//Temp\ object\ mesh\ data}}
+\DoxyCodeLine{00020\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ VAO;}
+\DoxyCodeLine{00021\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ VBO;}
+\DoxyCodeLine{00022\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ EBO;}
+\DoxyCodeLine{00023\ std::vector<Vertex>\ vertices;}
+\DoxyCodeLine{00024\ std::vector<unsigned\ int>\ indices;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{comment}{//Temp\ object\ material\ data}}
+\DoxyCodeLine{00027\ GLuint\ shaderProgram;}
+\DoxyCodeLine{00028\ GLuint\ fallback\_VShader;}
+\DoxyCodeLine{00029\ GLuint\ fallback\_FShader;}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ windowsTitle\ =\ \textcolor{stringliteral}{"{}Open\ Render\ X\ -\/\ OpenGL\ -\/\ Windows"{}};}
+\DoxyCodeLine{00032\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ appleTitle\ =\ \textcolor{stringliteral}{"{}Open\ Render\ X\ -\/\ OpenGL\ -\/\ MacOS"{}};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{comment}{//File\ Paths}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{comment}{//MacOS}}
+\DoxyCodeLine{00037\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{class_engine_a7834cb07a170c31fa7f6b17e6308ffee}{fallbackVertexPath}}\ =\ \textcolor{stringliteral}{"{}/Users/justinphilie/Documents/Projects/Graphics/Open-\/Render-\/X/Content/Shaders/Vertex/FallbackVertex.vert"{}};\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{class_engine_a983f48f64681299e4a50b44a77915205}{fallbackFragmentPath}}\ =\ \textcolor{stringliteral}{"{}/Users/justinphilie/Documents/Projects/Graphics/Open-\/Render-\/X/Content/Shaders/Fragment/FallbackFrag.frag"{}};\ }
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{comment}{//Windows}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00045\ std::string\ \mbox{\hyperlink{class_engine_ad9129d41518c3c81187fff1ae2f1145b}{LoadShaderAsString}}(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_engine_a451e6745ecec96a1f4774b6c3cfceda6}{CreateVertexShader}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \&shader,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ shaderPath);}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_engine_a8c70f71282f4d8ae38f26de75e1dc4c5}{CreateFragmentShader}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \&shader,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ shaderPath);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00054\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_engine_a983e8e9414f26d98645236ee670ae74e}{CreateTriangle}}();}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00057\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_engine_a0aa2f952fb6a7406d71ed66c1803dd86}{CreateWindow}}(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_engine_af540753bb1982a10e35072b24b5b4852}{height}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ title);}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00062\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_engine_a11baa1640d1f89e3cf8d1887a9621032}{Initialize}}();}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00065\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_engine_adcacda15ea7fe19fac794b438fc37501}{Loop}}();}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00068\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_engine_aae631a2f67136552836a172b1b5c9dd8}{Shutdown}}();}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \};}
+
+\end{DoxyCode}
