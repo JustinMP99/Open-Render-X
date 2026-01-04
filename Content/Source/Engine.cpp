@@ -89,18 +89,10 @@ bool Engine::CreateTriangle()
     tri->vertices.push_back(right);
     tri->vertices.push_back(top);
 
-    //vertices.push_back(left);
-    //vertices.push_back(right);
-    //vertices.push_back(top);
-
     //create indices
     tri->indices.push_back(0);
     tri->indices.push_back(1);
     tri->indices.push_back(2);
-
-    //indices.push_back(0);
-    //indices.push_back(1);
-    //indices.push_back(2);
 
     //create vao
     glGenVertexArrays(1, &tri->VAO);

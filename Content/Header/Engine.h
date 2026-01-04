@@ -19,17 +19,11 @@ Graphics renderer;
 
     std::vector<SceneObject*> sceneObjects;
 
-//Temp object mesh data
-// unsigned int VAO;
-// unsigned int VBO;
-// unsigned int EBO;
-// std::vector<Vertex> vertices;
-// std::vector<unsigned int> indices;
-//
-// //Temp object material data
-// GLuint shaderProgram;
+//Vertex Shaders
 GLuint fallback_VShader;
-GLuint fallback_FShader;
+
+    //Fragment Shaders
+    GLuint fallback_FShader;
 
 const char* windowsTitle = "Open Render X - OpenGL - Windows";
 const char* appleTitle = "Open Render X - OpenGL - MacOS";
