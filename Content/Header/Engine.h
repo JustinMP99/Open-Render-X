@@ -5,6 +5,7 @@
 
 #include "Graphics.h"
 #include "Vertex.h"
+#include "SceneObject.h"
 
 class Engine
 {
@@ -16,15 +17,17 @@ unsigned int height = 720; ///< The height of the window
 
 Graphics renderer;
 
-//Temp object mesh data
-unsigned int VAO;
-unsigned int VBO;
-unsigned int EBO;
-std::vector<Vertex> vertices;
-std::vector<unsigned int> indices;
+    std::vector<SceneObject*> sceneObjects;
 
-//Temp object material data
-GLuint shaderProgram;
+//Temp object mesh data
+// unsigned int VAO;
+// unsigned int VBO;
+// unsigned int EBO;
+// std::vector<Vertex> vertices;
+// std::vector<unsigned int> indices;
+//
+// //Temp object material data
+// GLuint shaderProgram;
 GLuint fallback_VShader;
 GLuint fallback_FShader;
 

@@ -16,6 +16,7 @@ Content/Source/Engine.cpp
 Content/Source/Graphics.cpp
 Content/Source/Vertex.cpp
 Content/main.cpp
+        Content/Source/SceneObject.cpp
 )
 
 # Set Path Variables

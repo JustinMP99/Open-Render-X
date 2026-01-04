@@ -6,8 +6,8 @@ class Vertex
 {
   public:
 
-  GLfloat position[3];
-
+  //GLfloat position[3];
+  glm::vec3 position;
 
   Vertex();
 

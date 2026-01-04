@@ -3,7 +3,7 @@
 
 #include "../Globals.h"
 
-//PRIVATE 
+//PRIVATE
 std::string Engine::LoadShaderAsString(const std::string& filename)
 {
     std::string result = "";
@@ -67,66 +67,68 @@ bool Engine::CreateFragmentShader(unsigned int &shader, const char *shaderPath)
 
 bool Engine::CreateTriangle()
 {
+    SceneObject *tri = new SceneObject();
+
     //create vertices
     Vertex top;
-    top.position[0] = 0.0f;
-    top.position[1] = 0.5f;
-    top.position[2] = 0.0f;
-
-    //top.position = glm::vec3(0.0f, 0.5f, 0.0f);
+    top.position = glm::vec3(0.0f, 0.5f, 0.0f);
     //top.color = glm::vec3(1.0f, 0.0f, 0.0f);
     //top.uv = glm::vec2(0.0f, 0.0f);
-    Vertex left;
-    left.position[0] = -0.5f;
-    left.position[1] = -0.5f;
-    left.position[2] = 0.0f;
 
-    //left.position = glm::vec3(-0.5f, -0.5f, 0.0f);
+    Vertex left;
+    left.position = glm::vec3(-0.5f, -0.5f, 0.0f);
     //left.color = glm::vec3(0.0f, 1.0f, 0.0f);
     //left.uv = glm::vec2(1.0f, 1.0f);
-    Vertex right;
-    right.position[0] = 0.5f;
-    right.position[1] = -0.5f;
-    right.position[2] = 0.0f;
 
-    //right.position = glm::vec3(0.5f, -0.5f, 0.0f);
+    Vertex right;
+    right.position = glm::vec3(0.5f, -0.5f, 0.0f);
     //right.color = glm::vec3(0.0f, 0.0f, 1.0f);
     //right.uv = glm::vec2(1.0f, 1.0f);
 
-    vertices.push_back(left);
-    vertices.push_back(right);
-    vertices.push_back(top);
+    tri->vertices.push_back(left);
+    tri->vertices.push_back(right);
+    tri->vertices.push_back(top);
+
+    //vertices.push_back(left);
+    //vertices.push_back(right);
+    //vertices.push_back(top);
 
     //create indices
-    indices.push_back(0);
-    indices.push_back(1);
-    indices.push_back(2);
+    tri->indices.push_back(0);
+    tri->indices.push_back(1);
+    tri->indices.push_back(2);
+
+    //indices.push_back(0);
+    //indices.push_back(1);
+    //indices.push_back(2);
 
     //create vao
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
+    glGenVertexArrays(1, &tri->VAO);
+    glBindVertexArray(tri->VAO);
 
     //create vbo
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * (sizeof(GLfloat) * 3), &vertices[0], GL_STATIC_DRAW);
+    glGenBuffers(1, &tri->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, tri->VBO);
+    glBufferData(GL_ARRAY_BUFFER, tri->vertices.size() * sizeof(Vertex), &tri->vertices[0], GL_STATIC_DRAW);
 
     //create ebo
-    glGenBuffers(1, &EBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+    glGenBuffers(1, &tri->EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tri->EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, tri->indices.size() * sizeof(unsigned int), &tri->indices[0], GL_STATIC_DRAW);
 
     //set vertex attribute layout
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3, (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
     glEnableVertexAttribArray(0);
 
     //create shaders
-    shaderProgram = glCreateProgram();
+    tri->shaderProgram = glCreateProgram();
 
-    glAttachShader(shaderProgram, fallback_VShader);
-    glAttachShader(shaderProgram, fallback_FShader);
+    glAttachShader(tri->shaderProgram, fallback_VShader);
+    glAttachShader(tri->shaderProgram, fallback_FShader);
 
-    glLinkProgram(shaderProgram);
+    glLinkProgram(tri->shaderProgram);
+
+    sceneObjects.push_back(tri);
 
     return true;
 }
@@ -198,8 +200,8 @@ void Engine::Loop()
         //renderer.Render();
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glUseProgram(shaderProgram);
-        glBindVertexArray(VAO);
+        glUseProgram(sceneObjects[0]->shaderProgram);
+        glBindVertexArray(sceneObjects[0]->VAO);
         glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
         glfwSwapBuffers(window);
         glfwPollEvents();
