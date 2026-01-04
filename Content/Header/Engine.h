@@ -51,6 +51,8 @@ bool CreateTriangle();
     /// Creates the window for the render engine
 bool CreateWindow(int width, int height, const char* title);
 
+    void SetVertexAttributePointers();
+
 public:
 
     /// Initializes engine by creating window, renderer, shaders, textures and any desired objects

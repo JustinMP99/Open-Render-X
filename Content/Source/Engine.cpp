@@ -72,18 +72,18 @@ bool Engine::CreateTriangle()
     //create vertices
     Vertex top;
     top.position = glm::vec3(0.0f, 0.5f, 0.0f);
-    //top.color = glm::vec3(1.0f, 0.0f, 0.0f);
-    //top.uv = glm::vec2(0.0f, 0.0f);
+    top.normal = glm::vec3(1.0f, 0.0f, 0.0f);
+    top.uv = glm::vec2(0.0f, 0.0f);
 
     Vertex left;
     left.position = glm::vec3(-0.5f, -0.5f, 0.0f);
-    //left.color = glm::vec3(0.0f, 1.0f, 0.0f);
-    //left.uv = glm::vec2(1.0f, 1.0f);
+    left.normal = glm::vec3(0.0f, 1.0f, 0.0f);
+    left.uv = glm::vec2(1.0f, 1.0f);
 
     Vertex right;
     right.position = glm::vec3(0.5f, -0.5f, 0.0f);
-    //right.color = glm::vec3(0.0f, 0.0f, 1.0f);
-    //right.uv = glm::vec2(1.0f, 1.0f);
+    right.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    right.uv = glm::vec2(1.0f, 1.0f);
 
     tri->mesh = new Mesh();
 
@@ -120,8 +120,7 @@ bool Engine::CreateTriangle()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, tri->mesh->indices.size() * sizeof(unsigned int), &tri->mesh->indices[0], GL_STATIC_DRAW);
 
     //set vertex attribute layout
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
-    glEnableVertexAttribArray(0);
+    SetVertexAttributePointers();
 
     //create shaders
     tri->shaderProgram = glCreateProgram();
@@ -166,6 +165,18 @@ bool Engine::CreateWindow(int width, int height, const char* title)
     }
 
     return true;
+}
+
+void Engine::SetVertexAttributePointers()
+{
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)(3 * sizeof(GL_FLOAT)));
+    glEnableVertexAttribArray(1);
+
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)(6 * sizeof(GL_FLOAT)));
+    glEnableVertexAttribArray(2);
 }
 
 // PUBLIC
