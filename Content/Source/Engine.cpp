@@ -1,8 +1,6 @@
 #include "../Header/Engine.h"
 #include <fstream>
 
-#include "../Globals.h"
-
 //PRIVATE
 std::string Engine::LoadShaderAsString(const std::string& filename)
 {
@@ -69,6 +67,8 @@ bool Engine::CreateTriangle()
 {
     SceneObject *tri = new SceneObject();
 
+    std::vector<Vertex> tempVerts;
+    std::vector<unsigned int> tempIndices;
     //create vertices
     Vertex top;
     top.position = glm::vec3(0.0f, 0.5f, 0.0f);
@@ -85,28 +85,39 @@ bool Engine::CreateTriangle()
     //right.color = glm::vec3(0.0f, 0.0f, 1.0f);
     //right.uv = glm::vec2(1.0f, 1.0f);
 
-    tri->vertices.push_back(left);
-    tri->vertices.push_back(right);
-    tri->vertices.push_back(top);
+    tri->mesh = new Mesh();
+
+    tempVerts.push_back(left);
+    tempVerts.push_back(right);
+    tempVerts.push_back(top);
+    tempIndices.push_back(0);
+    tempIndices.push_back(1);
+    tempIndices.push_back(2);
+
+    tri->mesh->AddMeshData(tempVerts, tempIndices);
+
+    //tri->mesh->vertices.push_back(left);
+    //tri->mesh->vertices.push_back(right);
+    //tri->mesh->vertices.push_back(top);
 
     //create indices
-    tri->indices.push_back(0);
-    tri->indices.push_back(1);
-    tri->indices.push_back(2);
+    //tri->mesh->indices.push_back(0);
+    //tri->mesh->indices.push_back(1);
+    //tri->mesh->indices.push_back(2);
 
     //create vao
-    glGenVertexArrays(1, &tri->VAO);
-    glBindVertexArray(tri->VAO);
+    glGenVertexArrays(1, &tri->mesh->VAO);
+    glBindVertexArray(tri->mesh->VAO);
 
     //create vbo
-    glGenBuffers(1, &tri->VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, tri->VBO);
-    glBufferData(GL_ARRAY_BUFFER, tri->vertices.size() * sizeof(Vertex), &tri->vertices[0], GL_STATIC_DRAW);
+    glGenBuffers(1, &tri->mesh->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, tri->mesh->VBO);
+    glBufferData(GL_ARRAY_BUFFER, tri->mesh->vertices.size() * sizeof(Vertex), &tri->mesh->vertices[0], GL_STATIC_DRAW);
 
     //create ebo
-    glGenBuffers(1, &tri->EBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tri->EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, tri->indices.size() * sizeof(unsigned int), &tri->indices[0], GL_STATIC_DRAW);
+    glGenBuffers(1, &tri->mesh->EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tri->mesh->EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, tri->mesh->indices.size() * sizeof(unsigned int), &tri->mesh->indices[0], GL_STATIC_DRAW);
 
     //set vertex attribute layout
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
@@ -193,7 +204,7 @@ void Engine::Loop()
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glUseProgram(sceneObjects[0]->shaderProgram);
-        glBindVertexArray(sceneObjects[0]->VAO);
+        glBindVertexArray(sceneObjects[0]->mesh->VAO);
         glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -203,6 +214,10 @@ void Engine::Loop()
 bool Engine::Shutdown()
 {
     std::cout << "Shutting down engine..." << std::endl;
+    for (unsigned int i = 0; i < sceneObjects.size(); i++)
+    {
+        delete sceneObjects[i];
+    }
     glfwDestroyWindow(window);
     return true;
 }

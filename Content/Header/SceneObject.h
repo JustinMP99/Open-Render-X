@@ -3,8 +3,23 @@
 //
 
 #include <vector>
-// #include "Vertex.h"
 
+#ifndef OPENRENDERX_MESH_H
+#define OPENRENDERX_MESH_H
+#include "Mesh.h"
+#endif
+
+#ifndef OPENRENDERX_VERTEX_H
+#define OPENRENDERX_VERTEX_H
+#include "Vertex.h"
+#endif
+
+/**************************************************************************//**
+ * The SceneObject class stores all data related to object present in the renderer. This includes:
+ *  - Mesh Data
+ *  - Material Data
+ *  - etc.
+ ******************************************************************************/
 class SceneObject
 {
 
@@ -12,14 +27,13 @@ private:
 
 
 public:
-    //Temp object mesh data
-    unsigned int VAO;
-    unsigned int VBO;
-    unsigned int EBO;
-    std::vector<Vertex> vertices;
-    std::vector<unsigned int> indices;
+
+    Mesh* mesh; ///< Stores mesh data for the SceneObject
 
     //Temp object material data
     GLuint shaderProgram;
+
+    SceneObject();
+    ~SceneObject();
 
 };

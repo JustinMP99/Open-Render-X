@@ -9,14 +9,14 @@ if(APPLE)
 endif()
 
 # Add Source Files
-add_executable(
-        OpenRenderX
-Content/Source/glad.c
-Content/Source/Engine.cpp
-Content/Source/Graphics.cpp
-Content/Source/Vertex.cpp
-Content/main.cpp
+add_executable(OpenRenderX
+        Content/Source/glad.c
+        Content/Source/Vertex.cpp
+        Content/Source/Engine.cpp
+        Content/Source/Graphics.cpp
+        Content/main.cpp
         Content/Source/SceneObject.cpp
+        Content/Source/Mesh.cpp
 )
 
 # Set Path Variables

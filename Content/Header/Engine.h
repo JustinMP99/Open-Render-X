@@ -2,9 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <vector>
-
 #include "Graphics.h"
-#include "Vertex.h"
 #include "SceneObject.h"
 
 class Engine
