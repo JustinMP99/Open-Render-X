@@ -1,7 +1,14 @@
 #include "../Header/Engine.h"
-#include <fstream>
 
 //PRIVATE
+void Engine::ProcessInput()
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    {
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
+    }
+}
+
 std::string Engine::LoadShaderAsString(const std::string& filename)
 {
     std::string result = "";
@@ -87,23 +94,15 @@ bool Engine::CreateTriangle()
 
     tri->mesh = new Mesh();
 
-    tempVerts.push_back(left);
-    tempVerts.push_back(right);
-    tempVerts.push_back(top);
-    tempIndices.push_back(0);
-    tempIndices.push_back(1);
-    tempIndices.push_back(2);
+    //add vertices to vector
+    tri->mesh->vertices.push_back(left);
+    tri->mesh->vertices.push_back(right);
+    tri->mesh->vertices.push_back(top);
 
-    tri->mesh->AddMeshData(tempVerts, tempIndices);
-
-    //tri->mesh->vertices.push_back(left);
-    //tri->mesh->vertices.push_back(right);
-    //tri->mesh->vertices.push_back(top);
-
-    //create indices
-    //tri->mesh->indices.push_back(0);
-    //tri->mesh->indices.push_back(1);
-    //tri->mesh->indices.push_back(2);
+    //create indices & add vertices to vector
+    tri->mesh->indices.push_back(0);
+    tri->mesh->indices.push_back(1);
+    tri->mesh->indices.push_back(2);
 
     //create vao
     glGenVertexArrays(1, &tri->mesh->VAO);
@@ -212,12 +211,11 @@ void Engine::Loop()
 {
     while (glfwWindowShouldClose(window) == false)
     {
-        //renderer.Render();
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glUseProgram(sceneObjects[0]->material->shaderProgram);
-        glBindVertexArray(sceneObjects[0]->mesh->VAO);
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+        ProcessInput();
+        for (unsigned int i = 0; i < sceneObjects.size(); i++)
+        {
+            renderer.Render(sceneObjects[i]);
+        }
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

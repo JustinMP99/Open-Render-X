@@ -1,5 +1,7 @@
+#pragma once
 
 #include <vector>
+
 
 #ifndef OPENRENDERX_VERTEX_H
 #define OPENRENDERX_VERTEX_H

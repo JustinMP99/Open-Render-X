@@ -1,7 +1,7 @@
 //
 // Created by Justin Philie on 1/3/26.
 //
-
+#pragma once
 #include <vector>
 
 #include "Material.h"
@@ -16,11 +16,6 @@
 #include "Mesh.h"
 #endif
 
-// #ifndef OPENRENDERX_VERTEX_H
-// #define OPENRENDERX_VERTEX_H
-// #include "Vertex.h"
-// #endif
-
 /**************************************************************************//**
  * The SceneObject class stores all data related to object present in the renderer. This includes:
  *  - Mesh Data
@@ -31,7 +26,6 @@ class SceneObject
 {
 
 private:
-
 
 public:
 
