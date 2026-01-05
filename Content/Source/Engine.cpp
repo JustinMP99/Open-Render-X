@@ -122,13 +122,14 @@ bool Engine::CreateTriangle()
     //set vertex attribute layout
     SetVertexAttributePointers();
 
+    tri->material = new Material();
     //create shaders
-    tri->shaderProgram = glCreateProgram();
+    tri->material->shaderProgram = glCreateProgram();
 
-    glAttachShader(tri->shaderProgram, fallback_VShader);
-    glAttachShader(tri->shaderProgram, fallback_FShader);
+    glAttachShader(tri->material->shaderProgram, fallback_VShader);
+    glAttachShader(tri->material->shaderProgram, fallback_FShader);
 
-    glLinkProgram(tri->shaderProgram);
+    glLinkProgram(tri->material->shaderProgram);
 
     sceneObjects.push_back(tri);
 
@@ -214,7 +215,7 @@ void Engine::Loop()
         //renderer.Render();
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glUseProgram(sceneObjects[0]->shaderProgram);
+        glUseProgram(sceneObjects[0]->material->shaderProgram);
         glBindVertexArray(sceneObjects[0]->mesh->VAO);
         glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
         glfwSwapBuffers(window);

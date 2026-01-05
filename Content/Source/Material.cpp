@@ -3,3 +3,16 @@
 //
 
 #include "../Header/Material.h"
+
+#include "glad/glad.h"
+
+
+Material::Material()
+{
+
+}
+
+Material::~Material()
+{
+    glDeleteProgram(shaderProgram);
+}

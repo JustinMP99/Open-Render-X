@@ -12,6 +12,10 @@ private:
 
     public:
     unsigned int shaderProgram;
+
+    Material();
+    ~Material();
+
 };
 
 
