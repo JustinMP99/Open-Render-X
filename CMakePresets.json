@@ -2,26 +2,14 @@
     "version": 8,
     "configurePresets": [
         {
-            "name": "MacOS",
+            "name": "EXAMPLE NAME",
             "displayName": "Clang 17.0.0 arm64-apple-darwin25.2.0",
-            "description": "Using compilers: C = /usr/bin/clang, CXX = /usr/bin/clang++",
+            "description": "Add description for preset",
             "binaryDir": "${sourceDir}/out/build/${presetName}",
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-                "CMAKE_C_COMPILER": "/usr/bin/clang",
-                "CMAKE_CXX_COMPILER": "/usr/bin/clang++",
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        },
-        {
-            "name": "Windows - Laptop",
-            "displayName": "Clang 17.0.0 arm64-apple-darwin25.2.0",
-            "description": "Using compilers: C = /usr/bin/clang, CXX = /usr/bin/clang++",
-            "binaryDir": "${sourceDir}/out/build/${presetName}",
-            "cacheVariables": {
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-                "CMAKE_C_COMPILER": "/usr/bin/clang",
-                "CMAKE_CXX_COMPILER": "/usr/bin/clang++",
+                "CMAKE_C_COMPILER": "This is the filepath to the C compiler on your machine",
+                "CMAKE_CXX_COMPILER": "This is the filepath to the C++ compiler on your machine",
                 "CMAKE_BUILD_TYPE": "Debug"
             }
         }

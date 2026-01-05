@@ -17,6 +17,8 @@ add_executable(OpenRenderX
         Content/main.cpp
         Content/Source/SceneObject.cpp
         Content/Source/Mesh.cpp
+        Content/Source/Material.cpp
+        Content/Header/Material.h
 )
 
 # Set Path Variables
