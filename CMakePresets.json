@@ -12,6 +12,18 @@
           "CMAKE_CXX_COMPILER": "/usr/bin/clang++",
           "CMAKE_BUILD_TYPE": "Debug"
         }
+      },
+      {
+        "name": "Windows - Laptop",
+        "displayName": "Windows Laptop Preset",
+        "description": "",
+        "binaryDir": "${sourceDir}/out/build/${presetName}",
+        "cacheVariables": {
+          "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+          "CMAKE_C_COMPILER": "C:/msys64/ucrt64/bin/gcc.exe",
+          "CMAKE_CXX_COMPILER": "C:/msys64/ucrt64/bin/g++.exe"
+
+        }
       }
     ]
 }

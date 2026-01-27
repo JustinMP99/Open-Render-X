@@ -6,19 +6,21 @@ project(OpenRenderX VERSION 0.1.0 LANGUAGES C CXX)
 if(APPLE)
     find_package(glfw3 REQUIRED)
     find_package(OpenGL REQUIRED)
+elseif(WIN32)
+    find_package(OpenGL REQUIRED)
 endif()
 
 # Add Source Files
 add_executable(OpenRenderX
-        Content/Source/glad.c
-        Content/Source/Vertex.cpp
-        Content/Source/Engine.cpp
-        Content/Source/Graphics.cpp
+#        Content/Source/glad.c
+#        Content/Source/Vertex.cpp
+#        Content/Source/Engine.cpp
+#        Content/Source/Graphics.cpp
         Content/main.cpp
-        Content/Source/SceneObject.cpp
-        Content/Source/Mesh.cpp
-        Content/Source/Material.cpp
-        Content/Header/Material.h
+#        Content/Source/SceneObject.cpp
+#        Content/Source/Mesh.cpp
+#        Content/Source/Material.cpp
+#        Content/Header/Material.h
 )
 
 # Set Path Variables
@@ -38,4 +40,8 @@ target_include_directories(OpenRenderX PRIVATE
     "${CMAKE_SOURCE_DIR}/Content/Additional/include"
 )
 
-target_link_libraries(OpenRenderX PRIVATE glfw OpenGL::GL)
+if(APPLE)
+    target_link_libraries(OpenRenderX PRIVATE glfw OpenGL::GL)
+elseif (WIN32)
+
+endif()
