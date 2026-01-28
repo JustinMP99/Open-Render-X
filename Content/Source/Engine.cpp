@@ -104,6 +104,8 @@ bool Engine::CreateTriangle()
     tri->mesh->indices.push_back(1);
     tri->mesh->indices.push_back(2);
 
+    tri->mesh->indexCount = static_cast<unsigned int>(tri->mesh->indices.size());
+
     //create vao
     glGenVertexArrays(1, &tri->mesh->VAO);
     glBindVertexArray(tri->mesh->VAO);
@@ -121,14 +123,9 @@ bool Engine::CreateTriangle()
     //set vertex attribute layout
     SetVertexAttributePointers();
 
+    //Create material & set shaders
     tri->material = new Material();
-    //create shaders
-    tri->material->shaderProgram = glCreateProgram();
-
-    glAttachShader(tri->material->shaderProgram, fallback_VShader);
-    glAttachShader(tri->material->shaderProgram, fallback_FShader);
-
-    glLinkProgram(tri->material->shaderProgram);
+    tri->material->SetShaders(fallback_VShader, fallback_FShader);
 
     sceneObjects.push_back(tri);
 

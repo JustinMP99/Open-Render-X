@@ -41,9 +41,10 @@ void Graphics::Render(SceneObject* object)
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glUseProgram(object->material->shaderProgram);
+    object->material->Use();
+    //glUseProgram(object->material->shaderProgram);
     glBindVertexArray(object->mesh->VAO);
-    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, object->mesh->indexCount, GL_UNSIGNED_INT, 0);
 }
 
 bool Graphics::Shutdown()

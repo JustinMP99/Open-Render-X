@@ -18,6 +18,7 @@ class Mesh
     unsigned int EBO; ///< Element Buffer Object - Stores mesh index data for use with OpenGL
     std::vector<Vertex> vertices; ///< Vector that stores the Vertex data for each vertice in the Mesh
     std::vector<unsigned int> indices; ///< Vector that stores the Index data for the Mesh
+    unsigned int indexCount; ///< The number of indices in the Mesh
 
     Mesh();
     ~Mesh();

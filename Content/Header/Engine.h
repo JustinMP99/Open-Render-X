@@ -22,10 +22,10 @@ Graphics renderer;
     std::vector<SceneObject*> sceneObjects;
 
     //Vertex Shaders
-    GLuint fallback_VShader;
+    unsigned int fallback_VShader;
 
     //Fragment Shaders
-    GLuint fallback_FShader;
+    unsigned int fallback_FShader;
 
     const char* windowsTitle = "Open Render X - OpenGL - Windows";
     const char* appleTitle = "Open Render X - OpenGL - MacOS";

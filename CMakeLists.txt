@@ -16,7 +16,7 @@ add_executable(OpenRenderX
        Content/Source/Vertex.cpp
        Content/Source/Engine.cpp
        Content/Source/Graphics.cpp
-        Content/main.cpp
+       Content/main.cpp
        Content/Source/SceneObject.cpp
        Content/Source/Mesh.cpp
        Content/Source/Material.cpp

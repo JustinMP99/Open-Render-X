@@ -7,8 +7,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-
-
+/**************************************************************************//**
+ * The Graphics class handles rendering of SceneObjects to the screen. It contains a pointer to the window where rendering occurs,
+ * as well as methods for initializing the graphics context, rendering objects, and shutting down the graphics system.
+ ******************************************************************************/
 class Graphics
 {
   private:
@@ -28,7 +30,7 @@ class Graphics
     void Render();
     void Render(SceneObject* object);
 
-  bool Shutdown();
+    bool Shutdown();
     
 
 };
