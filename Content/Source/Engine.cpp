@@ -1,5 +1,9 @@
 #include "../Header/Engine.h"
-
+#ifndef STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_IMPLEMENTATION
+//#include "stb_image.h"
+#include <stb_image.h>
+#endif
 //PRIVATE
 void Engine::ProcessInput()
 {
@@ -70,6 +74,46 @@ bool Engine::CreateFragmentShader(unsigned int &shader, const char *shaderPath)
     return true;
 }
 
+bool Engine::CreateTexture(const char* filepath, unsigned int &texture)
+{
+
+    int width;
+    int height;
+    int nrChannels;
+
+    //Generate texture resource
+    glGenTextures(1, &texture);
+
+    //Bind texture so we can perform operations on it
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    //Set texture wrapping/filtering options
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    //call stbi to flip textures on load
+    stbi_set_flip_vertically_on_load(true);
+
+    //load passed in texture image
+    unsigned char *data = stbi_load(filepath, &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Error Loading Texture..." << std::endl;
+        return false;
+    }
+
+    stbi_image_free(data);
+    glBindTexture(GL_TEXTURE_2D, NULL);
+    return true;
+}
+
 bool Engine::CreateTriangle()
 {
     SceneObject *tri = new SceneObject();
@@ -80,17 +124,17 @@ bool Engine::CreateTriangle()
     Vertex top;
     top.position = glm::vec3(0.0f, 0.5f, 0.0f);
     top.normal = glm::vec3(1.0f, 0.0f, 0.0f);
-    top.uv = glm::vec2(0.0f, 0.0f);
+    top.uv = glm::vec2(0.5f, 1.0f);
 
     Vertex left;
     left.position = glm::vec3(-0.5f, -0.5f, 0.0f);
     left.normal = glm::vec3(0.0f, 1.0f, 0.0f);
-    left.uv = glm::vec2(1.0f, 1.0f);
+    left.uv = glm::vec2(0.0f, 0.0f);
 
     Vertex right;
     right.position = glm::vec3(0.5f, -0.5f, 0.0f);
     right.normal = glm::vec3(0.0f, 0.0f, 1.0f);
-    right.uv = glm::vec2(1.0f, 1.0f);
+    right.uv = glm::vec2(1.0f, 0.0f);
 
     tri->mesh = new Mesh();
 
@@ -126,6 +170,7 @@ bool Engine::CreateTriangle()
     //Create material & set shaders
     tri->material = new Material();
     tri->material->SetShaders(fallback_VShader, fallback_FShader);
+    tri->material->SetDiffuseTexture(containerTexture);
 
     sceneObjects.push_back(tri);
 
@@ -197,6 +242,9 @@ bool Engine::Initialize()
     //create shaders
     CreateVertexShader(fallback_VShader, fallbackVertexPath);
     CreateFragmentShader(fallback_FShader, fallbackFragmentPath);
+
+    //create textures
+    CreateTexture(containerTexturePath, containerTexture);
 
     //create objects
     CreateTriangle();

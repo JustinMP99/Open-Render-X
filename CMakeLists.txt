@@ -32,12 +32,13 @@ set(GLM_INCLUDE_DIR "Content/Additional/include/glm")
 
 # set(IMGUI_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/Additional/include/imgui")
 set(GLFW_LIBRARY "${CMAKE_SOURCE_DIR}/Additional/Library/glfw3.lib")
-# set(STB_IMAGE_DIR "${PROJECT_SOURCE_DIR}/Additional/include/stb_image")
+set(STB_IMAGE_DIR "${PROJECT_SOURCE_DIR}/Additional/include/stb_image.h")
 # set(IMAGE_DIR "${PROJECT_SOURCE_DIR}/Additional/Images")
 
 # Include Directories
 target_include_directories(OpenRenderX PRIVATE
     "${CMAKE_SOURCE_DIR}/Content/Additional/include"
+
 )
 
 if(APPLE)

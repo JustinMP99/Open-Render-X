@@ -1,3 +1,5 @@
+
+
 #include "SceneObject.h"
 #include "Graphics.h"
 #include <glad/glad.h>
@@ -7,7 +9,7 @@
 #include <fstream>
 
 
-#define GL_SILENCE_DEPRICATIONßßß
+#define GL_SILENCE_DEPRICATION
 
 class Engine
 {
@@ -27,6 +29,9 @@ Graphics renderer;
     //Fragment Shaders
     unsigned int fallback_FShader;
 
+    //Textures
+    unsigned int containerTexture;
+
     const char* windowsTitle = "Open Render X - OpenGL - Windows";
     const char* appleTitle = "Open Render X - OpenGL - MacOS";
 
@@ -35,6 +40,7 @@ Graphics renderer;
 //MacOS
     const char* fallbackVertexPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
     const char* fallbackFragmentPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
+    const char* containerTexturePath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
 
 //Windows
 
@@ -51,6 +57,9 @@ private:
 
     /// Creates a fragment shader using the passed in shader and shader path
     bool CreateFragmentShader(unsigned int &shader, const char* shaderPath);
+
+    /// Creates a texture using the passed in file path and assigns it to the passed in texture variable
+    bool CreateTexture(const char* filepath, unsigned int &texture);
 
     /// Creates a triangle to be rendered
     bool CreateTriangle();
