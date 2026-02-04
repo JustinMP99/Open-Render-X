@@ -31,7 +31,7 @@ add_executable(OpenRenderX
 # Include Directories
 target_include_directories(OpenRenderX PRIVATE
     "${CMAKE_SOURCE_DIR}/Content/Additional/include"
-        "E:/Projects/Graphics/Open-Render-X/Content/Additional/include/GLFW"
+        "${CMAKE_SOURCE_DIR}/Content/Additional/include/GLFW"
 )
 
 if(APPLE)
@@ -39,6 +39,6 @@ if(APPLE)
 elseif (WIN32)
     target_link_libraries(OpenRenderX PRIVATE
             OpenGL::GL  # or opengl32
-            "E:/Projects/Graphics/Open-Render-X/Content/Additional/library/glfw3.lib"      # or glfw3dll / glfw::glfw depending on your install
+            "${CMAKE_SOURCE_DIR}/Content/Additional/library/glfw3.lib"      # or glfw3dll / glfw::glfw depending on your install
     )
 endif()

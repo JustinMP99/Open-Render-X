@@ -12,5 +12,7 @@ _deps
 CMakeUserPresets.json
 
 out
+cmake-build-windows---desktop
+cmake-build-debug
 .idea
 Documentation/Files/.DS_Store
