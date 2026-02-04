@@ -110,7 +110,7 @@ bool Engine::CreateTexture(const char* filepath, unsigned int &texture)
     }
 
     stbi_image_free(data);
-    glBindTexture(GL_TEXTURE_2D, NULL);
+    glBindTexture(GL_TEXTURE_2D, texture);
     return true;
 }
 

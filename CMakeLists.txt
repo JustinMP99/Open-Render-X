@@ -1,6 +1,12 @@
-
+#Set cmake minimum required version
 cmake_minimum_required(VERSION 3.10.0)
+
+#set project name version and languages
 project(OpenRenderX VERSION 0.1.0 LANGUAGES C CXX)
+
+#Set cmake standards
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find Packages
 if(APPLE)
@@ -20,29 +26,19 @@ add_executable(OpenRenderX
        Content/Source/SceneObject.cpp
        Content/Source/Mesh.cpp
        Content/Source/Material.cpp
-       Content/Header/Material.h
 )
-
-# Set Path Variables
-set(GLAD_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/Additional/include/glad")
-set(GLFW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/Additional/include/GLFW")
-set(KHR_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/Additional/include/KHR")
-set(GLM_INCLUDE_DIR "Content/Additional/include/glm")
-#set(FRAG_DIR "${CMAKE_SOURCE_DIR}/Source/Shaders/Fragment Shaders")
-
-# set(IMGUI_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/Additional/include/imgui")
-set(GLFW_LIBRARY "${CMAKE_SOURCE_DIR}/Additional/Library/glfw3.lib")
-set(STB_IMAGE_DIR "${PROJECT_SOURCE_DIR}/Additional/include/stb_image.h")
-# set(IMAGE_DIR "${PROJECT_SOURCE_DIR}/Additional/Images")
 
 # Include Directories
 target_include_directories(OpenRenderX PRIVATE
     "${CMAKE_SOURCE_DIR}/Content/Additional/include"
-
+        "E:/Projects/Graphics/Open-Render-X/Content/Additional/include/GLFW"
 )
 
 if(APPLE)
     target_link_libraries(OpenRenderX PRIVATE glfw OpenGL::GL)
 elseif (WIN32)
-
+    target_link_libraries(OpenRenderX PRIVATE
+            OpenGL::GL  # or opengl32
+            "E:/Projects/Graphics/Open-Render-X/Content/Additional/library/glfw3.lib"      # or glfw3dll / glfw::glfw depending on your install
+    )
 endif()

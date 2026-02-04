@@ -75,15 +75,18 @@ bool Material::SetDiffuseTexture(unsigned int diffuse)
 bool Material::SetBool(const std::string& name, bool value) const
 {
 	glUniform1i(glGetUniformLocation(shaderProgram, name.c_str()), (int)value);
+	return true;
 }
 
 bool Material::SetInt(const std::string& name, int value) const
 {
 	glUniform1i(glGetUniformLocation(shaderProgram, name.c_str()), value);
+	return true;
 }
 
 bool Material::SetFloat(const std::string& name, float value) const
 {
 	glUniform1f(glGetUniformLocation(shaderProgram, name.c_str()), value);
+	return true;
 }
 
