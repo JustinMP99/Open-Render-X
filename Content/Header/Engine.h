@@ -38,9 +38,9 @@ Graphics renderer;
 //File Paths
 
 //MacOS
-    //const char* fallbackVertexPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
-    //const char* fallbackFragmentPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
-    //const char* containerTexturePath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
+    const char* fallbackVertexPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
+    const char* fallbackFragmentPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
+    const char* containerTexturePath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
 
 //Windows - Laptop
     //const char* fallbackVertexPath = "E:/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
@@ -48,9 +48,9 @@ Graphics renderer;
     //const char* containerTexturePath = "E:/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
 
 //Windows - Desktop
-    const char* fallbackVertexPath = "D:/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
-    const char* fallbackFragmentPath = "D:/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
-    const char* containerTexturePath = "D:/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg";
+    // const char* fallbackVertexPath = "D:/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
+    // const char* fallbackFragmentPath = "D:/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
+    // const char* containerTexturePath = "D:/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg";
 
 
 private:
@@ -72,6 +72,9 @@ private:
 
     /// Creates a triangle to be rendered
     bool CreateTriangle();
+
+    /// Creates a quad to be rendered
+    bool CreateQuad();
 
     /// Creates the window for the render engine
     bool CreateWindow(int width, int height, const char* title);

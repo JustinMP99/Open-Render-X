@@ -118,8 +118,6 @@ bool Engine::CreateTriangle()
 {
     SceneObject *tri = new SceneObject();
 
-    std::vector<Vertex> tempVerts;
-    std::vector<unsigned int> tempIndices;
     //create vertices
     Vertex top;
     top.position = glm::vec3(0.0f, 0.5f, 0.0f);
@@ -150,16 +148,16 @@ bool Engine::CreateTriangle()
 
     tri->mesh->indexCount = static_cast<unsigned int>(tri->mesh->indices.size());
 
-    //create vao
+    //create and bind vao
     glGenVertexArrays(1, &tri->mesh->VAO);
     glBindVertexArray(tri->mesh->VAO);
 
-    //create vbo
+    //create, bind and fill vbo
     glGenBuffers(1, &tri->mesh->VBO);
     glBindBuffer(GL_ARRAY_BUFFER, tri->mesh->VBO);
     glBufferData(GL_ARRAY_BUFFER, tri->mesh->vertices.size() * sizeof(Vertex), &tri->mesh->vertices[0], GL_STATIC_DRAW);
 
-    //create ebo
+    //create, bind and fill ebo
     glGenBuffers(1, &tri->mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tri->mesh->EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, tri->mesh->indices.size() * sizeof(unsigned int), &tri->mesh->indices[0], GL_STATIC_DRAW);
@@ -173,6 +171,75 @@ bool Engine::CreateTriangle()
     tri->material->SetDiffuseTexture(containerTexture);
 
     sceneObjects.push_back(tri);
+
+    return true;
+}
+
+bool Engine::CreateQuad()
+{
+
+    SceneObject *quad = new SceneObject();
+
+    //Create vertices
+    Vertex topLeft;
+    topLeft.position = glm::vec3(-0.5f, 0.5f, 0.0f);
+    topLeft.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topLeft.uv = glm::vec2(0.0f, 1.0f); 
+
+    Vertex topRight;
+    topRight.position = glm::vec3(0.5f, 0.5f, 0.0f);    
+    topRight.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topRight.uv = glm::vec2(1.0f, 1.0f);
+
+    Vertex bottomLeft;
+    bottomLeft.position = glm::vec3(-0.5f, -0.5f, 0.0f);
+    bottomLeft.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomLeft.uv = glm::vec2(0.0f, 0.0f);
+
+    Vertex bottomRight;
+    bottomRight.position = glm::vec3(0.5f, -0.5f, 0.0f);
+    bottomRight.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomRight.uv = glm::vec2(1.0f, 0.0f);
+
+    quad->mesh = new Mesh();
+
+    quad->mesh->vertices.push_back(bottomLeft);
+    quad->mesh->vertices.push_back(bottomRight);
+    quad->mesh->vertices.push_back(topRight);
+    quad->mesh->vertices.push_back(topLeft);
+
+    //Create indices
+    quad->mesh->indices.push_back(0);
+    quad->mesh->indices.push_back(1);
+    quad->mesh->indices.push_back(2);
+    quad->mesh->indices.push_back(0);
+    quad->mesh->indices.push_back(2);
+    quad->mesh->indices.push_back(3);
+
+    quad->mesh->indexCount = static_cast<unsigned int>(quad->mesh->indices.size());
+
+    //Create and bind VAO
+    glGenVertexArrays(1, &quad->mesh->VAO);
+    glBindVertexArray(quad->mesh->VAO);
+
+    //Create and bind VBO
+    glGenBuffers(1, &quad->mesh->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, quad->mesh->VBO);
+    glBufferData(GL_ARRAY_BUFFER, quad->mesh->vertices.size() * sizeof(Vertex), &quad->mesh->vertices[0], GL_STATIC_DRAW);
+
+    //Create EBO
+    glGenBuffers(1, &quad->mesh->EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quad->mesh->EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, quad->mesh->indices.size() * sizeof(unsigned int), &quad->mesh->indices[0], GL_STATIC_DRAW);
+
+    //Set vertex attribute pointers
+    SetVertexAttributePointers();
+
+    quad->material = new Material();
+    quad->material->SetShaders(fallback_VShader, fallback_FShader);
+    quad->material->SetDiffuseTexture(containerTexture);
+
+    sceneObjects.push_back(quad);
 
     return true;
 }
@@ -247,7 +314,8 @@ bool Engine::Initialize()
     CreateTexture(containerTexturePath, containerTexture);
 
     //create objects
-    CreateTriangle();
+    //CreateTriangle();
+    CreateQuad();
 
     return true;
 }
