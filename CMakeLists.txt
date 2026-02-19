@@ -26,6 +26,7 @@ add_executable(OpenRenderX
        Content/Source/SceneObject.cpp
        Content/Source/Mesh.cpp
        Content/Source/Material.cpp
+       Content/Source/Camera.cpp
 )
 
 # Include Directories

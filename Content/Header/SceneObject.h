@@ -29,6 +29,11 @@ private:
 
 public:
 
+	glm::mat4 transform;
+	glm::vec3 position;
+	glm::vec3 rotation;
+	glm::vec3 scale;
+
     Mesh* mesh; ///< Stores mesh data for the SceneObject
     Material* material; ///< Stores material data for SceneObject
 

@@ -239,6 +239,9 @@ bool Engine::CreateQuad()
     quad->material->SetShaders(fallback_VShader, fallback_FShader);
     quad->material->SetDiffuseTexture(containerTexture);
 
+    quad->position = glm::vec3(0.0f, 0.0f, -3.0f);
+    quad->scale = glm::vec3(1.0f, 1.0f, 1.0f);
+
     sceneObjects.push_back(quad);
 
     return true;
@@ -299,12 +302,16 @@ bool Engine::Initialize()
     }
 
     renderer = Graphics(width, height);
+    renderer.SetFOV(45.0f);
 
     if (!renderer.Initialize(window))
     {
         std::cout << "Failed to initialize renderer!" << std::endl;
         return false;
     }
+
+    camera = Camera();
+    camera.Setup(glm::vec3(0.0f, 0.0f, 0.0f), window);
 
     //create shaders
     CreateVertexShader(fallback_VShader, fallbackVertexPath);
@@ -324,7 +331,12 @@ void Engine::Loop()
 {
     while (glfwWindowShouldClose(window) == false)
     {
+        float currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
         ProcessInput();
+        camera.Update(deltaTime);
+        renderer.UpdateViewMatrix(camera.View);
         for (unsigned int i = 0; i < sceneObjects.size(); i++)
         {
             renderer.Render(sceneObjects[i]);

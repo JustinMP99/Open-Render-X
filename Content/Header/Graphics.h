@@ -12,13 +12,25 @@
  ******************************************************************************/
 class Graphics
 {
-  private:
+private:
 
   GLFWwindow* window;
   int width;
   int height;
+  glm::mat4 model;
+	glm::mat4 view;
+	glm::mat4 projection;
+  float fov = 45.0f;
 
-  public:
+  void ClearScreen();
+
+  void SetModel(SceneObject* object);
+
+  void UpdateTransformUniforms(SceneObject* object);
+
+
+
+public:
 
     Graphics();
     Graphics(int width, int height);
@@ -31,5 +43,7 @@ class Graphics
 
     bool Shutdown();
     
+    void UpdateViewMatrix(glm::mat4 viewMatrix);
 
+    void SetFOV(float fov);
 };

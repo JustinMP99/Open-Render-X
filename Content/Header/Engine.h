@@ -2,6 +2,7 @@
 
 #include "SceneObject.h"
 #include "Graphics.h"
+#include "Camera.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -16,24 +17,28 @@ class Engine
 
 private:
 GLFWwindow* window; ///< Pointer to the window that is created by GLFW
-unsigned int width = 1290;;///< The width of the window
+unsigned int width = 1290;///< The width of the window
 unsigned int height = 720; ///< The height of the window
 
 Graphics renderer;
+Camera camera;
 
-    std::vector<SceneObject*> sceneObjects;
+float deltaTime = 0.0f; ///< The time it takes to render a single frame
+float lastFrame = 0.0f; ///< The time it took to render the last
 
-    //Vertex Shaders
-    unsigned int fallback_VShader;
+std::vector<SceneObject*> sceneObjects;
 
-    //Fragment Shaders
-    unsigned int fallback_FShader;
+//Vertex Shaders
+unsigned int fallback_VShader;
 
-    //Textures
-    unsigned int containerTexture;
+//Fragment Shaders
+unsigned int fallback_FShader;
 
-    const char* windowsTitle = "Open Render X - OpenGL - Windows";
-    const char* appleTitle = "Open Render X - OpenGL - MacOS";
+//Textures
+unsigned int containerTexture;
+
+const char* windowsTitle = "Open Render X - OpenGL - Windows";
+const char* appleTitle = "Open Render X - OpenGL - MacOS";
 
 //File Paths
 
@@ -51,7 +56,6 @@ Graphics renderer;
     // const char* fallbackVertexPath = "D:/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
     // const char* fallbackFragmentPath = "D:/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
     // const char* containerTexturePath = "D:/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg";
-
 
 private:
 
