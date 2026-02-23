@@ -3,7 +3,7 @@
     "configurePresets": [
         {
             "name": "MacOS",
-            "displayName": "Clang 17.0.0 arm64-apple-darwin25.2.0",
+            "displayName": "M4 Macbook Pro Preset",
             "description": "Using compilers: C = /usr/bin/clang, CXX = /usr/bin/clang++",
             "binaryDir": "${sourceDir}/out/build/${presetName}",
             "cacheVariables": {
@@ -40,7 +40,7 @@
         },
         {
             "name": "Fedora-Linux-Laptop",
-            "displayName": "GCC 15.2.1 x86_64-redhat-linux",
+            "displayName": "Fedora Linux Laptop Preset",
             "description": "Using compilers: C = /usr/bin/gcc, CXX = /usr/bin/g++",
             "binaryDir": "${sourceDir}/out/build/${presetName}",
             "cacheVariables": {
