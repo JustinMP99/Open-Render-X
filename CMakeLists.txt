@@ -12,9 +12,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(APPLE)
     find_package(glfw3 REQUIRED)
     find_package(OpenGL REQUIRED)
+elseif(LINUX)
+    #find_package(glfw3 REQUIRED)
+    set(OpenGL_GL_PREFERENCE GLVND)
+    find_package(OpenGL REQUIRED)
+
 elseif(WIN32)
     find_package(OpenGL REQUIRED)
 endif()
+
+
 
 # Add Source Files
 add_executable(OpenRenderX
@@ -36,7 +43,11 @@ target_include_directories(OpenRenderX PRIVATE
 )
 
 if(APPLE)
-    target_link_libraries(OpenRenderX PRIVATE glfw OpenGL::GL)
+target_link_libraries(OpenRenderX PRIVATE glfw OpenGL::GL)
+elseif(LINUX)
+
+target_link_libraries(OpenRenderX PRIVATE glfw OpenGL::GL)
+
 elseif (WIN32)
     target_link_libraries(OpenRenderX PRIVATE
             OpenGL::GL  # or opengl32

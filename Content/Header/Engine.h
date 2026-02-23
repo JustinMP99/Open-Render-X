@@ -43,9 +43,16 @@ const char* appleTitle = "Open Render X - OpenGL - MacOS";
 //File Paths
 
 //MacOS
-    const char* fallbackVertexPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
-    const char* fallbackFragmentPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
-    const char* containerTexturePath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
+    //const char* fallbackVertexPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
+    //const char* fallbackFragmentPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
+    //const char* containerTexturePath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
+
+//Linux - Laptop
+
+    const char* fallbackVertexPath = "/run/media/jphilie/SSD_02/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
+    const char* fallbackFragmentPath = "/run/media/jphilie/SSD_02/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
+    const char* containerTexturePath = "/run/media/jphilie/SSD_02/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
+
 
 //Windows - Laptop
     //const char* fallbackVertexPath = "E:/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS

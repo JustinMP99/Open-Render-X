@@ -18,7 +18,7 @@ void Graphics::SetModel(SceneObject* object)
     object->transform = glm::scale(object->transform, object->scale);
     object->transform = glm::translate(object->transform, object->position);
     object->transform = glm::rotate(object->transform, glm::radians(object->rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-    object->transform = glm::rotate(object->transform, glm::radians(float(glfwGetTime()) * -10.0f), glm::vec3(0.0, 1.0, 0.0));
+    //object->transform = glm::rotate(object->transform, glm::radians(float(glfwGetTime()) * -10.0f), glm::vec3(0.0, 1.0, 0.0));
 }
 
 void Graphics::UpdateTransformUniforms(SceneObject* object)
