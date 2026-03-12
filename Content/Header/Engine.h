@@ -28,11 +28,18 @@ float lastFrame = 0.0f; ///< The time it took to render the last
 
 std::vector<SceneObject*> sceneObjects;
 
+//Grid Data
+SceneObject *grid;
+int gridHorizontal = 1000;
+int gridVertical = 1000;
+
 //Vertex Shaders
 unsigned int fallback_VShader;
+unsigned int grid_VShader;
 
 //Fragment Shaders
 unsigned int fallback_FShader;
+unsigned int grid_FShader;
 
 //Textures
 unsigned int containerTexture;
@@ -42,12 +49,13 @@ const char* appleTitle = "Open Render X - OpenGL - MacOS";
 
 //File Paths
 
-    const char* projectDirectory = std::filesystem::current_path().string().c_str(); ///< The path to the project directory, used as a base for all other file paths
+    //const char* projectDirectory = std::filesystem::current_path().string().c_str(); ///< The path to the project directory, used as a base for all other file paths
 
 //MacOS
-    // const char* fallbackVertexPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
-    // const char* fallbackFragmentPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
-    // const char* containerTexturePath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
+    const char* fallbackVertexPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
+    const char* fallbackFragmentPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
+    const char* gridFragmentPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/GridFrag.frag"; ///< The path to the grid fragment shader on macOS
+    const char* containerTexturePath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
 
 //Linux - Desktop
 
@@ -87,6 +95,8 @@ private:
 
     /// Creates a quad to be rendered
     bool CreateQuad();
+
+    bool CreateGrid();
 
     /// Creates the window for the render engine
     bool CreateWindow(int width, int height, const char* title);

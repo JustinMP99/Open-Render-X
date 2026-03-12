@@ -247,6 +247,83 @@ bool Engine::CreateQuad()
     return true;
 }
 
+bool Engine::CreateGrid()
+{
+
+    //Create SceneObject
+    grid = new SceneObject();
+
+    grid->mesh = new Mesh();
+
+    float z = -500.0f;
+    float x = -500.0f;
+
+    //Horizonal lines
+    for (size_t i = 0; i < gridHorizontal; i++)
+    {
+        
+        //vertices one
+        Vertex vertOne;
+        vertOne.position = glm::vec3(-100.0f, 0.0f, z);
+        vertOne.normal = glm::vec3(0.0f, 0.0f, 0.0f);
+        vertOne.uv = glm::vec2(0.0f, 1.0f); 
+
+        //vertices two
+        Vertex vertTwo;
+        vertTwo.position = glm::vec3(100.0f, 0.0f, z);    
+        vertTwo.normal = glm::vec3(0.0f, 0.0f, 0.0f);
+        vertTwo.uv = glm::vec2(1.0f, 1.0f);
+
+        grid->mesh->vertices.push_back(vertOne);
+        grid->mesh->vertices.push_back(vertTwo);
+        z = z + 1.0f;
+    }
+
+    //Vertical lines
+
+    for (int i = 0; i < gridVertical; i++)
+    {
+        //vertices one
+        Vertex vertOne;
+        vertOne.position = glm::vec3(x, 0.0f, 100.0f);
+        vertOne.normal = glm::vec3(0.0f, 0.0f, 0.0f);
+        vertOne.uv = glm::vec2(0.0f, 1.0f); 
+
+        //vertices two
+        Vertex vertTwo;
+        vertTwo.position = glm::vec3(x, 0.0f, -100.0f);    
+        vertTwo.normal = glm::vec3(0.0f, 0.0f, 0.0f);
+        vertTwo.uv = glm::vec2(1.0f, 1.0f);
+
+        grid->mesh->vertices.push_back(vertOne);
+        grid->mesh->vertices.push_back(vertTwo);
+        x = x + 1.0f;
+    }
+    
+    grid->mesh->indexCount = static_cast<unsigned int>(grid->mesh->vertices.size());
+
+    glGenVertexArrays(1, &grid->mesh->VAO);
+    glBindVertexArray(grid->mesh->VAO);
+
+    //Create and bind VBO
+    glGenBuffers(1, &grid->mesh->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, grid->mesh->VBO);
+    glBufferData(GL_ARRAY_BUFFER, grid->mesh->vertices.size() * sizeof(Vertex), &grid->mesh->vertices[0], GL_STATIC_DRAW);
+
+    SetVertexAttributePointers();
+
+    grid->material = new Material();
+    grid->material->SetShaders(grid_VShader, fallback_FShader);
+
+    grid->position = glm::vec3(0.0f, -3.0f, 0.0f);
+    grid->scale = glm::vec3(1.0f, 1.0f, 1.0f);
+
+    //Add grid to scene objects Vector
+    //sceneObjects.push_back(grid);
+
+    return true;
+}
+
 bool Engine::CreateWindow(int width, int height, const char* title)
 {
 
@@ -311,11 +388,13 @@ bool Engine::Initialize()
     }
 
     camera = Camera();
-    camera.Setup(glm::vec3(0.0f, 0.0f, 0.0f), window);
+    camera.Setup(glm::vec3(0.0f, 1.0f, 0.0f), window);
 
     //create shaders
     CreateVertexShader(fallback_VShader, fallbackVertexPath);
+    CreateVertexShader(grid_VShader, fallbackVertexPath);
     CreateFragmentShader(fallback_FShader, fallbackFragmentPath);
+    CreateFragmentShader(grid_FShader, gridFragmentPath);
 
     //create textures
     CreateTexture(containerTexturePath, containerTexture);
@@ -323,6 +402,7 @@ bool Engine::Initialize()
     //create objects
     //CreateTriangle();
     CreateQuad();
+    CreateGrid();
 
     return true;
 }
@@ -331,16 +411,20 @@ void Engine::Loop()
 {
     while (glfwWindowShouldClose(window) == false)
     {
+
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
         ProcessInput();
         camera.Update(deltaTime);
         renderer.UpdateViewMatrix(camera.View);
+        //Render Grid
+        
         for (unsigned int i = 0; i < sceneObjects.size(); i++)
         {
             renderer.Render(sceneObjects[i]);
         }
+        renderer.RenderGrid(grid);
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

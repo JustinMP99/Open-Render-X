@@ -40,6 +40,7 @@ public:
 
     void Render();
     void Render(SceneObject* object);
+    void RenderGrid(SceneObject* grid);
 
     bool Shutdown();
     
