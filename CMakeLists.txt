@@ -8,20 +8,19 @@ project(OpenRenderX VERSION 0.1.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+ set(OpenGL_GL_PREFERENCE GLVND)
+
 # Find Packages
 if(APPLE)
     find_package(glfw3 REQUIRED)
     find_package(OpenGL REQUIRED)
 elseif(LINUX)
-    #find_package(glfw3 REQUIRED)
-    set(OpenGL_GL_PREFERENCE GLVND)
+    find_package(glfw3 REQUIRED)
     find_package(OpenGL REQUIRED)
-
+    
 elseif(WIN32)
     find_package(OpenGL REQUIRED)
 endif()
-
-
 
 # Add Source Files
 add_executable(OpenRenderX
