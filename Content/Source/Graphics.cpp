@@ -17,7 +17,7 @@ void Graphics::SetModel(SceneObject* object)
 
     object->transform = glm::scale(object->transform, object->scale);
     object->transform = glm::translate(object->transform, object->position);
-    object->transform = glm::rotate(object->transform, glm::radians(object->rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+    //object->transform = glm::rotate(object->transform, glm::radians(object->rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
     //object->transform = glm::rotate(object->transform, glm::radians(float(glfwGetTime()) * -10.0f), glm::vec3(0.0, 1.0, 0.0));
 }
 
@@ -68,25 +68,28 @@ void Graphics::Render()
 
 void Graphics::Render(SceneObject* object)
 {
-    //Clear screen before rendering
-    ClearScreen();
-
     //set model matrix for object
     SetModel(object);
-
     //update shader uniforms
     UpdateTransformUniforms(object);
-
     object->material->Use();
-    //glUseProgram(object->material->shaderProgram);
     glBindVertexArray(object->mesh->VAO);
-    glDrawElements(GL_TRIANGLES, object->mesh->indexCount, GL_UNSIGNED_INT, 0);
+  
+    int drawMode = object->mesh->GetDrawMode();
+    if (drawMode == GL_TRIANGLES)
+    {
+        glDrawElements(GL_TRIANGLES, object->mesh->indexCount, GL_UNSIGNED_INT, 0);
+    }
+    else if (drawMode == GL_LINES)
+    {
+        glDrawArrays(GL_LINES, 0, object->mesh->indexCount);
+    }
 }
 
 void Graphics::RenderGrid(SceneObject* grid)
 {
     //Clear screen before rendering
-    ClearScreen();
+    //ClearScreen();
 
     //set model matrix for object
     SetModel(grid);

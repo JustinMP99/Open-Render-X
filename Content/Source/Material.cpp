@@ -26,7 +26,7 @@ std::string GetFileContents(const char* filename)
 
 Material::Material()
 {
-
+    
 }
 
 Material::~Material()
@@ -36,8 +36,11 @@ Material::~Material()
 
 void Material::Use()
 {
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, diffuseTexture);
+    if (diffuseTexture != NULL)
+    {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, diffuseTexture);
+    }
     glUseProgram(shaderProgram);
 }
 

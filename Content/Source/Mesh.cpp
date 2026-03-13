@@ -4,6 +4,8 @@
 
 #include "../Header/Mesh.h"
 
+// PRIVATE
+
 Mesh::Mesh()
 {
 
@@ -59,4 +61,17 @@ void Mesh::DestroyMeshData()
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
+}
+
+
+// PUBLIC
+
+int Mesh::GetDrawMode()
+{
+    return drawMode;
+}
+
+void Mesh::SetDrawMode(DrawMode mode)
+{
+    drawMode = mode;
 }

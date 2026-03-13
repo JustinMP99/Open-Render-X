@@ -22,7 +22,7 @@ private:
 	glm::mat4 projection;
   float fov = 45.0f;
 
-  void ClearScreen();
+
 
   void SetModel(SceneObject* object);
 
@@ -44,6 +44,7 @@ public:
 
     bool Shutdown();
     
+    void ClearScreen();
     void UpdateViewMatrix(glm::mat4 viewMatrix);
 
     void SetFOV(float fov);

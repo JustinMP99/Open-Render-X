@@ -8,11 +8,18 @@
 #include "Vertex.h"
 #endif
 
+enum DrawMode
+{
+    LINES = 1,
+    TRIANGLES = 4,
+};
+
 class Mesh
 {
-    private:
+private:
 
     public:
+    DrawMode drawMode; ///< The OpenGL Draw Mode to use when rendering the Mesh (ex. GL_TRIANGLES, GL_LINES, etc.)
     unsigned int VAO; ///< Vertex Array Object
     unsigned int VBO; ///< Vertex Buffer Object - Stores mesh vertex data for use with OpenGL
     unsigned int EBO; ///< Element Buffer Object - Stores mesh index data for use with OpenGL
@@ -28,5 +35,11 @@ class Mesh
 
     /// Frees all mesh data (VAO, VBO, EBO, etc.)
     void DestroyMeshData();
+
+public:
+
+    int GetDrawMode();
+    
+    void SetDrawMode(DrawMode mode);
 
 };

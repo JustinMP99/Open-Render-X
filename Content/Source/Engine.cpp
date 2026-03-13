@@ -235,11 +235,13 @@ bool Engine::CreateQuad()
     //Set vertex attribute pointers
     SetVertexAttributePointers();
 
+    quad->mesh->SetDrawMode(DrawMode::TRIANGLES);
+
     quad->material = new Material();
     quad->material->SetShaders(fallback_VShader, fallback_FShader);
     quad->material->SetDiffuseTexture(containerTexture);
 
-    quad->position = glm::vec3(0.0f, 0.0f, -3.0f);
+    quad->position = glm::vec3(0.0f, 0.0f, 0.0f);
     quad->scale = glm::vec3(1.0f, 1.0f, 1.0f);
 
     sceneObjects.push_back(quad);
@@ -300,7 +302,7 @@ bool Engine::CreateGrid()
         x = x + 1.0f;
     }
     
-    grid->mesh->indexCount = static_cast<unsigned int>(grid->mesh->vertices.size());
+    grid->mesh->indexCount = static_cast<int>(grid->mesh->vertices.size());
 
     glGenVertexArrays(1, &grid->mesh->VAO);
     glBindVertexArray(grid->mesh->VAO);
@@ -312,14 +314,15 @@ bool Engine::CreateGrid()
 
     SetVertexAttributePointers();
 
+    grid->mesh->SetDrawMode(DrawMode::LINES);
+
     grid->material = new Material();
+    //grid->material->SetShaders(grid_VShader, grid_FShader);
     grid->material->SetShaders(grid_VShader, fallback_FShader);
+    //grid->material->SetDiffuseTexture(NULL);
 
-    grid->position = glm::vec3(0.0f, -3.0f, 0.0f);
+    grid->position = glm::vec3(0.0f, 0.0f, 0.0f);
     grid->scale = glm::vec3(1.0f, 1.0f, 1.0f);
-
-    //Add grid to scene objects Vector
-    //sceneObjects.push_back(grid);
 
     return true;
 }
@@ -388,7 +391,7 @@ bool Engine::Initialize()
     }
 
     camera = Camera();
-    camera.Setup(glm::vec3(0.0f, 1.0f, 0.0f), window);
+    camera.Setup(glm::vec3(0.0f, 1.0f, 3.0f), window);
 
     //create shaders
     CreateVertexShader(fallback_VShader, fallbackVertexPath);
@@ -400,7 +403,6 @@ bool Engine::Initialize()
     CreateTexture(containerTexturePath, containerTexture);
 
     //create objects
-    //CreateTriangle();
     CreateQuad();
     CreateGrid();
 
@@ -411,20 +413,18 @@ void Engine::Loop()
 {
     while (glfwWindowShouldClose(window) == false)
     {
-
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
         ProcessInput();
         camera.Update(deltaTime);
         renderer.UpdateViewMatrix(camera.View);
-        //Render Grid
-        
+        renderer.ClearScreen();
         for (unsigned int i = 0; i < sceneObjects.size(); i++)
         {
             renderer.Render(sceneObjects[i]);
         }
-        renderer.RenderGrid(grid);
+        renderer.Render(grid);
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
