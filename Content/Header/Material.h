@@ -21,7 +21,9 @@ class Material
 {
 private:
 
-    public:
+    bool usingDiffuse = false;
+
+public:
     std::string MaterialName;
     unsigned int shaderProgram;
     unsigned int diffuseTexture;

@@ -68,6 +68,7 @@ void Graphics::Render()
 
 void Graphics::Render(SceneObject* object)
 {
+    // ClearScreen();
     //set model matrix for object
     SetModel(object);
     //update shader uniforms
@@ -84,22 +85,6 @@ void Graphics::Render(SceneObject* object)
     {
         glDrawArrays(GL_LINES, 0, object->mesh->indexCount);
     }
-}
-
-void Graphics::RenderGrid(SceneObject* grid)
-{
-    //Clear screen before rendering
-    //ClearScreen();
-
-    //set model matrix for object
-    SetModel(grid);
-
-    //update shader uniforms
-    UpdateTransformUniforms(grid);
-
-    grid->material->Use();
-    glBindVertexArray(grid->mesh->VAO);
-    glDrawArrays(GL_LINES, 0, grid->mesh->indexCount);
 }
 
 bool Graphics::Shutdown()

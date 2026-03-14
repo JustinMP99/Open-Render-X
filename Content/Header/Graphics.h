@@ -20,15 +20,11 @@ private:
   glm::mat4 model;
 	glm::mat4 view;
 	glm::mat4 projection;
-  float fov = 45.0f;
-
-
+  float fov = 60.0f;
 
   void SetModel(SceneObject* object);
 
   void UpdateTransformUniforms(SceneObject* object);
-
-
 
 public:
 
@@ -37,15 +33,10 @@ public:
     ~Graphics();
 
     bool Initialize(GLFWwindow* win);
-
     void Render();
     void Render(SceneObject* object);
-    void RenderGrid(SceneObject* grid);
-
     bool Shutdown();
-    
     void ClearScreen();
     void UpdateViewMatrix(glm::mat4 viewMatrix);
-
     void SetFOV(float fov);
 };

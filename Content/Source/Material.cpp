@@ -26,7 +26,7 @@ std::string GetFileContents(const char* filename)
 
 Material::Material()
 {
-    
+    usingDiffuse = false;
 }
 
 Material::~Material()
@@ -36,11 +36,19 @@ Material::~Material()
 
 void Material::Use()
 {
-    if (diffuseTexture != NULL)
+      
+    if (usingDiffuse)
     {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, diffuseTexture);
+        SetInt("diffuseTexture", 0);
     }
+    else
+    {
+         glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+  
     glUseProgram(shaderProgram);
 }
 
@@ -71,6 +79,7 @@ bool Material::SetShaders(unsigned int vertexShader, unsigned int fragmentShader
 
 bool Material::SetDiffuseTexture(unsigned int diffuse)
 {
+    usingDiffuse = true;
     diffuseTexture = diffuse;
     return true;
 }

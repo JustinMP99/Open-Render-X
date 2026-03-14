@@ -311,18 +311,14 @@ bool Engine::CreateGrid()
     glGenBuffers(1, &grid->mesh->VBO);
     glBindBuffer(GL_ARRAY_BUFFER, grid->mesh->VBO);
     glBufferData(GL_ARRAY_BUFFER, grid->mesh->vertices.size() * sizeof(Vertex), &grid->mesh->vertices[0], GL_STATIC_DRAW);
-
     SetVertexAttributePointers();
-
     grid->mesh->SetDrawMode(DrawMode::LINES);
-
     grid->material = new Material();
-    //grid->material->SetShaders(grid_VShader, grid_FShader);
-    grid->material->SetShaders(grid_VShader, fallback_FShader);
-    //grid->material->SetDiffuseTexture(NULL);
-
+    grid->material->SetShaders(grid_VShader, grid_FShader);
     grid->position = glm::vec3(0.0f, 0.0f, 0.0f);
     grid->scale = glm::vec3(1.0f, 1.0f, 1.0f);
+
+    sceneObjects.push_back(grid);
 
     return true;
 }
@@ -403,8 +399,9 @@ bool Engine::Initialize()
     CreateTexture(containerTexturePath, containerTexture);
 
     //create objects
-    CreateQuad();
     CreateGrid();
+    CreateQuad();
+   
 
     return true;
 }
@@ -420,11 +417,12 @@ void Engine::Loop()
         camera.Update(deltaTime);
         renderer.UpdateViewMatrix(camera.View);
         renderer.ClearScreen();
+        //renderer.Render(grid);
         for (unsigned int i = 0; i < sceneObjects.size(); i++)
         {
             renderer.Render(sceneObjects[i]);
         }
-        renderer.Render(grid);
+        
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
