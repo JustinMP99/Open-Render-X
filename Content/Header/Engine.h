@@ -46,34 +46,33 @@ unsigned int containerTexture;
 
 const char* windowsTitle = "Open Render X - OpenGL - Windows";
 const char* appleTitle = "Open Render X - OpenGL - MacOS";
+const char* linuxTitle = "Open Render X - OpenGL - Linux";
 
 //File Paths
 
-    //const char* projectDirectory = std::filesystem::current_path().string().c_str(); ///< The path to the project directory, used as a base for all other file paths
+std::string projectDirectory = std::filesystem::current_path().string(); ///< The path to the project directory, used as a base for all other file paths
 
 //MacOS
-    // const char* fallbackVertexPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
-    // const char* fallbackFragmentPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
-    // const char* gridFragmentPath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/GridFrag.frag"; ///< The path to the grid fragment shader on macOS
-    // const char* containerTexturePath = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
+#ifdef Platform_Apple
 
+    std::string appleProjectDirectory = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/";
+    const char* fallbackVertexPath = "Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
+    const char* gridVertexPath = "Content/Shaders/Vertex/GridVertex.vert"; ///< The path to the grid vertex shader on macOS
+    const char* fallbackFragmentPath = "Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
+    const char* gridFragmentPath = "Content/Shaders/Fragment/GridFrag.frag"; ///< The path to the grid fragment shader on macOS
+    const char* containerTexturePath = "Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
+#endif
+
+    
 //Linux - Desktop
 
-    const char* fallbackVertexPath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
-    const char* gridVertexPath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/GridVertex.vert"; ///< The path to the grid vertex shader on macOS
-    const char* fallbackFragmentPath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on Linux
-    const char* gridFragmentPath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/GridFrag.frag"; ///< The path to the grid fragment shader on macOS
-    const char* containerTexturePath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
-
-//Windows - Laptop
-    //const char* fallbackVertexPath = "E:/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
-    //const char* fallbackFragmentPath = "E:/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
-    //const char* containerTexturePath = "E:/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
-
-//Windows - Desktop
-    // const char* fallbackVertexPath = "D:/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
-    // const char* fallbackFragmentPath = "D:/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
-    // const char* containerTexturePath = "D:/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg";
+#ifdef Platform_Linux
+    // const char* fallbackVertexPath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
+    // const char* gridVertexPath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/GridVertex.vert"; ///< The path to the grid vertex shader on macOS
+    // const char* fallbackFragmentPath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on Linux
+    // const char* gridFragmentPath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/GridFrag.frag"; ///< The path to the grid fragment shader on macOS
+    // const char* containerTexturePath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
+#endif
 
 private:
 

@@ -378,12 +378,23 @@ void Engine::CalculateDelta()
 
 bool Engine::Initialize()
 {
-    if (!CreateWindow(width,  height,  appleTitle))
-    {
-        std::cout << "Failed to create window!" << std::endl;
-        return false;
-    }
 
+    #ifdef Platform_Linux
+        if (!CreateWindow(width,  height,  linuxTitle))
+        {
+            std::cout << "Failed to create window!" << std::endl;
+            return false;
+        }
+    #endif
+    #ifdef Platform_Apple
+        if (!CreateWindow(width,  height, appleTitle))
+        {
+            std::cout << "Failed to create window!" << std::endl;
+            return false;
+        }
+ 
+    #endif
+   
     renderer = Graphics(width, height);
     renderer.SetFOV(45.0f);
 
@@ -396,20 +407,29 @@ bool Engine::Initialize()
     camera = Camera();
     camera.Setup(glm::vec3(0.0f, 1.0f, 3.0f), window);
 
+    std::cout << projectDirectory << std::endl;
+   
+#ifdef Platform_Linux
+
+#endif
+
+#ifdef Platform_Apple
+
     //create shaders
-    CreateVertexShader(fallback_VShader, fallbackVertexPath);
-    CreateVertexShader(grid_VShader, gridVertexPath);
-    CreateFragmentShader(fallback_FShader, fallbackFragmentPath);
-    CreateFragmentShader(grid_FShader, gridFragmentPath);
+    CreateVertexShader(fallback_VShader, (appleProjectDirectory + fallbackVertexPath).c_str());
+    CreateVertexShader(grid_VShader, (appleProjectDirectory + gridVertexPath).c_str());
+    CreateFragmentShader(fallback_FShader, (appleProjectDirectory + fallbackFragmentPath).c_str());
+    CreateFragmentShader(grid_FShader, (appleProjectDirectory + gridFragmentPath).c_str());
 
     //create textures
-    CreateTexture(containerTexturePath, containerTexture);
+    CreateTexture((appleProjectDirectory + containerTexturePath).c_str(), containerTexture);
+
+#endif
 
     //create objects
     CreateGrid();
     CreateQuad();
    
-
     return true;
 }
 

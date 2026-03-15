@@ -14,11 +14,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(APPLE)
     find_package(glfw3 REQUIRED)
     find_package(OpenGL REQUIRED)
+    add_compile_definitions(Platform_Apple)
+
 elseif(LINUX)
+    add_compile_definitions(Platform_Linux)
     find_package(glfw3 REQUIRED)
     find_package(OpenGL REQUIRED)
     
 elseif(WIN32)
+    add_compile_definitions(Platform_Windows)
     find_package(OpenGL REQUIRED)
 endif()
 
