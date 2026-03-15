@@ -12,5 +12,5 @@ SceneObject::SceneObject()
 SceneObject::~SceneObject()
 {
     delete mesh;
-    glDeleteProgram(shaderProgram);
+    delete material;
 }

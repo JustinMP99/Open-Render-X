@@ -60,6 +60,7 @@ const char* appleTitle = "Open Render X - OpenGL - MacOS";
 //Linux - Desktop
 
     const char* fallbackVertexPath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
+    const char* gridVertexPath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/GridVertex.vert"; ///< The path to the grid vertex shader on macOS
     const char* fallbackFragmentPath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on Linux
     const char* gridFragmentPath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/GridFrag.frag"; ///< The path to the grid fragment shader on macOS
     const char* containerTexturePath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
@@ -104,6 +105,8 @@ private:
 
     /// Sets the vertex attribute pointers to fully utilize the Vertex data structure
     void SetVertexAttributePointers();
+
+    void CalculateDelta();
 
 public:
 

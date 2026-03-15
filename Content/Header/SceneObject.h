@@ -38,7 +38,7 @@ public:
     Material* material; ///< Stores material data for SceneObject
 
     //Temp object material data
-    GLuint shaderProgram;
+    // GLuint shaderProgram;
 
     SceneObject();
     ~SceneObject();

@@ -367,6 +367,13 @@ void Engine::SetVertexAttributePointers()
     glEnableVertexAttribArray(2);
 }
 
+void Engine::CalculateDelta()
+{
+    float currentFrame = glfwGetTime();
+    deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+}
+
 // PUBLIC
 
 bool Engine::Initialize()
@@ -391,7 +398,7 @@ bool Engine::Initialize()
 
     //create shaders
     CreateVertexShader(fallback_VShader, fallbackVertexPath);
-    CreateVertexShader(grid_VShader, fallbackVertexPath);
+    CreateVertexShader(grid_VShader, gridVertexPath);
     CreateFragmentShader(fallback_FShader, fallbackFragmentPath);
     CreateFragmentShader(grid_FShader, gridFragmentPath);
 
@@ -410,19 +417,15 @@ void Engine::Loop()
 {
     while (glfwWindowShouldClose(window) == false)
     {
-        float currentFrame = glfwGetTime();
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
+        CalculateDelta();
         ProcessInput();
         camera.Update(deltaTime);
         renderer.UpdateViewMatrix(camera.View);
         renderer.ClearScreen();
-        //renderer.Render(grid);
         for (unsigned int i = 0; i < sceneObjects.size(); i++)
         {
             renderer.Render(sceneObjects[i]);
         }
-        
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
@@ -431,6 +434,10 @@ void Engine::Loop()
 bool Engine::Shutdown()
 {
     std::cout << "Shutting down engine..." << std::endl;
+    glDeleteShader(fallback_VShader);
+    glDeleteShader(fallback_FShader);
+    glDeleteShader(grid_VShader);
+    glDeleteShader(grid_FShader);
     for (unsigned int i = 0; i < sceneObjects.size(); i++)
     {
         delete sceneObjects[i];

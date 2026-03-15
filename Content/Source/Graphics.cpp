@@ -68,12 +68,12 @@ void Graphics::Render()
 
 void Graphics::Render(SceneObject* object)
 {
-    // ClearScreen();
+    object->material->Use();
     //set model matrix for object
     SetModel(object);
     //update shader uniforms
     UpdateTransformUniforms(object);
-    object->material->Use();
+    
     glBindVertexArray(object->mesh->VAO);
   
     int drawMode = object->mesh->GetDrawMode();
