@@ -411,6 +411,15 @@ bool Engine::Initialize()
    
 #ifdef Platform_Linux
 
+    //create shaders
+    CreateVertexShader(fallback_VShader, (linuxProjectDirectory + fallbackVertexPath).c_str());
+    CreateVertexShader(grid_VShader, (linuxProjectDirectory + gridVertexPath).c_str());
+    CreateFragmentShader(fallback_FShader, (linuxProjectDirectory + fallbackFragmentPath).c_str());
+    CreateFragmentShader(grid_FShader, (linuxProjectDirectory + gridFragmentPath).c_str());
+
+    //create textures
+    CreateTexture((linuxProjectDirectory + containerTexturePath).c_str(), containerTexture);
+
 #endif
 
 #ifdef Platform_Apple

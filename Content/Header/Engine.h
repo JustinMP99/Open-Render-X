@@ -52,7 +52,6 @@ const char* linuxTitle = "Open Render X - OpenGL - Linux";
 
 std::string projectDirectory = std::filesystem::current_path().string(); ///< The path to the project directory, used as a base for all other file paths
 
-//MacOS
 #ifdef Platform_Apple
 
     std::string appleProjectDirectory = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/";
@@ -63,15 +62,13 @@ std::string projectDirectory = std::filesystem::current_path().string(); ///< Th
     const char* containerTexturePath = "Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
 #endif
 
-    
-//Linux - Desktop
-
 #ifdef Platform_Linux
-    // const char* fallbackVertexPath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
-    // const char* gridVertexPath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Shaders/Vertex/GridVertex.vert"; ///< The path to the grid vertex shader on macOS
-    // const char* fallbackFragmentPath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on Linux
-    // const char* gridFragmentPath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Shaders/Fragment/GridFrag.frag"; ///< The path to the grid fragment shader on macOS
-    // const char* containerTexturePath = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
+    std::string linuxProjectDirectory = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/";
+    const char* fallbackVertexPath = "Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on Linux
+    const char* gridVertexPath = "Content/Shaders/Vertex/GridVertex.vert"; ///< The path to the grid vertex shader on Linux
+    const char* fallbackFragmentPath = "Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on Linux
+    const char* gridFragmentPath = "Content/Shaders/Fragment/GridFrag.frag"; ///< The path to the grid fragment shader on Linux
+    const char* containerTexturePath = "Content/Additional/Images/container.jpg"; ///< The path to the crate texture on Linux
 #endif
 
 private:
