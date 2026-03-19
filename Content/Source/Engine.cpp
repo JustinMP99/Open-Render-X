@@ -35,6 +35,13 @@ std::string Engine::LoadShaderAsString(const std::string& filename)
     return result;
 }
 
+void Engine::ReadOBJ(std::string filepath)
+{
+   
+    
+
+}
+
 bool Engine::CreateVertexShader(unsigned int &shader, const char *shaderPath)
 {
     std::string vertexShader = LoadShaderAsString(shaderPath);
