@@ -60,6 +60,7 @@ std::string projectDirectory = std::filesystem::current_path().string(); ///< Th
     const char* fallbackFragmentPath = "Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
     const char* gridFragmentPath = "Content/Shaders/Fragment/GridFrag.frag"; ///< The path to the grid fragment shader on macOS
     const char* containerTexturePath = "Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
+    const char* objModelPath = "Content/Additional/mesh/cube.obj"; ///< The path to the OBJ model on macOS
 
 #endif
 
@@ -87,7 +88,7 @@ private:
     ///Loads the passed in shader file into a string to be compiled for use in rendering
     std::string LoadShaderAsString(const std::string& filename);
 
-    void ReadOBJ(std::string filepath);
+    void ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, std::vector<unsigned int> &out_indices);
 
     /// Creates a vertex shader using the passed in shader and shader path
     bool CreateVertexShader(unsigned int &shader, const char* shaderPath);

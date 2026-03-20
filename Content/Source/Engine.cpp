@@ -35,11 +35,39 @@ std::string Engine::LoadShaderAsString(const std::string& filename)
     return result;
 }
 
-void Engine::ReadOBJ(std::string filepath)
+void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, std::vector<unsigned int> &out_indices)
 {
    
-    
+    FILE* file = fopen(filepath.c_str(), "r");
+    if (file == nullptr)
+    {
+        std::cout << "> Could not open file: " << filepath << std::endl;
+    }
 
+    std::vector<glm::vec3> temp_vertex;
+    std::vector<glm::vec3> temp_normal;
+    std::vector<glm::vec2> temp_uv;
+
+    while(1)
+    {
+        char lineHeader[128];
+        int res = fscanf(file, "%s", lineHeader);
+        std::cout << "> Reading line" << std::endl;
+
+        if (strcmp(lineHeader, "v") == 0)
+        {
+            glm::vec3 vertex;
+            fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
+            temp_vertex.push_back(vertex);
+            std::cout << "> Read vertex: " << "X " << vertex.x << " Y " << vertex.y << " Z " << vertex.z << std::endl;
+        }
+        
+        
+        if (res == EOF)
+        {
+            break;
+        }
+    }
 }
 
 bool Engine::CreateVertexShader(unsigned int &shader, const char *shaderPath)
@@ -224,6 +252,8 @@ bool Engine::CreateQuad()
     quad->mesh->indices.push_back(3);
 
     quad->mesh->indexCount = static_cast<unsigned int>(quad->mesh->indices.size());
+
+    ReadOBJ((appleProjectDirectory + objModelPath).c_str(), quad->mesh->vertices, quad->mesh->indices);
 
     //Create and bind VAO
     glGenVertexArrays(1, &quad->mesh->VAO);
@@ -441,6 +471,7 @@ bool Engine::Initialize()
     CreateTexture((appleProjectDirectory + containerTexturePath).c_str(), containerTexture);
 
 #endif
+
 
     //create objects
     CreateGrid();
