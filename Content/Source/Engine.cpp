@@ -48,12 +48,14 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
     std::vector<glm::vec3> temp_normal;
     std::vector<glm::vec2> temp_uv;
 
+    std::vector<unsigned int> uvIndices;
+    std::vector<unsigned int> vertexIndices;
+
     while(1)
     {
         char lineHeader[128];
         int res = fscanf(file, "%s", lineHeader);
-        std::cout << "> Reading line" << std::endl;
-
+        
         if (strcmp(lineHeader, "v") == 0)
         {
             glm::vec3 vertex;
@@ -61,13 +63,62 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
             temp_vertex.push_back(vertex);
             std::cout << "> Read vertex: " << "X " << vertex.x << " Y " << vertex.y << " Z " << vertex.z << std::endl;
         }
-        
-        
+        else if( strcmp(lineHeader, "vt") == 0 )
+        {
+            glm::vec2 uv;
+            fscanf(file, "%f %f\n", &uv.x, &uv.y);
+            temp_uv.push_back(uv);
+        }
+        else if( strcmp(lineHeader, "vn") == 0 )
+        {
+            glm::vec3 normal;
+            fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z);
+            temp_normal.push_back(normal);
+        }
+        else if ( strcmp( lineHeader, "f" ) == 0 )
+        {
+            std::string vertex1, vertex2, vertex3;
+            unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
+            int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2] );
+            if (matches != 9){
+                printf("File can't be read by our simple parser -> Try exporting with other options\n");
+                break;
+            }
+
+            out_indices.push_back(vertexIndex[0] - 1);
+            out_indices.push_back(vertexIndex[1] - 1);
+            out_indices.push_back(vertexIndex[2] - 1);
+            uvIndices.push_back(uvIndex[0]- 1);
+            uvIndices.push_back(uvIndex[1]- 1);
+            uvIndices.push_back(uvIndex[2]- 1);
+
+        }
+
         if (res == EOF)
         {
             break;
         }
     }
+
+    std::cout << "Vertex Count: " <<  temp_vertex.size() << std::endl;
+    std::cout << "Index Count: " <<  vertexIndices.size() << std::endl;
+    std::cout << "Normal Count: " <<  temp_normal.size() << std::endl;
+    std::cout << "UV Count: " <<  temp_uv.size() << std::endl;
+
+    for (unsigned int i = 0; i < out_indices.size(); i++)
+    {
+        /* code */
+        Vertex vert;
+        unsigned int vertexIndex = out_indices[i];
+        vert.position = temp_vertex[vertexIndex];    
+        //vert.normal = temp_normal[vertexIndex];
+        int uvIndex = uvIndices[i];
+        vert.uv = temp_uv[uvIndex];
+        out_vertices.push_back(vert);
+
+    }
+
+            
 }
 
 bool Engine::CreateVertexShader(unsigned int &shader, const char *shaderPath)
@@ -253,7 +304,7 @@ bool Engine::CreateQuad()
 
     quad->mesh->indexCount = static_cast<unsigned int>(quad->mesh->indices.size());
 
-    ReadOBJ((appleProjectDirectory + objModelPath).c_str(), quad->mesh->vertices, quad->mesh->indices);
+    ReadOBJ((linuxProjectDirectory + objModelPath).c_str(), quad->mesh->vertices, quad->mesh->indices);
 
     //Create and bind VAO
     glGenVertexArrays(1, &quad->mesh->VAO);
@@ -356,6 +407,47 @@ bool Engine::CreateGrid()
     grid->scale = glm::vec3(1.0f, 1.0f, 1.0f);
 
     sceneObjects.push_back(grid);
+
+    return true;
+}
+
+bool Engine::CreateSceneObject(const char* objPath)
+{
+    SceneObject *obj = new SceneObject();
+
+    obj->mesh = new Mesh();
+
+    ReadOBJ(objPath, obj->mesh->vertices, obj->mesh->indices);
+
+    std::cout << "Vertex Count After Read: " << obj->mesh->vertices.size() << std::endl;
+
+    obj->mesh->indexCount = static_cast<unsigned int>(obj->mesh->indices.size());
+
+    glGenVertexArrays(1, &obj->mesh->VAO);
+    glBindVertexArray(obj->mesh->VAO);
+
+    //Create and bind VBO
+    glGenBuffers(1, &obj->mesh->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, obj->mesh->VBO);
+    glBufferData(GL_ARRAY_BUFFER, obj->mesh->vertices.size() * sizeof(Vertex), &obj->mesh->vertices[0], GL_STATIC_DRAW);
+
+    //Create EBO
+    glGenBuffers(1, &obj->mesh->EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj->mesh->EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj->mesh->indexCount * sizeof(unsigned int), &obj->mesh->indices[0], GL_STATIC_DRAW);
+
+    //Set vertex attribute pointers
+    SetVertexAttributePointers();
+
+    obj->material = new Material();
+    obj->material->SetShaders(fallback_VShader, fallback_FShader);
+    obj->material->SetDiffuseTexture(containerTexture);
+    obj->mesh->SetDrawMode(DrawMode::TRIANGLES);
+
+    obj->position = glm::vec3(0.0f, 0.0f, -5.0f);
+    obj->scale = glm::vec3(1.0f, 1.0f, 1.0f);
+
+    sceneObjects.push_back(obj);
 
     return true;
 }
@@ -476,6 +568,8 @@ bool Engine::Initialize()
     //create objects
     CreateGrid();
     CreateQuad();
+    CreateSceneObject((linuxProjectDirectory + objModelPath).c_str());
+
    
     return true;
 }
