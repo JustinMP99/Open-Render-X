@@ -44,12 +44,12 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
         std::cout << "> Could not open file: " << filepath << std::endl;
     }
 
-    std::vector<glm::vec3> temp_vertex;
+    std::vector<glm::vec3> temp_position;
     std::vector<glm::vec3> temp_normal;
     std::vector<glm::vec2> temp_uv;
 
     std::vector<unsigned int> uvIndices;
-    std::vector<unsigned int> vertexIndices;
+    std::vector<unsigned int> positionIndices;
 
     while(1)
     {
@@ -58,10 +58,10 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
         
         if (strcmp(lineHeader, "v") == 0)
         {
-            glm::vec3 vertex;
-            fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
-            temp_vertex.push_back(vertex);
-            std::cout << "> Read vertex: " << "X " << vertex.x << " Y " << vertex.y << " Z " << vertex.z << std::endl;
+            glm::vec3 position;
+            fscanf(file, "%f %f %f\n", &position.x, &position.y, &position.z);
+            temp_position.push_back(position);
+            std::cout << "> Read vertex: " << "X " << position.x << " Y " << position.y << " Z " << position.z << std::endl;
         }
         else if( strcmp(lineHeader, "vt") == 0 )
         {
@@ -78,16 +78,19 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
         else if ( strcmp( lineHeader, "f" ) == 0 )
         {
             std::string vertex1, vertex2, vertex3;
-            unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
-            int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2] );
+            unsigned int positionIndex[3], uvIndex[3], normalIndex[3];
+            int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &positionIndex[0], &uvIndex[0], &normalIndex[0], &positionIndex[1], &uvIndex[1], &normalIndex[1], &positionIndex[2], &uvIndex[2], &normalIndex[2] );
             if (matches != 9){
                 printf("File can't be read by our simple parser -> Try exporting with other options\n");
                 break;
             }
 
-            out_indices.push_back(vertexIndex[0] - 1);
-            out_indices.push_back(vertexIndex[1] - 1);
-            out_indices.push_back(vertexIndex[2] - 1);
+            //out_indices.push_back(positionIndex[0] - 1);
+            //out_indices.push_back(positionIndex[1] - 1);
+            //out_indices.push_back(positionIndex[2] - 1);
+            positionIndices.push_back(positionIndex[0]);
+            positionIndices.push_back(positionIndex[1]);
+            positionIndices.push_back(positionIndex[2]);
             uvIndices.push_back(uvIndex[0]- 1);
             uvIndices.push_back(uvIndex[1]- 1);
             uvIndices.push_back(uvIndex[2]- 1);
@@ -100,23 +103,46 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
         }
     }
 
-    std::cout << "Vertex Count: " <<  temp_vertex.size() << std::endl;
-    std::cout << "Index Count: " <<  vertexIndices.size() << std::endl;
-    std::cout << "Normal Count: " <<  temp_normal.size() << std::endl;
-    std::cout << "UV Count: " <<  temp_uv.size() << std::endl;
-
-    for (unsigned int i = 0; i < out_indices.size(); i++)
+    for (int i = 0; i < positionIndices.size(); i++)
     {
-        /* code */
         Vertex vert;
-        unsigned int vertexIndex = out_indices[i];
-        vert.position = temp_vertex[vertexIndex];    
-        //vert.normal = temp_normal[vertexIndex];
-        int uvIndex = uvIndices[i];
-        vert.uv = temp_uv[uvIndex];
-        out_vertices.push_back(vert);
+        unsigned int positionIndex = positionIndices[i];
 
+        std::cout << "> Position Index: " << positionIndex << std::endl;
+
+        vert.position = temp_position[positionIndex - 1];
+        //vert.uv = temp_uv[uvIndices[i]];
+        out_indices.push_back(positionIndex - 1);
+        out_vertices.push_back(vert);
+        /* code */
     }
+
+
+    // for (int i = 0; i < temp_position.size(); i++)
+    // {
+    //     Vertex vert;
+    //     vert.position = temp_position[i];
+    //     out_vertices.push_back(vert);
+    // }
+    
+
+
+
+    
+    std::cout << "> Vertex Count After Data Set: " << out_vertices.size() << std::endl;
+
+    // for (unsigned int i = 0; i < out_indices.size(); i++)
+    // {
+    //     /* code */
+    //     Vertex vert;
+    //     unsigned int vertexIndex = out_indices[i];
+    //     vert.position = temp_vertex[vertexIndex];    
+    //     //vert.normal = temp_normal[vertexIndex];
+    //     int uvIndex = uvIndices[i];
+    //     vert.uv = temp_uv[uvIndex];
+    //     out_vertices.push_back(vert);
+
+    // }
 
             
 }
