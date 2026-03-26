@@ -3,6 +3,11 @@
 #include "SceneObject.h"
 #include "Graphics.h"
 #include "Camera.h"
+
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -59,10 +64,10 @@ std::string projectDirectory = std::filesystem::current_path().string(); ///< Th
 #endif
 
 #ifdef Platform_Linux
-   
+
     //Desktop
     std::string linuxProjectDirectory = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/";
-    
+
     //Laptop
     //std::string linuxProjectDirectory = "/mnt/03796401-d644-4d8d-8373-0614cdaf42a0/Projects/Graphics/Open-Render-X/";
 
@@ -78,8 +83,17 @@ std::string projectDirectory = std::filesystem::current_path().string(); ///< Th
 
 private:
 
+
+    //PROGRAM LOOP FUNCTIONS
+
     /// Process basic input
     void ProcessInput();
+
+    void CalculateDelta();
+
+    void RenderImGui();
+
+    //SETUP UTILITY FUNCTIONS
 
     ///Loads the passed in shader file into a string to be compiled for use in rendering
     std::string LoadShaderAsString(const std::string& filename);
@@ -111,7 +125,7 @@ private:
     /// Sets the vertex attribute pointers to fully utilize the Vertex data structure
     void SetVertexAttributePointers();
 
-    void CalculateDelta();
+    void ImGuiSetup();
 
 public:
 

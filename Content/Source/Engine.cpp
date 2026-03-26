@@ -13,6 +13,29 @@ void Engine::ProcessInput()
     }
 }
 
+void Engine::CalculateDelta()
+{
+    float currentFrame = glfwGetTime();
+    deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+}
+
+void Engine::RenderImGui()
+{
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+    
+    ImGui::Begin("Hello World");
+    ImGui::Button("Hello");
+    ImGui::End();
+
+    // Rendering
+    // (Your code clears your framebuffer, renders your other stuff etc.)
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
 std::string Engine::LoadShaderAsString(const std::string& filename)
 {
     std::string result = "";
@@ -37,7 +60,7 @@ std::string Engine::LoadShaderAsString(const std::string& filename)
 
 void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, std::vector<unsigned int> &out_indices)
 {
-   
+
     FILE* file = fopen(filepath.c_str(), "r");
     if (file == nullptr)
     {
@@ -55,7 +78,7 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
     {
         char lineHeader[128];
         int res = fscanf(file, "%s", lineHeader);
-        
+
         if (strcmp(lineHeader, "v") == 0)
         {
             glm::vec3 position;
@@ -124,11 +147,11 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
     //     vert.position = temp_position[i];
     //     out_vertices.push_back(vert);
     // }
-    
 
 
 
-    
+
+
     std::cout << "> Vertex Count After Data Set: " << out_vertices.size() << std::endl;
 
     // for (unsigned int i = 0; i < out_indices.size(); i++)
@@ -136,7 +159,7 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
     //     /* code */
     //     Vertex vert;
     //     unsigned int vertexIndex = out_indices[i];
-    //     vert.position = temp_vertex[vertexIndex];    
+    //     vert.position = temp_vertex[vertexIndex];
     //     //vert.normal = temp_normal[vertexIndex];
     //     int uvIndex = uvIndices[i];
     //     vert.uv = temp_uv[uvIndex];
@@ -144,7 +167,7 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
 
     // }
 
-            
+
 }
 
 bool Engine::CreateVertexShader(unsigned int &shader, const char *shaderPath)
@@ -296,10 +319,10 @@ bool Engine::CreateQuad()
     Vertex topLeft;
     topLeft.position = glm::vec3(-0.5f, 0.5f, 0.0f);
     topLeft.normal = glm::vec3(0.0f, 0.0f, 1.0f);
-    topLeft.uv = glm::vec2(0.0f, 1.0f); 
+    topLeft.uv = glm::vec2(0.0f, 1.0f);
 
     Vertex topRight;
-    topRight.position = glm::vec3(0.5f, 0.5f, 0.0f);    
+    topRight.position = glm::vec3(0.5f, 0.5f, 0.0f);
     topRight.normal = glm::vec3(0.0f, 0.0f, 1.0f);
     topRight.uv = glm::vec2(1.0f, 1.0f);
 
@@ -330,7 +353,7 @@ bool Engine::CreateQuad()
 
     quad->mesh->indexCount = static_cast<unsigned int>(quad->mesh->indices.size());
 
-    ReadOBJ((linuxProjectDirectory + objModelPath).c_str(), quad->mesh->vertices, quad->mesh->indices);
+    //ReadOBJ((linuxProjectDirectory + objModelPath).c_str(), quad->mesh->vertices, quad->mesh->indices);
 
     //Create and bind VAO
     glGenVertexArrays(1, &quad->mesh->VAO);
@@ -377,16 +400,16 @@ bool Engine::CreateGrid()
     //Horizonal lines
     for (size_t i = 0; i < gridHorizontal; i++)
     {
-        
+
         //vertices one
         Vertex vertOne;
         vertOne.position = glm::vec3(-100.0f, 0.0f, z);
         vertOne.normal = glm::vec3(0.0f, 0.0f, 0.0f);
-        vertOne.uv = glm::vec2(0.0f, 1.0f); 
+        vertOne.uv = glm::vec2(0.0f, 1.0f);
 
         //vertices two
         Vertex vertTwo;
-        vertTwo.position = glm::vec3(100.0f, 0.0f, z);    
+        vertTwo.position = glm::vec3(100.0f, 0.0f, z);
         vertTwo.normal = glm::vec3(0.0f, 0.0f, 0.0f);
         vertTwo.uv = glm::vec2(1.0f, 1.0f);
 
@@ -403,11 +426,11 @@ bool Engine::CreateGrid()
         Vertex vertOne;
         vertOne.position = glm::vec3(x, 0.0f, 100.0f);
         vertOne.normal = glm::vec3(0.0f, 0.0f, 0.0f);
-        vertOne.uv = glm::vec2(0.0f, 1.0f); 
+        vertOne.uv = glm::vec2(0.0f, 1.0f);
 
         //vertices two
         Vertex vertTwo;
-        vertTwo.position = glm::vec3(x, 0.0f, -100.0f);    
+        vertTwo.position = glm::vec3(x, 0.0f, -100.0f);
         vertTwo.normal = glm::vec3(0.0f, 0.0f, 0.0f);
         vertTwo.uv = glm::vec2(1.0f, 1.0f);
 
@@ -415,7 +438,7 @@ bool Engine::CreateGrid()
         grid->mesh->vertices.push_back(vertTwo);
         x = x + 1.0f;
     }
-    
+
     grid->mesh->indexCount = static_cast<int>(grid->mesh->vertices.size());
 
     glGenVertexArrays(1, &grid->mesh->VAO);
@@ -522,11 +545,18 @@ void Engine::SetVertexAttributePointers()
     glEnableVertexAttribArray(2);
 }
 
-void Engine::CalculateDelta()
+void Engine::ImGuiSetup()
 {
-    float currentFrame = glfwGetTime();
-    deltaTime = currentFrame - lastFrame;
-    lastFrame = currentFrame;
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // IF using Docking Branch
+
+    // Setup Platform/Renderer backends
+    ImGui_ImplGlfw_InitForOpenGL(window, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
+    ImGui_ImplOpenGL3_Init();
 }
 
 // PUBLIC
@@ -547,9 +577,9 @@ bool Engine::Initialize()
             std::cout << "Failed to create window!" << std::endl;
             return false;
         }
- 
+
     #endif
-   
+
     renderer = Graphics(width, height);
     renderer.SetFOV(45.0f);
 
@@ -563,7 +593,7 @@ bool Engine::Initialize()
     camera.Setup(glm::vec3(0.0f, 1.0f, 3.0f), window);
 
     std::cout << projectDirectory << std::endl;
-   
+
 #ifdef Platform_Linux
 
     //create shaders
@@ -590,13 +620,14 @@ bool Engine::Initialize()
 
 #endif
 
-
     //create objects
     CreateGrid();
     CreateQuad();
-    CreateSceneObject((linuxProjectDirectory + objModelPath).c_str());
+    CreateSceneObject((appleProjectDirectory + objModelPath).c_str());
 
-   
+    //Setup ImGui
+    ImGuiSetup();
+
     return true;
 }
 
@@ -604,23 +635,38 @@ void Engine::Loop()
 {
     while (glfwWindowShouldClose(window) == false)
     {
+
+        glfwPollEvents();
+
         CalculateDelta();
+
         ProcessInput();
+        
         camera.Update(deltaTime);
+        
         renderer.UpdateViewMatrix(camera.View);
+        
         renderer.ClearScreen();
+        
         for (unsigned int i = 0; i < sceneObjects.size(); i++)
         {
             renderer.Render(sceneObjects[i]);
         }
+        
+        RenderImGui();
+
         glfwSwapBuffers(window);
-        glfwPollEvents();
     }
 }
 
 bool Engine::Shutdown()
 {
     std::cout << "Shutting down engine..." << std::endl;
+
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
     glDeleteShader(fallback_VShader);
     glDeleteShader(fallback_FShader);
     glDeleteShader(grid_VShader);

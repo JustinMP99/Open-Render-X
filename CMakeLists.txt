@@ -20,7 +20,7 @@ elseif(LINUX)
     add_compile_definitions(Platform_Linux)
     find_package(glfw3 REQUIRED)
     find_package(OpenGL REQUIRED)
-    
+
 elseif(WIN32)
     add_compile_definitions(Platform_Windows)
     find_package(OpenGL REQUIRED)
@@ -37,12 +37,24 @@ add_executable(OpenRenderX
        Content/Source/Mesh.cpp
        Content/Source/Material.cpp
        Content/Source/Camera.cpp
+
+        Content/Additional/include/imgui/imgui.cpp
+        Content/Additional/include/imgui/imgui_demo.cpp
+        Content/Additional/include/imgui/imgui_draw.cpp
+        Content/Additional/include/imgui/imgui_tables.cpp
+        Content/Additional/include/imgui/imgui_widgets.cpp
+
+       Content/Additional/include/imgui/backends/imgui_impl_glfw.cpp
+       Content/Additional/include/imgui/backends/imgui_impl_opengl3.cpp
 )
 
 # Include Directories
 target_include_directories(OpenRenderX PRIVATE
     "${CMAKE_SOURCE_DIR}/Content/Additional/include"
-        "${CMAKE_SOURCE_DIR}/Content/Additional/include/GLFW"
+    #"${CMAKE_SOURCE_DIR}/Content/Additional/include/glad"
+    "${CMAKE_SOURCE_DIR}/Content/Additional/include/GLFW"
+    "${CMAKE_SOURCE_DIR}/Content/Additional/include/imgui"
+    "${CMAKE_SOURCE_DIR}/Content/Additional/include/imgui/backends"
 )
 
 if(APPLE)
@@ -53,7 +65,7 @@ target_link_libraries(OpenRenderX PRIVATE glfw OpenGL::GL)
 
 elseif (WIN32)
     target_link_libraries(OpenRenderX PRIVATE
-            OpenGL::GL  # or opengl32
-            "${CMAKE_SOURCE_DIR}/Content/Additional/library/glfw3.lib"      # or glfw3dll / glfw::glfw depending on your install
+        OpenGL::GL  # or opengl32
+        "${CMAKE_SOURCE_DIR}/Content/Additional/library/glfw3.lib"      # or glfw3dll / glfw::glfw depending on your install
     )
 endif()
