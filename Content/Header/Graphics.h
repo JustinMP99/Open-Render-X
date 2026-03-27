@@ -37,6 +37,7 @@ public:
     void Render(SceneObject* object);
     bool Shutdown();
     void ClearScreen();
+    void ClearScreen(float r, float g, float b);
     void UpdateViewMatrix(glm::mat4 viewMatrix);
     void SetFOV(float fov);
 };

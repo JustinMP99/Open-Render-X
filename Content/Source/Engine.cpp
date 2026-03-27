@@ -20,20 +20,30 @@ void Engine::CalculateDelta()
     lastFrame = currentFrame;
 }
 
-void Engine::RenderImGui()
+void Engine::CreateDebugWindow()
 {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
     
-    ImGui::Begin("Hello World");
-    ImGui::Button("Hello");
-    ImGui::End();
+    ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Once);
+    ImGui::Begin("Debug Menu");
+    ImGui::Checkbox("Render Grid", &renderGrid);
+    ImGui::SliderFloat("Clear Red", &clearRed, 0.0f, 1.0f);
+    ImGui::SliderFloat("Clear Green", &clearGreen, 0.0f, 1.0f);
+    ImGui::SliderFloat("Clear Blue", &clearBlue, 0.0f, 1.0f);
+    //ImGui::Button("Hello");
+    if (ImGui::Button("Create Quad"))
+    {
+        CreateQuad();
+    }
 
-    // Rendering
-    // (Your code clears your framebuffer, renders your other stuff etc.)
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    if(ImGui::Button("Clear SceneObjects"))
+    {
+        ClearSceneObjects();
+    }
+
+    ImGui::End();
 }
 
 std::string Engine::LoadShaderAsString(const std::string& filename)
@@ -378,7 +388,21 @@ bool Engine::CreateQuad()
     quad->material->SetShaders(fallback_VShader, fallback_FShader);
     quad->material->SetDiffuseTexture(containerTexture);
 
-    quad->position = glm::vec3(0.0f, 0.0f, 0.0f);
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    
+    // 2. Seed a pseudo-random number generator (e.g., Mersenne Twister)
+    std::mt19937 gen(seed); // A high-quality engine
+    
+    // 3. Define the desired range (inclusive) using a distribution
+    float min = 1.0f;
+    float max = 10.0f;
+    std::uniform_real_distribution<float> distrib(min, max);
+    
+    // 4. Generate the random number
+    float random_x = distrib(gen);
+    float random_y = distrib(gen);
+    float random_z = distrib(gen);
+    quad->position = glm::vec3(random_x, random_y, random_z);
     quad->scale = glm::vec3(1.0f, 1.0f, 1.0f);
 
     sceneObjects.push_back(quad);
@@ -455,7 +479,7 @@ bool Engine::CreateGrid()
     grid->position = glm::vec3(0.0f, 0.0f, 0.0f);
     grid->scale = glm::vec3(1.0f, 1.0f, 1.0f);
 
-    sceneObjects.push_back(grid);
+    //sceneObjects.push_back(grid);
 
     return true;
 }
@@ -559,6 +583,17 @@ void Engine::ImGuiSetup()
     ImGui_ImplOpenGL3_Init();
 }
 
+void Engine::ClearSceneObjects()
+{
+    renderSceneObjects = false;
+    for (unsigned int i = 0; i < sceneObjects.size(); i++)
+    {
+        delete sceneObjects[i];
+    }
+    sceneObjects.clear();
+    renderSceneObjects = true;
+}
+
 // PUBLIC
 
 bool Engine::Initialize()
@@ -620,10 +655,8 @@ bool Engine::Initialize()
 
 #endif
 
-    //create objects
+    //create Grid
     CreateGrid();
-    CreateQuad();
-    CreateSceneObject((appleProjectDirectory + objModelPath).c_str());
 
     //Setup ImGui
     ImGuiSetup();
@@ -646,14 +679,25 @@ void Engine::Loop()
         
         renderer.UpdateViewMatrix(camera.View);
         
-        renderer.ClearScreen();
+        renderer.ClearScreen(clearRed, clearGreen, clearBlue);
         
-        for (unsigned int i = 0; i < sceneObjects.size(); i++)
+        if (renderGrid)
         {
-            renderer.Render(sceneObjects[i]);
+            renderer.Render(grid);
         }
         
-        RenderImGui();
+        if (renderSceneObjects)
+        {
+            for (unsigned int i = 0; i < sceneObjects.size(); i++)
+            {
+                renderer.Render(sceneObjects[i]);
+            }
+        }
+        
+        CreateDebugWindow();
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         glfwSwapBuffers(window);
     }
@@ -671,10 +715,9 @@ bool Engine::Shutdown()
     glDeleteShader(fallback_FShader);
     glDeleteShader(grid_VShader);
     glDeleteShader(grid_FShader);
-    for (unsigned int i = 0; i < sceneObjects.size(); i++)
-    {
-        delete sceneObjects[i];
-    }
+ 
+    ClearSceneObjects();
+
     glfwDestroyWindow(window);
     return true;
 }

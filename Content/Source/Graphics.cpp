@@ -10,6 +10,12 @@ void Graphics::ClearScreen()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
+void Graphics::ClearScreen(float r, float g, float b)
+{
+    glClearColor(r, g, b, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
 void Graphics::SetModel(SceneObject* object)
 {
     //reset the objects transform to identity before applying position, rotation, and scale

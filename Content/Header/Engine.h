@@ -10,6 +10,8 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <random>
+#include <chrono>
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -31,9 +33,15 @@ Camera camera;
 float deltaTime = 0.0f; ///< The time it takes to render a single frame
 float lastFrame = 0.0f; ///< The time it took to render the last
 
+float clearRed = 0.0f;
+float clearGreen = 0.0f;
+float clearBlue = 0.0f;
+
+bool renderSceneObjects = true;
 std::vector<SceneObject*> sceneObjects;
 
 //Grid Data
+bool renderGrid = true;
 SceneObject *grid;
 int gridHorizontal = 1000;
 int gridVertical = 1000;
@@ -91,7 +99,7 @@ private:
 
     void CalculateDelta();
 
-    void RenderImGui();
+    void CreateDebugWindow();
 
     //SETUP UTILITY FUNCTIONS
 
@@ -126,6 +134,8 @@ private:
     void SetVertexAttributePointers();
 
     void ImGuiSetup();
+
+    void ClearSceneObjects();
 
 public:
 
