@@ -14,8 +14,10 @@ class Camera
     glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
     glm::vec3 cameraDir = glm::vec3(0.0f, 0.0f, -1.0f);
     float camSpeed = 2.5f;
+    float camFastSpeed = 5.0f;
     bool firstMouse = true;
     bool captureMouse = false;
+    bool moveFast = false;
     double currentX = 0.0f;
     double currentY = 0.0f;
     double lastX = 0;

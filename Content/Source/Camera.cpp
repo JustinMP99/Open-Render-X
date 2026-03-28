@@ -4,7 +4,17 @@
 
 void Camera::ProcessInput(float deltaTime)
 {
-    float finalSpeed = camSpeed * deltaTime;
+
+    float finalSpeed = 0.0f;
+
+    if (moveFast)
+    {
+       finalSpeed = camFastSpeed * deltaTime;
+    }
+    else
+    {
+        finalSpeed = camSpeed * deltaTime;
+    }
 
     //QUIT APPLICATION
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -44,6 +54,15 @@ void Camera::ProcessInput(float deltaTime)
         glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
         cameraPos += glm::normalize(glm::cross(cameraDir, up)) * finalSpeed;
     }
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+    {
+        moveFast = true;
+    }
+    else if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
+    {
+        moveFast = false;
+    }
+    
 
     //UP & DOWN
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)

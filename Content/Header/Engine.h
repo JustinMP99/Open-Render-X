@@ -123,6 +123,8 @@ private:
     /// Creates a quad to be rendered
     bool CreateQuad();
 
+    bool CreateCube();
+
     bool CreateGrid();
 
     bool CreateSceneObject(const char* objPath);

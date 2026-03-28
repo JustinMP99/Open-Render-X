@@ -484,6 +484,113 @@ bool Engine::CreateGrid()
     return true;
 }
 
+bool Engine::CreateCube()
+{
+
+    //Create SceneObject
+    SceneObject *cube = new SceneObject();
+
+    //Create Vertices
+    Vertex topLeftFront;
+    topLeftFront.position = glm::vec3(-0.5f, 0.5f, 0.5f);
+    topLeftFront.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topLeftFront.uv = glm::vec2(0.0f, 1.0f);
+
+    Vertex topRightFront;
+    topRightFront.position = glm::vec3(0.5f, 0.5f, 0.5f);
+    topRightFront.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topRightFront.uv = glm::vec2(1.0f, 1.0f);
+
+    Vertex bottomLeftFront;
+    bottomLeftFront.position = glm::vec3(-0.5f, -0.5f, 0.5f);
+    bottomLeftFront.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomLeftFront.uv = glm::vec2(0.0f, 0.0f);
+
+    Vertex bottomRightFront;
+    bottomRightFront.position = glm::vec3(0.5f, -0.5f, 0.5f);
+    bottomRightFront.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomRightFront.uv = glm::vec2(1.0f, 0.0f);
+
+    Vertex topLeftBack;
+    topLeftBack.position = glm::vec3(-0.5f, 0.5f, -0.5f);
+    topLeftBack.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topLeftBack.uv = glm::vec2(0.0f, 1.0f);
+
+    Vertex topRightBack;
+    topRightBack.position = glm::vec3(0.5f, 0.5f, -0.5f );
+    topRightBack.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topRightBack.uv = glm::vec2(1.0f, 1.0f);
+
+    Vertex bottomLeftBack;
+    bottomLeftBack.position = glm::vec3(-0.5f, -0.5f, -0.5f);
+    bottomLeftBack.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomLeftBack.uv = glm::vec2(0.0f, 0.0f);
+
+    Vertex bottomRightBack;
+    bottomRightBack.position = glm::vec3(0.5f, -0.5f, -0.5f);
+    bottomRightBack.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomRightBack.uv = glm::vec2(1.0f, 0.0f);
+
+    cube->mesh = new Mesh();
+
+    cube->mesh->vertices.push_back(bottomLeftFront);
+    cube->mesh->vertices.push_back(bottomRightFront);
+    cube->mesh->vertices.push_back(topRightFront);
+    cube->mesh->vertices.push_back(topLeftFront);
+
+    // cube->mesh->vertices.push_back(bottomLeftBack);
+    // cube->mesh->vertices.push_back(bottomRightBack);
+    // cube->mesh->vertices.push_back(topRightBack);
+    // cube->mesh->vertices.push_back(topLeftBack);
+
+    //Create Indices
+    cube->mesh->indices.push_back(0);
+    cube->mesh->indices.push_back(1);
+    cube->mesh->indices.push_back(2);
+
+    cube->mesh->indices.push_back(0);
+    cube->mesh->indices.push_back(2);
+    cube->mesh->indices.push_back(3);
+
+    cube->mesh->indexCount = static_cast<unsigned int>(cube->mesh->indices.size());
+
+    std::cout << "Cube Vertex Count: " << cube->mesh->vertices.size() << std::endl;
+
+    SetVertexAttributePointers();
+
+    cube->mesh->SetDrawMode(DrawMode::TRIANGLES);
+
+    //create vao
+    glGenVertexArrays(1, &cube->mesh->VAO);
+    glBindVertexArray(cube->mesh->VAO);
+
+    //create vbo
+    glGenBuffers(1, &cube->mesh->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, cube->mesh->VBO);
+    glBufferData(GL_ARRAY_BUFFER, cube->mesh->vertices.size() * sizeof(Vertex), &cube->mesh->vertices[0], GL_STATIC_DRAW);
+
+    //create ebo
+    glGenBuffers(1, &cube->mesh->EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cube->mesh->EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, cube->mesh->indices.size() * sizeof(unsigned int), &cube->mesh->indices[0], GL_STATIC_DRAW);
+
+    //create material
+    cube->material = new Material();
+
+    //set shaders 
+    cube->material->SetShaders(fallback_VShader, fallback_FShader);
+    cube->material->SetDiffuseTexture(containerTexture);
+
+    //set initial position and scale
+    cube->position = glm::vec3(0.0f, 0.0f, 0.0f);
+    cube->scale = glm::vec3(1.0f, 1.0f, 1.0f);
+
+    //add to scene objects vector
+    sceneObjects.push_back(cube);
+
+    return true;
+}
+
 bool Engine::CreateSceneObject(const char* objPath)
 {
     SceneObject *obj = new SceneObject();
@@ -657,6 +764,7 @@ bool Engine::Initialize()
 
     //create Grid
     CreateGrid();
+    CreateCube();
 
     //Setup ImGui
     ImGuiSetup();
