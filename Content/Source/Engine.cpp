@@ -11,6 +11,14 @@ void Engine::ProcessInput()
     {
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     }
+    if(glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+    {
+        renderDebugWindow = true;
+    }
+    if(glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+    {
+        renderDebugWindow = false;
+    }
 }
 
 void Engine::CalculateDelta()
@@ -23,8 +31,13 @@ void Engine::CalculateDelta()
 void Engine::CreateDebugSettingsWindow()
 {
     
-    ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Once);
-    ImGui::Begin("Debug Menu");
+    ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
+    
+    ImGui::Begin("Debug Menu", nullptr, ImGuiWindowFlags_NoCollapse);
+    //ImGui::BeginGroup();
+
+    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Settings");
+
     ImGui::Checkbox("Render Grid", &renderGrid);
     ImGui::SliderFloat("Clear Red", &clearRed, 0.0f, 1.0f);
     ImGui::SliderFloat("Clear Green", &clearGreen, 0.0f, 1.0f);
@@ -35,15 +48,24 @@ void Engine::CreateDebugSettingsWindow()
         CreateQuad();
     }
 
+    ImGui::SameLine();
+
     if (ImGui::Button("Create Cube"))
     {
         CreateCube();
     }
-    
+
     if(ImGui::Button("Clear SceneObjects"))
     {
         ClearSceneObjects();
     }
+    //ImGui::EndGroup();
+
+    ImGui::Separator();
+    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Data");
+    ImGui::Text("FPS: %.1f", 1.0f / deltaTime);
+    ImGui::Text("Scene Object Count: %d", sceneObjects.size());
+
 
     ImGui::End();
 }
@@ -52,7 +74,7 @@ void Engine::CreateDebugDataWindow()
 {
 
     ImGui::SetNextWindowPos(ImVec2(0, 200), ImGuiCond_Once);
-    ImGui::Begin("Debug Data");
+    ImGui::Begin("Debug Data", nullptr, ImGuiWindowFlags_NoCollapse);
     ImGui::Text("FPS: %.1f", 1.0f / deltaTime);
     ImGui::Text("Scene Object Count: %d", sceneObjects.size());
 
@@ -762,17 +784,17 @@ bool Engine::CreateCube()
     std::mt19937 gen(seed); // A high-quality engine
     
     // 3. Define the desired range (inclusive) using a distribution
-    float min = 1.0f;
-    float max = 10.0f;
+    float min = -5.0f;
+    float max = 5.0f;
     std::uniform_real_distribution<float> distrib(min, max);
     
     // 4. Generate the random number
     float random_x = distrib(gen);
-    float random_y = distrib(gen);
+    //float random_y = distrib(gen);
     float random_z = distrib(gen);
    
     //set initial position and scale
-    cube->position = glm::vec3(random_x, random_y, -random_z);
+    cube->position = glm::vec3(random_x, 0.0f, -random_z);
     cube->scale = glm::vec3(1.0f, 1.0f, 1.0f);
 
     //add to scene objects vector
@@ -872,9 +894,8 @@ void Engine::ImGuiSetup()
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-    //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // IF using Docking Branch
-
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;    
+ 
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
     ImGui_ImplOpenGL3_Init();
@@ -922,7 +943,7 @@ bool Engine::Initialize()
     }
 
     camera = Camera();
-    camera.Setup(glm::vec3(0.0f, 1.0f, 3.0f), window);
+    camera.Setup(glm::vec3(0.0f, 1.0f, 5.0f), window);
 
     std::cout << projectDirectory << std::endl;
 
@@ -992,16 +1013,19 @@ void Engine::Loop()
             }
         }
         
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
+        if (renderDebugWindow)
+        {
+            ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplGlfw_NewFrame();
+            ImGui::NewFrame();
 
-        CreateDebugSettingsWindow();
+            CreateDebugSettingsWindow();
 
-        CreateDebugDataWindow();
+            //CreateDebugDataWindow();
 
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+            ImGui::Render();
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());   
+        }
 
         glfwSwapBuffers(window);
     }

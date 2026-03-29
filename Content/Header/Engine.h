@@ -40,8 +40,11 @@ float clearBlue = 0.0f;
 bool renderSceneObjects = true;
 std::vector<SceneObject*> sceneObjects;
 
-//Grid Data
+//Debug Settings
+bool renderDebugWindow = false;
 bool renderGrid = true;
+
+//Grid Data
 SceneObject *grid;
 int gridHorizontal = 1000;
 int gridVertical = 1000;
@@ -74,10 +77,10 @@ std::string projectDirectory = std::filesystem::current_path().string(); ///< Th
 #ifdef Platform_Linux
 
     //Desktop
-    std::string linuxProjectDirectory = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/";
+   // std::string linuxProjectDirectory = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/";
 
     //Laptop
-    //std::string linuxProjectDirectory = "/mnt/03796401-d644-4d8d-8373-0614cdaf42a0/Projects/Graphics/Open-Render-X/";
+    std::string linuxProjectDirectory = "/mnt/03796401-d644-4d8d-8373-0614cdaf42a0/Projects/Graphics/Open-Render-X/";
 
 #endif
 
