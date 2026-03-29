@@ -20,11 +20,8 @@ void Engine::CalculateDelta()
     lastFrame = currentFrame;
 }
 
-void Engine::CreateDebugWindow()
+void Engine::CreateDebugSettingsWindow()
 {
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
     
     ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Once);
     ImGui::Begin("Debug Menu");
@@ -38,10 +35,26 @@ void Engine::CreateDebugWindow()
         CreateQuad();
     }
 
+    if (ImGui::Button("Create Cube"))
+    {
+        CreateCube();
+    }
+    
     if(ImGui::Button("Clear SceneObjects"))
     {
         ClearSceneObjects();
     }
+
+    ImGui::End();
+}
+
+void Engine::CreateDebugDataWindow()
+{
+
+    ImGui::SetNextWindowPos(ImVec2(0, 200), ImGuiCond_Once);
+    ImGui::Begin("Debug Data");
+    ImGui::Text("FPS: %.1f", 1.0f / deltaTime);
+    ImGui::Text("Scene Object Count: %d", sceneObjects.size());
 
     ImGui::End();
 }
@@ -576,6 +589,48 @@ bool Engine::CreateCube()
     bottomRightRight.normal = glm::vec3(0.0f, 0.0f, 1.0f);
     bottomRightRight.uv = glm::vec2(1.0f, 0.0f);
 
+    //Top Vertices
+    Vertex topLeftTop;
+    topLeftTop.position = glm::vec3(-0.5f, 0.5f, -0.5f);
+    topLeftTop.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topLeftTop.uv = glm::vec2(0.0f, 1.0f);
+
+    Vertex topRightTop;
+    topRightTop.position = glm::vec3(0.5f, 0.5f, -0.5f);
+    topRightTop.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topRightTop.uv = glm::vec2(1.0f, 1.0f);
+
+    Vertex bottomLeftTop;
+    bottomLeftTop.position = glm::vec3(-0.5f, 0.5f, 0.5f);
+    bottomLeftTop.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomLeftTop.uv = glm::vec2(0.0f, 0.0f);
+
+    Vertex bottomRightTop;
+    bottomRightTop.position = glm::vec3(0.5f, 0.5f, 0.5f);
+    bottomRightTop.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomRightTop.uv = glm::vec2(1.0f, 0.0f);
+
+    //Top Vertices
+    Vertex topLeftBottom;
+    topLeftBottom.position = glm::vec3(-0.5f, -0.5f, -0.5f);
+    topLeftBottom.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topLeftBottom.uv = glm::vec2(0.0f, 1.0f);
+
+    Vertex topRightBottom;
+    topRightBottom.position = glm::vec3(0.5f, -0.5f, -0.5f);
+    topRightBottom.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topRightBottom.uv = glm::vec2(1.0f, 1.0f);
+
+    Vertex bottomLeftBottom;
+    bottomLeftBottom.position = glm::vec3(-0.5f, -0.5f, 0.5f);
+    bottomLeftBottom.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomLeftBottom.uv = glm::vec2(0.0f, 0.0f);
+
+    Vertex bottomRightBottom;
+    bottomRightBottom.position = glm::vec3(0.5f, -0.5f, 0.5f);
+    bottomRightBottom.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomRightBottom.uv = glm::vec2(1.0f, 0.0f);
+
 
     cube->mesh = new Mesh();
 
@@ -598,11 +653,22 @@ bool Engine::CreateCube()
     cube->mesh->vertices.push_back(topLeftLeft); //11
 
     //Right
-    cube->mesh->vertices.push_back(bottomLeftRight); //8
-    cube->mesh->vertices.push_back(bottomRightRight); //9
-    cube->mesh->vertices.push_back(topRightRight); //10
-    cube->mesh->vertices.push_back(topLeftRight); //11
+    cube->mesh->vertices.push_back(bottomLeftRight); //12
+    cube->mesh->vertices.push_back(bottomRightRight); //13
+    cube->mesh->vertices.push_back(topRightRight); //14
+    cube->mesh->vertices.push_back(topLeftRight); //15
 
+    //Top
+    cube->mesh->vertices.push_back(bottomLeftTop); //16
+    cube->mesh->vertices.push_back(bottomRightTop); //17
+    cube->mesh->vertices.push_back(topRightTop); //18
+    cube->mesh->vertices.push_back(topLeftTop); //19
+
+    //Bottom
+    cube->mesh->vertices.push_back(bottomLeftBottom); //20
+    cube->mesh->vertices.push_back(bottomRightBottom); //21
+    cube->mesh->vertices.push_back(topRightBottom); //22
+    cube->mesh->vertices.push_back(topLeftBottom); //23
 
     //Create Indices
 
@@ -643,7 +709,22 @@ bool Engine::CreateCube()
     cube->mesh->indices.push_back(15);
 
     //Top
+    cube->mesh->indices.push_back(16);
+    cube->mesh->indices.push_back(17);
+    cube->mesh->indices.push_back(18);
 
+    cube->mesh->indices.push_back(16);
+    cube->mesh->indices.push_back(18);
+    cube->mesh->indices.push_back(19);
+
+    //Bottom
+    cube->mesh->indices.push_back(20);
+    cube->mesh->indices.push_back(21);
+    cube->mesh->indices.push_back(22);
+
+    cube->mesh->indices.push_back(20);
+    cube->mesh->indices.push_back(22);
+    cube->mesh->indices.push_back(23);
 
     cube->mesh->indexCount = static_cast<unsigned int>(cube->mesh->indices.size());
 
@@ -674,8 +755,24 @@ bool Engine::CreateCube()
     cube->material->SetShaders(fallback_VShader, fallback_FShader);
     cube->material->SetDiffuseTexture(containerTexture);
 
+
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    
+    // 2. Seed a pseudo-random number generator (e.g., Mersenne Twister)
+    std::mt19937 gen(seed); // A high-quality engine
+    
+    // 3. Define the desired range (inclusive) using a distribution
+    float min = 1.0f;
+    float max = 10.0f;
+    std::uniform_real_distribution<float> distrib(min, max);
+    
+    // 4. Generate the random number
+    float random_x = distrib(gen);
+    float random_y = distrib(gen);
+    float random_z = distrib(gen);
+   
     //set initial position and scale
-    cube->position = glm::vec3(0.0f, 0.0f, 0.0f);
+    cube->position = glm::vec3(random_x, random_y, -random_z);
     cube->scale = glm::vec3(1.0f, 1.0f, 1.0f);
 
     //add to scene objects vector
@@ -857,7 +954,7 @@ bool Engine::Initialize()
 
     //create Grid
     CreateGrid();
-    CreateCube();
+    //CreateCube();
 
     //Setup ImGui
     ImGuiSetup();
@@ -895,7 +992,13 @@ void Engine::Loop()
             }
         }
         
-        CreateDebugWindow();
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        CreateDebugSettingsWindow();
+
+        CreateDebugDataWindow();
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

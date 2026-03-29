@@ -88,9 +88,7 @@ std::string projectDirectory = std::filesystem::current_path().string(); ///< Th
     const char* containerTexturePath = "Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
     const char* objModelPath = "Content/Additional/mesh/cube.obj"; ///< The path to the OBJ model on macOS
 
-
 private:
-
 
     //PROGRAM LOOP FUNCTIONS
 
@@ -99,7 +97,9 @@ private:
 
     void CalculateDelta();
 
-    void CreateDebugWindow();
+    void CreateDebugSettingsWindow();
+
+    void CreateDebugDataWindow();
 
     //SETUP UTILITY FUNCTIONS
 
