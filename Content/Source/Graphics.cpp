@@ -62,7 +62,7 @@ bool Graphics::Initialize(GLFWwindow* win)
     window = win;
     glfwGetWindowSize(window, &width,  &height);
     projection = glm::perspective(glm::radians(fov), (float)width / (float)height, 0.1f, 100.0f);
-    glViewport(0, 0, width,  height);
+    SetViewport(0, 0, width, height);
 	glEnable(GL_DEPTH_TEST);
     return true;
 }
@@ -106,4 +106,9 @@ void Graphics::UpdateViewMatrix(glm::mat4 viewMatrix)
 void Graphics::SetFOV(float newFOV)
 {
     fov = newFOV;
+}
+
+void Graphics::SetViewport(int x, int y, int width, int height)
+{
+    glViewport(x, y, width, height);
 }

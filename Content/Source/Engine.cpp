@@ -4,7 +4,13 @@
 //#include "stb_image.h"
 #include <stb_image.h>
 #endif
+
 //PRIVATE
+void Engine::framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    renderer.SetViewport(0, 0, width, height);
+}
+
 void Engine::ProcessInput()
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -866,6 +872,11 @@ bool Engine::CreateWindow(int width, int height, const char* title)
     }
 
     glfwMakeContextCurrent(window);
+    glfwSetWindowUserPointer(window, this);
+    glfwSetFramebufferSizeCallback(window, [](GLFWwindow* win, int width, int height) {
+        Engine* engine = static_cast<Engine*>(glfwGetWindowUserPointer(win));
+        engine->framebuffer_size_callback(win, width, height);
+    });
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {

@@ -41,7 +41,7 @@ bool renderSceneObjects = true;
 std::vector<SceneObject*> sceneObjects;
 
 //Debug Settings
-bool renderDebugWindow = false;
+bool renderDebugWindow = true;
 bool renderGrid = true;
 
 //Grid Data
@@ -77,10 +77,10 @@ std::string projectDirectory = std::filesystem::current_path().string(); ///< Th
 #ifdef Platform_Linux
 
     //Desktop
-   // std::string linuxProjectDirectory = "/mnt/1b8f20dd-88cc-4bd6-8bca-2f8c5e21dfba/Projects/Graphics/Open-Render-X/";
+    std::string linuxProjectDirectory = "/mnt/SSD_02/Projects/Graphics/Open-Render-X/";
 
     //Laptop
-    std::string linuxProjectDirectory = "/mnt/03796401-d644-4d8d-8373-0614cdaf42a0/Projects/Graphics/Open-Render-X/";
+    //std::string linuxProjectDirectory = "/mnt/03796401-d644-4d8d-8373-0614cdaf42a0/Projects/Graphics/Open-Render-X/";
 
 #endif
 
@@ -92,6 +92,9 @@ std::string projectDirectory = std::filesystem::current_path().string(); ///< Th
     const char* objModelPath = "Content/Additional/mesh/cube.obj"; ///< The path to the OBJ model on macOS
 
 private:
+
+
+    void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
     //PROGRAM LOOP FUNCTIONS
 
