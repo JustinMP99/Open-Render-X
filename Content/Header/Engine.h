@@ -23,6 +23,7 @@ class Engine
 {
 
 private:
+
 GLFWwindow* window; ///< Pointer to the window that is created by GLFW
 unsigned int width = 1290;///< The width of the window
 unsigned int height = 720; ///< The height of the window
@@ -33,16 +34,19 @@ Camera camera;
 float deltaTime = 0.0f; ///< The time it takes to render a single frame
 float lastFrame = 0.0f; ///< The time it took to render the last
 
-float clearRed = 0.0f;
-float clearGreen = 0.0f;
-float clearBlue = 0.0f;
-
-bool renderSceneObjects = true;
 std::vector<SceneObject*> sceneObjects;
 
+std::vector<SceneObject*> litSceneObjects; ///< Vector that stores all SceneObjects that use the simple lit shader
+
 //Debug Settings
+bool renderSceneObjects = true;
 bool renderDebugWindow = true;
 bool renderGrid = true;
+glm::vec3 gridColor = glm::vec3(0.0f, 0.0f, 0.0f);
+
+//Lighting Data
+glm::vec3 ambientColor = glm::vec3(0.5f, 0.5f, 0.5f);
+float ambientStrength = 1.0f;
 
 //Grid Data
 SceneObject *grid;
@@ -59,6 +63,7 @@ unsigned int grid_VShader;
 //Fragment Shaders
 unsigned int fallback_FShader;
 unsigned int grid_FShader;
+unsigned int simpleLit_FShader;
 
 //Textures
 unsigned int containerTexture;
@@ -87,12 +92,15 @@ std::string projectDirectory = std::filesystem::current_path().string(); ///< Th
 
 #endif
 
-    const char* fallbackVertexPath = "Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader on macOS
-    const char* gridVertexPath = "Content/Shaders/Vertex/GridVertex.vert"; ///< The path to the grid vertex shader on macOS
-    const char* fallbackFragmentPath = "Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader on macOS
-    const char* gridFragmentPath = "Content/Shaders/Fragment/GridFrag.frag"; ///< The path to the grid fragment shader on macOS
-    const char* containerTexturePath = "Content/Additional/Images/container.jpg"; ///< The path to the crate texture on macOS
-    const char* objModelPath = "Content/Additional/mesh/cube.obj"; ///< The path to the OBJ model on macOS
+    const char* fallbackVertexPath = "Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader
+    const char* gridVertexPath = "Content/Shaders/Vertex/GridVertex.vert"; ///< The path to the grid vertex shader
+    const char* fallbackFragmentPath = "Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader
+    const char* gridFragmentPath = "Content/Shaders/Fragment/GridFrag.frag"; ///< The path to the grid fragment shader
+    const char* simpleLitFragmentPath = "Content/Shaders/Fragment/SimpleLitFrag.frag"; ///< The path to the simple lit fragment shader
+
+    const char* containerTexturePath = "Content/Additional/Images/container.jpg"; ///< The path to the crate texture 
+
+    const char* objModelPath = "Content/Additional/mesh/cube.obj"; ///< The path to the OBJ model
 
 private:
 

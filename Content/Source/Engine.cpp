@@ -11,6 +11,8 @@ void Engine::framebuffer_size_callback(GLFWwindow* window, int width, int height
     renderer.SetViewport(0, 0, width, height);
 }
 
+#pragma region Program Loop Functions
+
 void Engine::ProcessInput()
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -45,9 +47,12 @@ void Engine::CreateDebugSettingsWindow()
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Settings");
 
     ImGui::Checkbox("Render Grid", &renderGrid);
-    ImGui::SliderFloat("Clear Red", &clearRed, 0.0f, 1.0f);
-    ImGui::SliderFloat("Clear Green", &clearGreen, 0.0f, 1.0f);
-    ImGui::SliderFloat("Clear Blue", &clearBlue, 0.0f, 1.0f);
+    ImGui::ColorEdit3("Grid Color", (float*)&gridColor);
+
+    ImGui::Separator();
+    ImGui::SliderFloat("Ambient Strength", &ambientStrength, 0.0f, 1.0f);
+    ImGui::ColorEdit3("Ambient Color", (float*)&ambientColor);
+
     //ImGui::Button("Hello");
     if (ImGui::Button("Create Quad"))
     {
@@ -86,6 +91,10 @@ void Engine::CreateDebugDataWindow()
 
     ImGui::End();
 }
+
+#pragma endregion
+
+#pragma region Setup Utility Functions
 
 std::string Engine::LoadShaderAsString(const std::string& filename)
 {
@@ -300,156 +309,71 @@ bool Engine::CreateTexture(const char* filepath, unsigned int &texture)
     return true;
 }
 
-bool Engine::CreateTriangle()
+bool Engine::CreateWindow(int width, int height, const char* title)
 {
-    SceneObject *tri = new SceneObject();
 
-    //create vertices
-    Vertex top;
-    top.position = glm::vec3(0.0f, 0.5f, 0.0f);
-    top.normal = glm::vec3(1.0f, 0.0f, 0.0f);
-    top.uv = glm::vec2(0.5f, 1.0f);
+    if (!glfwInit())
+    {
+        std::cout << "Failed to initialize GLFW!" << std::endl;
+        return false;
+    }
 
-    Vertex left;
-    left.position = glm::vec3(-0.5f, -0.5f, 0.0f);
-    left.normal = glm::vec3(0.0f, 1.0f, 0.0f);
-    left.uv = glm::vec2(0.0f, 0.0f);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    Vertex right;
-    right.position = glm::vec3(0.5f, -0.5f, 0.0f);
-    right.normal = glm::vec3(0.0f, 0.0f, 1.0f);
-    right.uv = glm::vec2(1.0f, 0.0f);
+    window = glfwCreateWindow(width, height, title, nullptr, nullptr);
+    if (!window)
+    {
+        std::cout << "Failed to create GLFW window!" << std::endl;
+        glfwTerminate();
+        return false;
+    }
 
-    tri->mesh = new Mesh();
+    glfwMakeContextCurrent(window);
+    glfwSetWindowUserPointer(window, this);
+    glfwSetFramebufferSizeCallback(window, [](GLFWwindow* win, int width, int height) {
+        Engine* engine = static_cast<Engine*>(glfwGetWindowUserPointer(win));
+        engine->framebuffer_size_callback(win, width, height);
+    });
 
-    //add vertices to vector
-    tri->mesh->vertices.push_back(left);
-    tri->mesh->vertices.push_back(right);
-    tri->mesh->vertices.push_back(top);
-
-    //create indices & add vertices to vector
-    tri->mesh->indices.push_back(0);
-    tri->mesh->indices.push_back(1);
-    tri->mesh->indices.push_back(2);
-
-    tri->mesh->indexCount = static_cast<unsigned int>(tri->mesh->indices.size());
-
-    //create and bind vao
-    glGenVertexArrays(1, &tri->mesh->VAO);
-    glBindVertexArray(tri->mesh->VAO);
-
-    //create, bind and fill vbo
-    glGenBuffers(1, &tri->mesh->VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, tri->mesh->VBO);
-    glBufferData(GL_ARRAY_BUFFER, tri->mesh->vertices.size() * sizeof(Vertex), &tri->mesh->vertices[0], GL_STATIC_DRAW);
-
-    //create, bind and fill ebo
-    glGenBuffers(1, &tri->mesh->EBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tri->mesh->EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, tri->mesh->indices.size() * sizeof(unsigned int), &tri->mesh->indices[0], GL_STATIC_DRAW);
-
-    //set vertex attribute layout
-    SetVertexAttributePointers();
-
-    //Create material & set shaders
-    tri->material = new Material();
-    tri->material->SetShaders(fallback_VShader, fallback_FShader);
-    tri->material->SetDiffuseTexture(containerTexture);
-
-    sceneObjects.push_back(tri);
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "Failed to initialize GLAD!" << std::endl;
+        return false;
+    }
 
     return true;
 }
 
-bool Engine::CreateQuad()
+void Engine::SetVertexAttributePointers()
 {
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)0);
+    glEnableVertexAttribArray(0);
 
-    SceneObject *quad = new SceneObject();
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)(3 * sizeof(GL_FLOAT)));
+    glEnableVertexAttribArray(1);
 
-    //Create vertices
-    Vertex topLeft;
-    topLeft.position = glm::vec3(-0.5f, 0.5f, 0.0f);
-    topLeft.normal = glm::vec3(0.0f, 0.0f, 1.0f);
-    topLeft.uv = glm::vec2(0.0f, 1.0f);
-
-    Vertex topRight;
-    topRight.position = glm::vec3(0.5f, 0.5f, 0.0f);
-    topRight.normal = glm::vec3(0.0f, 0.0f, 1.0f);
-    topRight.uv = glm::vec2(1.0f, 1.0f);
-
-    Vertex bottomLeft;
-    bottomLeft.position = glm::vec3(-0.5f, -0.5f, 0.0f);
-    bottomLeft.normal = glm::vec3(0.0f, 0.0f, 1.0f);
-    bottomLeft.uv = glm::vec2(0.0f, 0.0f);
-
-    Vertex bottomRight;
-    bottomRight.position = glm::vec3(0.5f, -0.5f, 0.0f);
-    bottomRight.normal = glm::vec3(0.0f, 0.0f, 1.0f);
-    bottomRight.uv = glm::vec2(1.0f, 0.0f);
-
-    quad->mesh = new Mesh();
-
-    quad->mesh->vertices.push_back(bottomLeft);
-    quad->mesh->vertices.push_back(bottomRight);
-    quad->mesh->vertices.push_back(topRight);
-    quad->mesh->vertices.push_back(topLeft);
-
-    //Create indices
-    quad->mesh->indices.push_back(0);
-    quad->mesh->indices.push_back(1);
-    quad->mesh->indices.push_back(2);
-    quad->mesh->indices.push_back(0);
-    quad->mesh->indices.push_back(2);
-    quad->mesh->indices.push_back(3);
-
-    quad->mesh->indexCount = static_cast<unsigned int>(quad->mesh->indices.size());
-
-    //ReadOBJ((linuxProjectDirectory + objModelPath).c_str(), quad->mesh->vertices, quad->mesh->indices);
-
-    //Create and bind VAO
-    glGenVertexArrays(1, &quad->mesh->VAO);
-    glBindVertexArray(quad->mesh->VAO);
-
-    //Create and bind VBO
-    glGenBuffers(1, &quad->mesh->VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, quad->mesh->VBO);
-    glBufferData(GL_ARRAY_BUFFER, quad->mesh->vertices.size() * sizeof(Vertex), &quad->mesh->vertices[0], GL_STATIC_DRAW);
-
-    //Create EBO
-    glGenBuffers(1, &quad->mesh->EBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quad->mesh->EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, quad->mesh->indices.size() * sizeof(unsigned int), &quad->mesh->indices[0], GL_STATIC_DRAW);
-
-    //Set vertex attribute pointers
-    SetVertexAttributePointers();
-
-    quad->mesh->SetDrawMode(DrawMode::TRIANGLES);
-
-    quad->material = new Material();
-    quad->material->SetShaders(fallback_VShader, fallback_FShader);
-    quad->material->SetDiffuseTexture(containerTexture);
-
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    
-    // 2. Seed a pseudo-random number generator (e.g., Mersenne Twister)
-    std::mt19937 gen(seed); // A high-quality engine
-    
-    // 3. Define the desired range (inclusive) using a distribution
-    float min = 1.0f;
-    float max = 10.0f;
-    std::uniform_real_distribution<float> distrib(min, max);
-    
-    // 4. Generate the random number
-    float random_x = distrib(gen);
-    float random_y = distrib(gen);
-    float random_z = distrib(gen);
-    quad->position = glm::vec3(random_x, random_y, random_z);
-    quad->scale = glm::vec3(1.0f, 1.0f, 1.0f);
-
-    sceneObjects.push_back(quad);
-
-    return true;
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)(6 * sizeof(GL_FLOAT)));
+    glEnableVertexAttribArray(2);
 }
+
+void Engine::ImGuiSetup()
+{
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;    
+ 
+    // Setup Platform/Renderer backends
+    ImGui_ImplGlfw_InitForOpenGL(window, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
+    ImGui_ImplOpenGL3_Init();
+}
+
+#pragma endregion
+
+#pragma region SceneObject Creation
 
 bool Engine::CreateGrid()
 {
@@ -676,6 +600,157 @@ bool Engine::CreateRays()
     colorLocation = glGetUniformLocation(zRay->material->shaderProgram, "color");
     glUseProgram(zRay->material->shaderProgram);
     glUniform3f(colorLocation, 0.0f, 0.0f, 1.0f);
+
+    return true;
+}
+
+bool Engine::CreateTriangle()
+{
+    SceneObject *tri = new SceneObject();
+
+    //create vertices
+    Vertex top;
+    top.position = glm::vec3(0.0f, 0.5f, 0.0f);
+    top.normal = glm::vec3(1.0f, 0.0f, 0.0f);
+    top.uv = glm::vec2(0.5f, 1.0f);
+
+    Vertex left;
+    left.position = glm::vec3(-0.5f, -0.5f, 0.0f);
+    left.normal = glm::vec3(0.0f, 1.0f, 0.0f);
+    left.uv = glm::vec2(0.0f, 0.0f);
+
+    Vertex right;
+    right.position = glm::vec3(0.5f, -0.5f, 0.0f);
+    right.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    right.uv = glm::vec2(1.0f, 0.0f);
+
+    tri->mesh = new Mesh();
+
+    //add vertices to vector
+    tri->mesh->vertices.push_back(left);
+    tri->mesh->vertices.push_back(right);
+    tri->mesh->vertices.push_back(top);
+
+    //create indices & add vertices to vector
+    tri->mesh->indices.push_back(0);
+    tri->mesh->indices.push_back(1);
+    tri->mesh->indices.push_back(2);
+
+    tri->mesh->indexCount = static_cast<unsigned int>(tri->mesh->indices.size());
+
+    //create and bind vao
+    glGenVertexArrays(1, &tri->mesh->VAO);
+    glBindVertexArray(tri->mesh->VAO);
+
+    //create, bind and fill vbo
+    glGenBuffers(1, &tri->mesh->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, tri->mesh->VBO);
+    glBufferData(GL_ARRAY_BUFFER, tri->mesh->vertices.size() * sizeof(Vertex), &tri->mesh->vertices[0], GL_STATIC_DRAW);
+
+    //create, bind and fill ebo
+    glGenBuffers(1, &tri->mesh->EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tri->mesh->EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, tri->mesh->indices.size() * sizeof(unsigned int), &tri->mesh->indices[0], GL_STATIC_DRAW);
+
+    //set vertex attribute layout
+    SetVertexAttributePointers();
+
+    //Create material & set shaders
+    tri->material = new Material();
+    tri->material->SetShaders(fallback_VShader, fallback_FShader);
+    tri->material->SetDiffuseTexture(containerTexture);
+
+    sceneObjects.push_back(tri);
+
+    return true;
+}
+
+bool Engine::CreateQuad()
+{
+
+    SceneObject *quad = new SceneObject();
+
+    //Create vertices
+    Vertex topLeft;
+    topLeft.position = glm::vec3(-0.5f, 0.5f, 0.0f);
+    topLeft.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topLeft.uv = glm::vec2(0.0f, 1.0f);
+
+    Vertex topRight;
+    topRight.position = glm::vec3(0.5f, 0.5f, 0.0f);
+    topRight.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topRight.uv = glm::vec2(1.0f, 1.0f);
+
+    Vertex bottomLeft;
+    bottomLeft.position = glm::vec3(-0.5f, -0.5f, 0.0f);
+    bottomLeft.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomLeft.uv = glm::vec2(0.0f, 0.0f);
+
+    Vertex bottomRight;
+    bottomRight.position = glm::vec3(0.5f, -0.5f, 0.0f);
+    bottomRight.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomRight.uv = glm::vec2(1.0f, 0.0f);
+
+    quad->mesh = new Mesh();
+
+    quad->mesh->vertices.push_back(bottomLeft);
+    quad->mesh->vertices.push_back(bottomRight);
+    quad->mesh->vertices.push_back(topRight);
+    quad->mesh->vertices.push_back(topLeft);
+
+    //Create indices
+    quad->mesh->indices.push_back(0);
+    quad->mesh->indices.push_back(1);
+    quad->mesh->indices.push_back(2);
+    quad->mesh->indices.push_back(0);
+    quad->mesh->indices.push_back(2);
+    quad->mesh->indices.push_back(3);
+
+    quad->mesh->indexCount = static_cast<unsigned int>(quad->mesh->indices.size());
+
+    //ReadOBJ((linuxProjectDirectory + objModelPath).c_str(), quad->mesh->vertices, quad->mesh->indices);
+
+    //Create and bind VAO
+    glGenVertexArrays(1, &quad->mesh->VAO);
+    glBindVertexArray(quad->mesh->VAO);
+
+    //Create and bind VBO
+    glGenBuffers(1, &quad->mesh->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, quad->mesh->VBO);
+    glBufferData(GL_ARRAY_BUFFER, quad->mesh->vertices.size() * sizeof(Vertex), &quad->mesh->vertices[0], GL_STATIC_DRAW);
+
+    //Create EBO
+    glGenBuffers(1, &quad->mesh->EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quad->mesh->EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, quad->mesh->indices.size() * sizeof(unsigned int), &quad->mesh->indices[0], GL_STATIC_DRAW);
+
+    //Set vertex attribute pointers
+    SetVertexAttributePointers();
+
+    quad->mesh->SetDrawMode(DrawMode::TRIANGLES);
+
+    quad->material = new Material();
+    quad->material->SetShaders(fallback_VShader, simpleLit_FShader);
+    quad->material->SetDiffuseTexture(containerTexture);
+
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    
+    // 2. Seed a pseudo-random number generator (e.g., Mersenne Twister)
+    std::mt19937 gen(seed); // A high-quality engine
+    
+    // 3. Define the desired range (inclusive) using a distribution
+    float min = -5.0f;
+    float max = 5.0f;
+    std::uniform_real_distribution<float> distrib(min, max);
+    
+    // 4. Generate the random number
+    float random_x = distrib(gen);
+    float random_y = distrib(gen);
+    float random_z = distrib(gen);
+    quad->position = glm::vec3(random_x, 0.0f, -random_z);
+    quad->scale = glm::vec3(1.0f, 1.0f, 1.0f);
+
+    sceneObjects.push_back(quad);
 
     return true;
 }
@@ -964,6 +1039,8 @@ bool Engine::CreateCube()
     return true;
 }
 
+#pragma endregion
+
 bool Engine::CreateSceneObject(const char* objPath)
 {
     SceneObject *obj = new SceneObject();
@@ -1003,68 +1080,6 @@ bool Engine::CreateSceneObject(const char* objPath)
     sceneObjects.push_back(obj);
 
     return true;
-}
-
-bool Engine::CreateWindow(int width, int height, const char* title)
-{
-
-    if (!glfwInit())
-    {
-        std::cout << "Failed to initialize GLFW!" << std::endl;
-        return false;
-    }
-
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    window = glfwCreateWindow(width, height, title, nullptr, nullptr);
-    if (!window)
-    {
-        std::cout << "Failed to create GLFW window!" << std::endl;
-        glfwTerminate();
-        return false;
-    }
-
-    glfwMakeContextCurrent(window);
-    glfwSetWindowUserPointer(window, this);
-    glfwSetFramebufferSizeCallback(window, [](GLFWwindow* win, int width, int height) {
-        Engine* engine = static_cast<Engine*>(glfwGetWindowUserPointer(win));
-        engine->framebuffer_size_callback(win, width, height);
-    });
-
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD!" << std::endl;
-        return false;
-    }
-
-    return true;
-}
-
-void Engine::SetVertexAttributePointers()
-{
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)(3 * sizeof(GL_FLOAT)));
-    glEnableVertexAttribArray(1);
-
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)(6 * sizeof(GL_FLOAT)));
-    glEnableVertexAttribArray(2);
-}
-
-void Engine::ImGuiSetup()
-{
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;    
- 
-    // Setup Platform/Renderer backends
-    ImGui_ImplGlfw_InitForOpenGL(window, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
-    ImGui_ImplOpenGL3_Init();
 }
 
 void Engine::ClearSceneObjects()
@@ -1133,6 +1148,7 @@ bool Engine::Initialize()
     CreateVertexShader(grid_VShader, (appleProjectDirectory + gridVertexPath).c_str());
     CreateFragmentShader(fallback_FShader, (appleProjectDirectory + fallbackFragmentPath).c_str());
     CreateFragmentShader(grid_FShader, (appleProjectDirectory + gridFragmentPath).c_str());
+    CreateFragmentShader(simpleLit_FShader, (appleProjectDirectory + simpleLitFragmentPath).c_str());
 
     //create textures
     CreateTexture((appleProjectDirectory + containerTexturePath).c_str(), containerTexture);
@@ -1164,7 +1180,7 @@ void Engine::Loop()
         
         renderer.UpdateViewMatrix(camera.View);
         
-        renderer.ClearScreen(clearRed, clearGreen, clearBlue);
+        renderer.ClearScreen(gridColor.x, gridColor.y, gridColor.z);
         
         if (renderGrid)
         {
@@ -1177,8 +1193,17 @@ void Engine::Loop()
 
         if (renderSceneObjects)
         {
+          
+
             for (unsigned int i = 0; i < sceneObjects.size(); i++)
             {
+                int ambientColorLocation = glGetUniformLocation(sceneObjects[0]->material->shaderProgram, "ambientColor");
+                glUseProgram(sceneObjects[0]->material->shaderProgram);
+                glUniform3f(ambientColorLocation, ambientColor.x, ambientColor.y, ambientColor.z);
+
+                int ambientStrengthLocation = glGetUniformLocation(sceneObjects[0]->material->shaderProgram, "ambientStrength");
+                glUseProgram(sceneObjects[0]->material->shaderProgram);
+                glUniform1f(ambientStrengthLocation, ambientStrength);
                 renderer.Render(sceneObjects[i]);
             }
         }
