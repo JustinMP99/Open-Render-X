@@ -466,20 +466,25 @@ bool Engine::CreateGrid()
     for (size_t i = 0; i < gridHorizontal; i++)
     {
 
-        //vertices one
-        Vertex vertOne;
-        vertOne.position = glm::vec3(-100.0f, 0.0f, z);
-        vertOne.normal = glm::vec3(0.0f, 0.0f, 0.0f);
-        vertOne.uv = glm::vec2(0.0f, 1.0f);
+        if (z != 0.0f)
+        {
+             //vertices one
+            Vertex vertOne;
+            vertOne.position = glm::vec3(-100.0f, 0.0f, z);
+            vertOne.normal = glm::vec3(0.0f, 0.0f, 0.0f);
+            vertOne.uv = glm::vec2(0.0f, 1.0f);
 
-        //vertices two
-        Vertex vertTwo;
-        vertTwo.position = glm::vec3(100.0f, 0.0f, z);
-        vertTwo.normal = glm::vec3(0.0f, 0.0f, 0.0f);
-        vertTwo.uv = glm::vec2(1.0f, 1.0f);
+            //vertices two
+            Vertex vertTwo;
+            vertTwo.position = glm::vec3(100.0f, 0.0f, z);
+            vertTwo.normal = glm::vec3(0.0f, 0.0f, 0.0f);
+            vertTwo.uv = glm::vec2(1.0f, 1.0f);
 
-        grid->mesh->vertices.push_back(vertOne);
-        grid->mesh->vertices.push_back(vertTwo);
+            grid->mesh->vertices.push_back(vertOne);
+            grid->mesh->vertices.push_back(vertTwo);
+        }
+        
+       
         z = z + 1.0f;
     }
 
@@ -487,20 +492,24 @@ bool Engine::CreateGrid()
 
     for (int i = 0; i < gridVertical; i++)
     {
-        //vertices one
-        Vertex vertOne;
-        vertOne.position = glm::vec3(x, 0.0f, 100.0f);
-        vertOne.normal = glm::vec3(0.0f, 0.0f, 0.0f);
-        vertOne.uv = glm::vec2(0.0f, 1.0f);
+        if (x != 0.0f)
+        {
+            //vertices one
+            Vertex vertOne;
+            vertOne.position = glm::vec3(x, 0.0f, 100.0f);
+            vertOne.normal = glm::vec3(0.0f, 0.0f, 0.0f);
+            vertOne.uv = glm::vec2(0.0f, 1.0f);
 
-        //vertices two
-        Vertex vertTwo;
-        vertTwo.position = glm::vec3(x, 0.0f, -100.0f);
-        vertTwo.normal = glm::vec3(0.0f, 0.0f, 0.0f);
-        vertTwo.uv = glm::vec2(1.0f, 1.0f);
+            //vertices two
+            Vertex vertTwo;
+            vertTwo.position = glm::vec3(x, 0.0f, -100.0f);
+            vertTwo.normal = glm::vec3(0.0f, 0.0f, 0.0f);
+            vertTwo.uv = glm::vec2(1.0f, 1.0f);
 
-        grid->mesh->vertices.push_back(vertOne);
-        grid->mesh->vertices.push_back(vertTwo);
+            grid->mesh->vertices.push_back(vertOne);
+            grid->mesh->vertices.push_back(vertTwo);
+        }
+        
         x = x + 1.0f;
     }
 
@@ -520,7 +529,153 @@ bool Engine::CreateGrid()
     grid->position = glm::vec3(0.0f, 0.0f, 0.0f);
     grid->scale = glm::vec3(1.0f, 1.0f, 1.0f);
 
+    int colorLocation = glGetUniformLocation(grid->material->shaderProgram, "color");
+    glUseProgram(grid->material->shaderProgram);
+    glUniform3f(colorLocation, 1.0f, 1.0f, 1.0f);
+
     //sceneObjects.push_back(grid);
+
+    return true;
+}
+
+bool Engine::CreateRays()
+{
+
+    xRay = new SceneObject();
+    yRay = new SceneObject();
+    zRay = new SceneObject();
+
+    xRay->mesh = new Mesh();
+    yRay->mesh = new Mesh();
+    zRay->mesh = new Mesh();
+
+    Vertex xVertOne;
+    xVertOne.position = glm::vec3(-500.0f, 0.0f, 0.0f);
+    xVertOne.normal = glm::vec3(0.0f, 0.0f, 0.0f);
+    xVertOne.uv = glm::vec2(0.0f, 0.0f);    
+    Vertex xVertTwo;
+    xVertTwo.position = glm::vec3(500.0f, 0.0f, 0.0f);
+    xVertTwo.normal = glm::vec3(0.0f, 0.0f, 0.0f);
+    xVertTwo.uv = glm::vec2(1.0f, 1.0f);    
+
+
+    xRay->mesh->vertices.push_back(xVertOne);
+    xRay->mesh->vertices.push_back(xVertTwo);
+    
+    xRay->mesh->SetDrawMode(DrawMode::LINES);
+    xRay->material = new Material();
+
+    xRay->mesh->indices.push_back(0);
+    xRay->mesh->indices.push_back(1);
+
+    xRay->mesh->indexCount = static_cast<unsigned int>(xRay->mesh->indices.size());
+
+    glGenVertexArrays(1, &xRay->mesh->VAO);
+    glBindVertexArray(xRay->mesh->VAO);
+
+    glGenBuffers(1, &xRay->mesh->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, xRay->mesh->VBO);
+    glBufferData(GL_ARRAY_BUFFER, xRay->mesh->vertices.size() * sizeof(Vertex), &xRay->mesh->vertices[0], GL_STATIC_DRAW);
+
+    glGenBuffers(1, &xRay->mesh->EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, xRay->mesh->EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, xRay->mesh->indices.size() * sizeof(unsigned int), &xRay->mesh->indices[0], GL_STATIC_DRAW);
+    
+    SetVertexAttributePointers();
+
+    xRay->material->SetShaders(grid_VShader, grid_FShader);
+    xRay->position = glm::vec3(0.0f, 0.0f, 0.0f);
+    xRay->scale = glm::vec3(1.0f, 1.0f, 1.0f);   
+
+    int colorLocation = glGetUniformLocation(xRay->material->shaderProgram, "color");
+    glUseProgram(xRay->material->shaderProgram);
+    glUniform3f(colorLocation, 1.0f, 0.0f, 0.0f);
+
+
+    Vertex yVertOne;
+    yVertOne.position = glm::vec3(0.0f, -500.0f, 0.0f);
+    yVertOne.normal = glm::vec3(0.0f, 0.0f, 0.0f);
+    yVertOne.uv = glm::vec2(0.0f, 0.0f);    
+    Vertex yVertTwo;
+    yVertTwo.position = glm::vec3(0.0f, 500.0f, 0.0f);
+    yVertTwo.normal = glm::vec3(0.0f, 0.0f, 0.0f);
+    yVertTwo.uv = glm::vec2(1.0f, 1.0f);    
+
+
+    yRay->mesh->vertices.push_back(yVertOne);
+    yRay->mesh->vertices.push_back(yVertTwo);
+    
+    yRay->mesh->SetDrawMode(DrawMode::LINES);
+    yRay->material = new Material();
+
+    yRay->mesh->indices.push_back(0);
+    yRay->mesh->indices.push_back(1);
+
+    yRay->mesh->indexCount = static_cast<unsigned int>(yRay->mesh->indices.size());
+
+    glGenVertexArrays(1, &yRay->mesh->VAO);
+    glBindVertexArray(yRay->mesh->VAO);
+
+    glGenBuffers(1, &yRay->mesh->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, yRay->mesh->VBO);
+    glBufferData(GL_ARRAY_BUFFER, yRay->mesh->vertices.size() * sizeof(Vertex), &yRay->mesh->vertices[0], GL_STATIC_DRAW);
+
+    glGenBuffers(1, &yRay->mesh->EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, yRay->mesh->EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, yRay->mesh->indices.size() * sizeof(unsigned int), &yRay->mesh->indices[0], GL_STATIC_DRAW);
+    
+    SetVertexAttributePointers();
+
+    yRay->material->SetShaders(grid_VShader, grid_FShader);
+    yRay->position = glm::vec3(0.0f, 0.0f, 0.0f);
+    yRay->scale = glm::vec3(1.0f, 1.0f, 1.0f);   
+
+    colorLocation = glGetUniformLocation(yRay->material->shaderProgram, "color");
+    glUseProgram(yRay->material->shaderProgram);
+    glUniform3f(colorLocation, 0.0f, 1.0f, 0.0f);
+
+
+    Vertex zVertOne;
+    zVertOne.position = glm::vec3(0.0f, 0.0f, -500.0f);
+    zVertOne.normal = glm::vec3(0.0f, 0.0f, 0.0f);
+    zVertOne.uv = glm::vec2(0.0f, 0.0f);    
+    Vertex zVertTwo;
+    zVertTwo.position = glm::vec3(0.0f, 0.0f, 500.0f);
+    zVertTwo.normal = glm::vec3(0.0f, 0.0f, 0.0f);
+    zVertTwo.uv = glm::vec2(1.0f, 1.0f);    
+
+
+    zRay->mesh->vertices.push_back(zVertOne);
+    zRay->mesh->vertices.push_back(zVertTwo);
+    
+    zRay->mesh->SetDrawMode(DrawMode::LINES);
+    zRay->material = new Material();
+
+    zRay->mesh->indices.push_back(0);
+    zRay->mesh->indices.push_back(1);
+
+    zRay->mesh->indexCount = static_cast<unsigned int>(zRay->mesh->indices.size());
+
+    glGenVertexArrays(1, &zRay->mesh->VAO);
+    glBindVertexArray(zRay->mesh->VAO);
+
+    glGenBuffers(1, &zRay->mesh->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, zRay->mesh->VBO);
+    glBufferData(GL_ARRAY_BUFFER, zRay->mesh->vertices.size() * sizeof(Vertex), &zRay->mesh->vertices[0], GL_STATIC_DRAW);
+
+    glGenBuffers(1, &zRay->mesh->EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, zRay->mesh->EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, zRay->mesh->indices.size() * sizeof(unsigned int), &zRay->mesh->indices[0], GL_STATIC_DRAW);
+    
+    SetVertexAttributePointers();
+
+    zRay->material->SetShaders(grid_VShader, grid_FShader);
+    zRay->position = glm::vec3(0.0f, 0.0f, 0.0f);
+    zRay->scale = glm::vec3(1.0f, 1.0f, 1.0f);   
+
+    colorLocation = glGetUniformLocation(zRay->material->shaderProgram, "color");
+    glUseProgram(zRay->material->shaderProgram);
+    glUniform3f(colorLocation, 0.0f, 0.0f, 1.0f);
 
     return true;
 }
@@ -986,7 +1141,7 @@ bool Engine::Initialize()
 
     //create Grid
     CreateGrid();
-    //CreateCube();
+    CreateRays();
 
     //Setup ImGui
     ImGuiSetup();
@@ -1016,6 +1171,10 @@ void Engine::Loop()
             renderer.Render(grid);
         }
         
+        renderer.Render(xRay);
+        renderer.Render(yRay);
+        renderer.Render(zRay);
+
         if (renderSceneObjects)
         {
             for (unsigned int i = 0; i < sceneObjects.size(); i++)

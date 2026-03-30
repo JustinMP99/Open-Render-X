@@ -46,6 +46,9 @@ bool renderGrid = true;
 
 //Grid Data
 SceneObject *grid;
+SceneObject *xRay;
+SceneObject *yRay;
+SceneObject *zRay;
 int gridHorizontal = 1000;
 int gridVertical = 1000;
 
@@ -132,6 +135,8 @@ private:
     bool CreateCube();
 
     bool CreateGrid();
+
+    bool CreateRays();
 
     bool CreateSceneObject(const char* objPath);
 
