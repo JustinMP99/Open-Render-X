@@ -9,13 +9,13 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
-CMakeUserPresets.json
+CMakeUserPresets
 
 out
+build
 cmake-build-windows---desktop
 cmake-build-debug
 .idea
 .vscode
-
 
 Documentation/Files/.DS_Store
