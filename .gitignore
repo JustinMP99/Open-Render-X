@@ -10,12 +10,12 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 CMakeUserPresets
+CMakePresets.json
 
 out
 build
 cmake-build-windows---desktop
 cmake-build-debug
-.idea
-.vscode
 
 Documentation/Files/.DS_Store
+Documentation/.DS_Store
