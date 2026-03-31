@@ -118,11 +118,61 @@ void Engine::CreateSceneListWindow()
 
     for (int i = 0; i < litSceneObjects.size(); i++)
     {
-        ImGui::Button(("Lit Object" + std::to_string(count)).c_str());
+
+        if (ImGui::Button((litSceneObjects[i]->name).c_str()))
+        {
+            selectedSceneObject = litSceneObjects[count];
+            renderInspectorWindow = true;
+            std::cout << "> Selected SceneObject: " << selectedSceneObject->name.c_str() << std::endl;
+        }
+        
+        count++;
+    }
+
+    count = 0;
+
+    for (int i = 0; i < sceneObjects.size(); i++)
+    {
+        if (ImGui::Button((sceneObjects[i]->name).c_str()))
+        {
+            selectedSceneObject = sceneObjects[count];
+            renderInspectorWindow = true;
+            std::cout << "> Selected SceneObject: " << selectedSceneObject->name.c_str() << std::endl;
+        }
+        
         count++;
     }
     
+    
     ImGui::End();
+}
+
+void Engine::CreateInspectorWindow()
+{
+
+    if (selectedSceneObject != NULL)
+    {
+
+        ImGui::Begin("Inspector");
+
+        ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Core Data");
+
+        ImGui::Text("Name: %s", selectedSceneObject->name.c_str());
+        ImGui::InputFloat3("Position", (float*)&selectedSceneObject->position);
+        ImGui::InputFloat3("Rotation", (float*)&selectedSceneObject->rotation);
+        ImGui::InputFloat3("Scale", (float*)&selectedSceneObject->scale);
+
+        ImGui::Separator();
+
+        ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Mesh Data");
+        ImGui::Text("Vertex Count: %d", selectedSceneObject->mesh->vertices.size());
+        ImGui::Text("Index Count: %d", selectedSceneObject->mesh->indices.size());
+
+
+        ImGui::End();
+
+    }
+    
 }
 
 #pragma endregion
@@ -712,6 +762,8 @@ bool Engine::CreateQuad()
 
     SceneObject *quad = new SceneObject();
 
+    quad->name = "Quad " + std::to_string(litSceneObjects.size());
+
     //Create vertices
     Vertex topLeft;
     topLeft.position = glm::vec3(-0.5f, 0.5f, 0.0f);
@@ -795,6 +847,8 @@ bool Engine::CreateCube()
 
     //Create SceneObject
     SceneObject *cube = new SceneObject();
+
+    cube->name = "Cube " + std::to_string(sceneObjects.size());
 
     //Create Vertices
 
@@ -1110,7 +1164,10 @@ bool Engine::CreateSceneObject(const char* objPath)
 
 void Engine::ClearSceneObjects()
 {
-    renderSceneObjects = false;
+    
+    renderInspectorWindow = false;
+    selectedSceneObject = NULL;
+
     for (unsigned int i = 0; i < sceneObjects.size(); i++)
     {
         delete sceneObjects[i];
@@ -1160,6 +1217,12 @@ void Engine::ProcessUI()
     {
         CreateSceneListWindow();
     }
+
+    if (renderInspectorWindow)
+    {
+        CreateInspectorWindow();
+    }
+    
     
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());   
@@ -1278,10 +1341,16 @@ void Engine::Loop()
 bool Engine::Shutdown()
 {
     std::cout << "Shutting down engine..." << std::endl;
+    
+    renderDebugWindow = false;
+    renderInspectorWindow = false;
+    renderSceneList = false;
+    selectedSceneObject = NULL;
 
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
+
 
     glDeleteShader(fallback_VShader);
     glDeleteShader(fallback_FShader);

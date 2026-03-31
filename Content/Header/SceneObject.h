@@ -29,6 +29,7 @@ private:
 
 public:
 
+    std::string name; ///< The name of the SceneObject, used for organization and debugging purposes
 	glm::mat4 transform;
 	glm::vec3 position;
 	glm::vec3 rotation;

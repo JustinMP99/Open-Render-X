@@ -38,10 +38,13 @@ std::vector<SceneObject*> sceneObjects;
 
 std::vector<SceneObject*> litSceneObjects; ///< Vector that stores all SceneObjects that use the simple lit shader
 
+SceneObject* selectedSceneObject = nullptr; ///< Pointer to the currently selected SceneObject, used for the inspector window
+
 //Debug Settings
 bool renderSceneObjects = true;
 bool renderDebugWindow = true;
 bool renderSceneList = false;
+bool renderInspectorWindow = false;
 bool renderGrid = true;
 glm::vec3 clearScreenColor = glm::vec3(0.0f, 0.0f, 0.0f);
 
@@ -120,6 +123,8 @@ private:
     void CreateDebugSettingsWindow();
 
     void CreateSceneListWindow();
+    
+    void CreateInspectorWindow();
 
     //SETUP UTILITY FUNCTIONS
 
