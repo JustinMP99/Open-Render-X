@@ -11,6 +11,20 @@ void Engine::framebuffer_size_callback(GLFWwindow* window, int width, int height
     renderer.SetViewport(0, 0, width, height);
 }
 
+float Engine::GetRandomFloat(float min, float max)
+{
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    
+    // 2. Seed a pseudo-random number generator (e.g., Mersenne Twister)
+    std::mt19937 gen(seed); // A high-quality engine
+    
+    // 3. Define the desired range (inclusive) using a distribution
+    std::uniform_real_distribution<float> distrib(min, max);
+    
+    // 4. Generate the random number
+    return distrib(gen);
+}
+
 #pragma region Program Loop Functions
 
 void Engine::ProcessInput()
@@ -19,14 +33,26 @@ void Engine::ProcessInput()
     {
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     }
-    if(glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+    
+    if(glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
     {
         renderDebugWindow = true;
     }
-    if(glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+    if(glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
     {
         renderDebugWindow = false;
     }
+
+    if(glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+    {
+        renderSceneList = true;
+    }
+    if(glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+    {
+        renderSceneList = false;
+    }
+
+
 }
 
 void Engine::CalculateDelta()
@@ -41,19 +67,27 @@ void Engine::CreateDebugSettingsWindow()
     
     ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
     
-    ImGui::Begin("Debug Menu", nullptr, ImGuiWindowFlags_NoCollapse);
+    ImGui::Begin("Debug Menu", nullptr, ImGuiWindowFlags_NoCollapse || ImGuiWindowFlags_AlwaysAutoResize);
     //ImGui::BeginGroup();
 
+    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Data");
+    ImGui::Text("FPS: %.1f", 1.0f / deltaTime);
+    ImGui::Text("Unlit Scene Object Count: %d", sceneObjects.size());
+    ImGui::Text("Lit Scene Object Count: %d", litSceneObjects.size());
+    ImGui::Separator();
+    
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Settings");
 
     ImGui::Checkbox("Render Grid", &renderGrid);
-    ImGui::ColorEdit3("Grid Color", (float*)&gridColor);
+    ImGui::ColorEdit3("Clear Color", (float*)&clearScreenColor);
 
     ImGui::Separator();
     ImGui::SliderFloat("Ambient Strength", &ambientStrength, 0.0f, 1.0f);
     ImGui::ColorEdit3("Ambient Color", (float*)&ambientColor);
 
-    //ImGui::Button("Hello");
+    ImGui::Separator();
+    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Scene Object Creation");
+
     if (ImGui::Button("Create Quad"))
     {
         CreateQuad();
@@ -70,25 +104,24 @@ void Engine::CreateDebugSettingsWindow()
     {
         ClearSceneObjects();
     }
-    //ImGui::EndGroup();
-
-    ImGui::Separator();
-    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Data");
-    ImGui::Text("FPS: %.1f", 1.0f / deltaTime);
-    ImGui::Text("Scene Object Count: %d", sceneObjects.size());
-
-
+    
     ImGui::End();
 }
 
-void Engine::CreateDebugDataWindow()
+void Engine::CreateSceneListWindow()
 {
 
-    ImGui::SetNextWindowPos(ImVec2(0, 200), ImGuiCond_Once);
-    ImGui::Begin("Debug Data", nullptr, ImGuiWindowFlags_NoCollapse);
-    ImGui::Text("FPS: %.1f", 1.0f / deltaTime);
-    ImGui::Text("Scene Object Count: %d", sceneObjects.size());
+    ImGui::SetNextWindowPos(ImVec2(width / 2, height / 2), ImGuiCond_Once);
+    ImGui::Begin("Scene List", nullptr, ImGuiWindowFlags_AlwaysVerticalScrollbar);
+    
+    int count = 0;
 
+    for (int i = 0; i < litSceneObjects.size(); i++)
+    {
+        ImGui::Button(("Lit Object" + std::to_string(count)).c_str());
+        count++;
+    }
+    
     ImGui::End();
 }
 
@@ -658,7 +691,16 @@ bool Engine::CreateTriangle()
     //Create material & set shaders
     tri->material = new Material();
     tri->material->SetShaders(fallback_VShader, fallback_FShader);
-    tri->material->SetDiffuseTexture(containerTexture);
+    //tri->material->SetDiffuseTexture(containerTexture);
+
+    float min = -5.0f;
+    float max = 5.0f;
+
+    // 4. Generate the random number
+    float random_x = GetRandomFloat(min, max);
+    float random_z = GetRandomFloat(min, max);
+    tri->position = glm::vec3(random_x, 0.0f, -random_z);
+    tri->scale = glm::vec3(1.0f, 1.0f, 1.0f);
 
     sceneObjects.push_back(tri);
 
@@ -733,24 +775,17 @@ bool Engine::CreateQuad()
     quad->material->SetShaders(fallback_VShader, simpleLit_FShader);
     quad->material->SetDiffuseTexture(containerTexture);
 
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    
-    // 2. Seed a pseudo-random number generator (e.g., Mersenne Twister)
-    std::mt19937 gen(seed); // A high-quality engine
-    
-    // 3. Define the desired range (inclusive) using a distribution
     float min = -5.0f;
     float max = 5.0f;
-    std::uniform_real_distribution<float> distrib(min, max);
-    
+
     // 4. Generate the random number
-    float random_x = distrib(gen);
-    float random_y = distrib(gen);
-    float random_z = distrib(gen);
+    float random_x = GetRandomFloat(min, max);
+    float random_y = GetRandomFloat(min, max);
+    float random_z = GetRandomFloat(min, max);
     quad->position = glm::vec3(random_x, 0.0f, -random_z);
     quad->scale = glm::vec3(1.0f, 1.0f, 1.0f);
 
-    sceneObjects.push_back(quad);
+    litSceneObjects.push_back(quad);
 
     return true;
 }
@@ -1012,22 +1047,13 @@ bool Engine::CreateCube()
     //set shaders 
     cube->material->SetShaders(fallback_VShader, fallback_FShader);
     cube->material->SetDiffuseTexture(containerTexture);
-
-
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    
-    // 2. Seed a pseudo-random number generator (e.g., Mersenne Twister)
-    std::mt19937 gen(seed); // A high-quality engine
     
     // 3. Define the desired range (inclusive) using a distribution
     float min = -5.0f;
     float max = 5.0f;
-    std::uniform_real_distribution<float> distrib(min, max);
     
-    // 4. Generate the random number
-    float random_x = distrib(gen);
-    //float random_y = distrib(gen);
-    float random_z = distrib(gen);
+    float random_x = GetRandomFloat(min, max);
+    float random_z = GetRandomFloat(min, max);
    
     //set initial position and scale
     cube->position = glm::vec3(random_x, 0.0f, -random_z);
@@ -1089,8 +1115,54 @@ void Engine::ClearSceneObjects()
     {
         delete sceneObjects[i];
     }
+    for (int i = 0; i < litSceneObjects.size(); i++)
+    {
+        delete litSceneObjects[i];
+    }
     sceneObjects.clear();
+    litSceneObjects.clear();
     renderSceneObjects = true;
+}
+
+void Engine::ProcessLit()
+{
+      for (unsigned int i = 0; i < litSceneObjects.size(); i++)
+      {
+            int ambientColorLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "ambientColor");
+            glUseProgram(litSceneObjects[i]->material->shaderProgram);
+            glUniform3f(ambientColorLocation, ambientColor.x, ambientColor.y, ambientColor.z);
+            int ambientStrengthLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "ambientStrength");
+            glUseProgram(litSceneObjects[i]->material->shaderProgram);
+            glUniform1f(ambientStrengthLocation, ambientStrength);
+            renderer.Render(litSceneObjects[i]);
+      }
+}
+
+void Engine::ProcessUnlit()
+{
+    for (unsigned int i = 0; i < sceneObjects.size(); i++)
+      {
+        renderer.Render(sceneObjects[i]);
+      }
+}
+
+void Engine::ProcessUI()
+{
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+    if (renderDebugWindow)
+    {
+        CreateDebugSettingsWindow(); 
+    }
+
+    if (renderSceneList)
+    {
+        CreateSceneListWindow();
+    }
+    
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());   
 }
 
 // PUBLIC
@@ -1180,7 +1252,7 @@ void Engine::Loop()
         
         renderer.UpdateViewMatrix(camera.View);
         
-        renderer.ClearScreen(gridColor.x, gridColor.y, gridColor.z);
+        renderer.ClearScreen(clearScreenColor.x, clearScreenColor.y, clearScreenColor.z);
         
         if (renderGrid)
         {
@@ -1193,34 +1265,11 @@ void Engine::Loop()
 
         if (renderSceneObjects)
         {
-          
-
-            for (unsigned int i = 0; i < sceneObjects.size(); i++)
-            {
-                int ambientColorLocation = glGetUniformLocation(sceneObjects[0]->material->shaderProgram, "ambientColor");
-                glUseProgram(sceneObjects[0]->material->shaderProgram);
-                glUniform3f(ambientColorLocation, ambientColor.x, ambientColor.y, ambientColor.z);
-
-                int ambientStrengthLocation = glGetUniformLocation(sceneObjects[0]->material->shaderProgram, "ambientStrength");
-                glUseProgram(sceneObjects[0]->material->shaderProgram);
-                glUniform1f(ambientStrengthLocation, ambientStrength);
-                renderer.Render(sceneObjects[i]);
-            }
+            ProcessLit();
+            ProcessUnlit();
         }
         
-        if (renderDebugWindow)
-        {
-            ImGui_ImplOpenGL3_NewFrame();
-            ImGui_ImplGlfw_NewFrame();
-            ImGui::NewFrame();
-
-            CreateDebugSettingsWindow();
-
-            //CreateDebugDataWindow();
-
-            ImGui::Render();
-            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());   
-        }
+        ProcessUI();
 
         glfwSwapBuffers(window);
     }

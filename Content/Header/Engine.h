@@ -1,5 +1,3 @@
-
-
 #include "SceneObject.h"
 #include "Graphics.h"
 #include "Camera.h"
@@ -24,10 +22,12 @@ class Engine
 
 private:
 
+//Window Data
 GLFWwindow* window; ///< Pointer to the window that is created by GLFW
 unsigned int width = 1290;///< The width of the window
 unsigned int height = 720; ///< The height of the window
 
+//Additional Core Data
 Graphics renderer;
 Camera camera;
 
@@ -41,8 +41,9 @@ std::vector<SceneObject*> litSceneObjects; ///< Vector that stores all SceneObje
 //Debug Settings
 bool renderSceneObjects = true;
 bool renderDebugWindow = true;
+bool renderSceneList = false;
 bool renderGrid = true;
-glm::vec3 gridColor = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 clearScreenColor = glm::vec3(0.0f, 0.0f, 0.0f);
 
 //Lighting Data
 glm::vec3 ambientColor = glm::vec3(0.5f, 0.5f, 0.5f);
@@ -107,6 +108,8 @@ private:
 
     void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
+    float GetRandomFloat(float min, float max);
+
     //PROGRAM LOOP FUNCTIONS
 
     /// Process basic input
@@ -116,7 +119,7 @@ private:
 
     void CreateDebugSettingsWindow();
 
-    void CreateDebugDataWindow();
+    void CreateSceneListWindow();
 
     //SETUP UTILITY FUNCTIONS
 
@@ -157,6 +160,13 @@ private:
     void ImGuiSetup();
 
     void ClearSceneObjects();
+
+    /// Processes all lit SceneObjects in the scene using the simple lit shader
+    void ProcessLit();
+
+    void ProcessUnlit();
+
+    void ProcessUI();
 
 public:
 
