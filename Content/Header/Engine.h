@@ -89,10 +89,10 @@ std::string projectDirectory = std::filesystem::current_path().string(); ///< Th
 #ifdef Platform_Linux
 
     //Desktop
-    std::string linuxProjectDirectory = "/mnt/SSD_02/Projects/Graphics/Open-Render-X/";
+    //std::string linuxProjectDirectory = "/mnt/SSD_02/Projects/Graphics/Open-Render-X/";
 
     //Laptop
-    //std::string linuxProjectDirectory = "/mnt/03796401-d644-4d8d-8373-0614cdaf42a0/Projects/Graphics/Open-Render-X/";
+    std::string linuxProjectDirectory = "/mnt/03796401-d644-4d8d-8373-0614cdaf42a0/Projects/Graphics/Open-Render-X/";
 
 #endif
 

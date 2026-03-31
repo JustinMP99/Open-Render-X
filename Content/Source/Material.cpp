@@ -36,11 +36,18 @@ Material::~Material()
 
 void Material::Use()
 {
+    
     glUseProgram(shaderProgram);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, diffuseTexture);
-    SetInt("diffuseTexture", 0);
-  
+    if(usingDiffuse)
+    {
+        std::cout << "Using Diffuse Texture" << std::endl;
+        std::cout << "Diffuse Texture ID: " << diffuseTexture << std::endl;
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, diffuseTexture);
+        SetInt("diffuseTexture", 0);
+    }
+   
+
 }
 
 bool Material::SetMaterialName(const char* name)

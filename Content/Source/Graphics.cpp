@@ -75,14 +75,17 @@ void Graphics::Render()
 
 void Graphics::Render(SceneObject* object)
 {
+   
     object->material->Use();
+
     //set model matrix for object
     SetModel(object);
+    
     //update shader uniforms
     UpdateTransformUniforms(object);
     
     glBindVertexArray(object->mesh->VAO);
-  
+
     int drawMode = object->mesh->GetDrawMode();
     if (drawMode == GL_TRIANGLES)
     {

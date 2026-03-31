@@ -535,6 +535,7 @@ bool Engine::CreateGrid()
     grid->material->SetShaders(grid_VShader, grid_FShader);
     grid->position = glm::vec3(0.0f, 0.0f, 0.0f);
     grid->scale = glm::vec3(1.0f, 1.0f, 1.0f);
+    grid->rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
     int colorLocation = glGetUniformLocation(grid->material->shaderProgram, "color");
     glUseProgram(grid->material->shaderProgram);
@@ -593,6 +594,7 @@ bool Engine::CreateRays()
     xRay->material->SetShaders(grid_VShader, grid_FShader);
     xRay->position = glm::vec3(0.0f, 0.0f, 0.0f);
     xRay->scale = glm::vec3(1.0f, 1.0f, 1.0f);   
+    xRay->rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
     int colorLocation = glGetUniformLocation(xRay->material->shaderProgram, "color");
     glUseProgram(xRay->material->shaderProgram);
@@ -636,6 +638,7 @@ bool Engine::CreateRays()
     yRay->material->SetShaders(grid_VShader, grid_FShader);
     yRay->position = glm::vec3(0.0f, 0.0f, 0.0f);
     yRay->scale = glm::vec3(1.0f, 1.0f, 1.0f);   
+    yRay->rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
     colorLocation = glGetUniformLocation(yRay->material->shaderProgram, "color");
     glUseProgram(yRay->material->shaderProgram);
@@ -679,6 +682,7 @@ bool Engine::CreateRays()
     zRay->material->SetShaders(grid_VShader, grid_FShader);
     zRay->position = glm::vec3(0.0f, 0.0f, 0.0f);
     zRay->scale = glm::vec3(1.0f, 1.0f, 1.0f);   
+    zRay->rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
     colorLocation = glGetUniformLocation(zRay->material->shaderProgram, "color");
     glUseProgram(zRay->material->shaderProgram);
@@ -836,6 +840,7 @@ bool Engine::CreateQuad()
     float random_z = GetRandomFloat(min, max);
     quad->position = glm::vec3(random_x, 0.0f, -random_z);
     quad->scale = glm::vec3(1.0f, 1.0f, 1.0f);
+    quad->rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
     litSceneObjects.push_back(quad);
 
@@ -1112,6 +1117,7 @@ bool Engine::CreateCube()
     //set initial position and scale
     cube->position = glm::vec3(random_x, 0.0f, -random_z);
     cube->scale = glm::vec3(1.0f, 1.0f, 1.0f);
+    cube->rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
     //add to scene objects vector
     sceneObjects.push_back(cube);
@@ -1185,13 +1191,13 @@ void Engine::ProcessLit()
 {
       for (unsigned int i = 0; i < litSceneObjects.size(); i++)
       {
-            int ambientColorLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "ambientColor");
-            glUseProgram(litSceneObjects[i]->material->shaderProgram);
-            glUniform3f(ambientColorLocation, ambientColor.x, ambientColor.y, ambientColor.z);
-            int ambientStrengthLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "ambientStrength");
-            glUseProgram(litSceneObjects[i]->material->shaderProgram);
-            glUniform1f(ambientStrengthLocation, ambientStrength);
-            renderer.Render(litSceneObjects[i]);
+        int ambientColorLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "ambientColor");
+        glUseProgram(litSceneObjects[i]->material->shaderProgram);
+        glUniform3f(ambientColorLocation, ambientColor.x, ambientColor.y, ambientColor.z);
+        int ambientStrengthLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "ambientStrength");
+        glUseProgram(litSceneObjects[i]->material->shaderProgram);
+        glUniform1f(ambientStrengthLocation, ambientStrength);
+        renderer.Render(litSceneObjects[i]);
       }
 }
 
@@ -1250,7 +1256,7 @@ bool Engine::Initialize()
     #endif
 
     renderer = Graphics(width, height);
-    renderer.SetFOV(45.0f);
+    renderer.SetFOV(60.0f);
 
     if (!renderer.Initialize(window))
     {
@@ -1270,6 +1276,7 @@ bool Engine::Initialize()
     CreateVertexShader(grid_VShader, (linuxProjectDirectory + gridVertexPath).c_str());
     CreateFragmentShader(fallback_FShader, (linuxProjectDirectory + fallbackFragmentPath).c_str());
     CreateFragmentShader(grid_FShader, (linuxProjectDirectory + gridFragmentPath).c_str());
+    CreateFragmentShader(simpleLit_FShader, (linuxProjectDirectory + simpleLitFragmentPath).c_str());
 
     //create textures
     CreateTexture((linuxProjectDirectory + containerTexturePath).c_str(), containerTexture);
