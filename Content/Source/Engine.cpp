@@ -82,8 +82,13 @@ void Engine::CreateDebugSettingsWindow()
     ImGui::ColorEdit3("Clear Color", (float*)&clearScreenColor);
 
     ImGui::Separator();
+    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Lighting");
     ImGui::SliderFloat("Ambient Strength", &ambientStrength, 0.0f, 1.0f);
     ImGui::ColorEdit3("Ambient Color", (float*)&ambientColor);
+
+    ImGui::SliderFloat("Light Strength", &lightStrength, 0.0f, 1.0f);
+    ImGui::ColorEdit3("Light Color", (float*)&lightColor);
+    ImGui::InputFloat3("Light Position", (float*)&lightPos);
 
     ImGui::Separator();
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Scene Object Creation");
@@ -881,108 +886,107 @@ bool Engine::CreateCube()
     //Back Vertices
     Vertex topLeftBack;
     topLeftBack.position = glm::vec3(-0.5f, 0.5f, -0.5f);
-    topLeftBack.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topLeftBack.normal = glm::vec3(0.0f, 0.0f, -1.0f);
     topLeftBack.uv = glm::vec2(0.0f, 1.0f);
 
     Vertex topRightBack;
     topRightBack.position = glm::vec3(0.5f, 0.5f, -0.5f );
-    topRightBack.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topRightBack.normal = glm::vec3(0.0f, 0.0f, -1.0f);
     topRightBack.uv = glm::vec2(1.0f, 1.0f);
 
     Vertex bottomLeftBack;
     bottomLeftBack.position = glm::vec3(-0.5f, -0.5f, -0.5f);
-    bottomLeftBack.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomLeftBack.normal = glm::vec3(0.0f, 0.0f, -1.0f);
     bottomLeftBack.uv = glm::vec2(0.0f, 0.0f);
 
     Vertex bottomRightBack;
     bottomRightBack.position = glm::vec3(0.5f, -0.5f, -0.5f);
-    bottomRightBack.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomRightBack.normal = glm::vec3(0.0f, 0.0f, -1.0f);
     bottomRightBack.uv = glm::vec2(1.0f, 0.0f);
 
     //Left Vertices
     Vertex topLeftLeft;
     topLeftLeft.position = glm::vec3(-0.5f, 0.5f, -0.5f);
-    topLeftLeft.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topLeftLeft.normal = glm::vec3(-1.0f, 0.0f, 0.0f);
     topLeftLeft.uv = glm::vec2(0.0f, 1.0f);
 
     Vertex topRightLeft;
     topRightLeft.position = glm::vec3(-0.5f, 0.5f, 0.5f);
-    topRightLeft.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topRightLeft.normal = glm::vec3(-1.0f, 0.0f, 0.0f);
     topRightLeft.uv = glm::vec2(1.0f, 1.0f);
 
     Vertex bottomLeftLeft;
     bottomLeftLeft.position = glm::vec3(-0.5f, -0.5f, -0.5f);
-    bottomLeftLeft.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomLeftLeft.normal = glm::vec3(-1.0f, 0.0f, 0.0f);
     bottomLeftLeft.uv = glm::vec2(0.0f, 0.0f);
 
     Vertex bottomRightLeft;
     bottomRightLeft.position = glm::vec3(-0.5f, -0.5f, 0.5f);
-    bottomRightLeft.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomRightLeft.normal = glm::vec3(-1.0f, 0.0f, 0.0f);
     bottomRightLeft.uv = glm::vec2(1.0f, 0.0f);
 
     //Right Vertices
     Vertex topLeftRight;
     topLeftRight.position = glm::vec3(0.5f, 0.5f, -0.5f);
-    topLeftRight.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topLeftRight.normal = glm::vec3(1.0f, 0.0f, 1.0f);
     topLeftRight.uv = glm::vec2(0.0f, 1.0f);
 
     Vertex topRightRight;
     topRightRight.position = glm::vec3(0.5f, 0.5f, 0.5f);
-    topRightRight.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topRightRight.normal = glm::vec3(1.0f, 0.0f, 1.0f);
     topRightRight.uv = glm::vec2(1.0f, 1.0f);
 
     Vertex bottomLeftRight;
     bottomLeftRight.position = glm::vec3(0.5f, -0.5f, -0.5f);
-    bottomLeftRight.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomLeftRight.normal = glm::vec3(1.0f, 0.0f, 0.0f);
     bottomLeftRight.uv = glm::vec2(0.0f, 0.0f);
 
     Vertex bottomRightRight;
     bottomRightRight.position = glm::vec3(0.5f, -0.5f, 0.5f);
-    bottomRightRight.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomRightRight.normal = glm::vec3(1.0f, 0.0f, 0.0f);
     bottomRightRight.uv = glm::vec2(1.0f, 0.0f);
 
     //Top Vertices
     Vertex topLeftTop;
     topLeftTop.position = glm::vec3(-0.5f, 0.5f, -0.5f);
-    topLeftTop.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topLeftTop.normal = glm::vec3(0.0f, 1.0f, 1.0f);
     topLeftTop.uv = glm::vec2(0.0f, 1.0f);
 
     Vertex topRightTop;
     topRightTop.position = glm::vec3(0.5f, 0.5f, -0.5f);
-    topRightTop.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topRightTop.normal = glm::vec3(0.0f, 1.0f, 1.0f);
     topRightTop.uv = glm::vec2(1.0f, 1.0f);
 
     Vertex bottomLeftTop;
     bottomLeftTop.position = glm::vec3(-0.5f, 0.5f, 0.5f);
-    bottomLeftTop.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomLeftTop.normal = glm::vec3(0.0f, 1.0f, 1.0f);
     bottomLeftTop.uv = glm::vec2(0.0f, 0.0f);
 
     Vertex bottomRightTop;
     bottomRightTop.position = glm::vec3(0.5f, 0.5f, 0.5f);
-    bottomRightTop.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomRightTop.normal = glm::vec3(0.0f, 1.0f, 1.0f);
     bottomRightTop.uv = glm::vec2(1.0f, 0.0f);
 
-    //Top Vertices
+    //Bottom Vertices
     Vertex topLeftBottom;
     topLeftBottom.position = glm::vec3(-0.5f, -0.5f, -0.5f);
-    topLeftBottom.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topLeftBottom.normal = glm::vec3(0.0f, -1.0f, 0.0f);
     topLeftBottom.uv = glm::vec2(0.0f, 1.0f);
 
     Vertex topRightBottom;
     topRightBottom.position = glm::vec3(0.5f, -0.5f, -0.5f);
-    topRightBottom.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    topRightBottom.normal = glm::vec3(0.0f, -1.0f, 0.0f);
     topRightBottom.uv = glm::vec2(1.0f, 1.0f);
 
     Vertex bottomLeftBottom;
     bottomLeftBottom.position = glm::vec3(-0.5f, -0.5f, 0.5f);
-    bottomLeftBottom.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomLeftBottom.normal = glm::vec3(0.0f, -1.0f, 0.0f);
     bottomLeftBottom.uv = glm::vec2(0.0f, 0.0f);
 
     Vertex bottomRightBottom;
     bottomRightBottom.position = glm::vec3(0.5f, -0.5f, 0.5f);
-    bottomRightBottom.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+    bottomRightBottom.normal = glm::vec3(0.0f, -1.0f, 0.0f);
     bottomRightBottom.uv = glm::vec2(1.0f, 0.0f);
-
 
     cube->mesh = new Mesh();
 
@@ -1104,7 +1108,7 @@ bool Engine::CreateCube()
     cube->material = new Material();
 
     //set shaders 
-    cube->material->SetShaders(fallback_VShader, fallback_FShader);
+    cube->material->SetShaders(fallback_VShader, simpleLit_FShader);
     cube->material->SetDiffuseTexture(containerTexture);
     
     // 3. Define the desired range (inclusive) using a distribution
@@ -1120,7 +1124,7 @@ bool Engine::CreateCube()
     cube->rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
     //add to scene objects vector
-    sceneObjects.push_back(cube);
+    litSceneObjects.push_back(cube);
 
     return true;
 }
@@ -1194,9 +1198,23 @@ void Engine::ProcessLit()
         int ambientColorLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "ambientColor");
         glUseProgram(litSceneObjects[i]->material->shaderProgram);
         glUniform3f(ambientColorLocation, ambientColor.x, ambientColor.y, ambientColor.z);
+        
         int ambientStrengthLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "ambientStrength");
         glUseProgram(litSceneObjects[i]->material->shaderProgram);
         glUniform1f(ambientStrengthLocation, ambientStrength);
+
+        int lightPosLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "lightPos");
+        glUseProgram(litSceneObjects[i]->material->shaderProgram);
+        glUniform3f(lightPosLocation, lightPos.x, lightPos.y, lightPos.z);
+
+        int lightColorLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "lightColor");
+        glUseProgram(litSceneObjects[i]->material->shaderProgram);
+        glUniform3f(lightColorLocation, lightColor.x, lightColor.y, lightColor.z);
+
+        int lightStrengthLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "lightStrength");
+        glUseProgram(litSceneObjects[i]->material->shaderProgram);
+        glUniform1f(lightStrengthLocation, lightStrength);
+
         renderer.Render(litSceneObjects[i]);
       }
 }

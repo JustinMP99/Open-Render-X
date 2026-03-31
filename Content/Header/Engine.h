@@ -43,7 +43,7 @@ SceneObject* selectedSceneObject = nullptr; ///< Pointer to the currently select
 //Debug Settings
 bool renderSceneObjects = true;
 bool renderDebugWindow = true;
-bool renderSceneList = false;
+bool renderSceneList = true;
 bool renderInspectorWindow = false;
 bool renderGrid = true;
 glm::vec3 clearScreenColor = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -51,6 +51,10 @@ glm::vec3 clearScreenColor = glm::vec3(0.0f, 0.0f, 0.0f);
 //Lighting Data
 glm::vec3 ambientColor = glm::vec3(0.5f, 0.5f, 0.5f);
 float ambientStrength = 1.0f;
+
+glm::vec3 lightColor = glm::vec3(1.0f, 0.0f, 1.0f);
+glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, 0.0f);
+float lightStrength = 1.0f;
 
 //Grid Data
 SceneObject *grid;
