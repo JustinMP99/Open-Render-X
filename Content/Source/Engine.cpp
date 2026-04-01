@@ -173,7 +173,6 @@ void Engine::CreateInspectorWindow()
         ImGui::Text("Vertex Count: %d", selectedSceneObject->mesh->vertices.size());
         ImGui::Text("Index Count: %d", selectedSceneObject->mesh->indices.size());
 
-
         ImGui::End();
 
     }
@@ -1376,12 +1375,19 @@ bool Engine::Shutdown()
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
 
-
     glDeleteShader(fallback_VShader);
     glDeleteShader(fallback_FShader);
     glDeleteShader(grid_VShader);
     glDeleteShader(grid_FShader);
+    glDeleteShader(simpleLit_FShader);
  
+    delete grid;
+    delete xRay;
+    delete yRay;
+    delete zRay;
+
+    //delete renderer;
+
     ClearSceneObjects();
 
     glfwDestroyWindow(window);

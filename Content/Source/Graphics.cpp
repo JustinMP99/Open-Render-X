@@ -1,7 +1,5 @@
 #include "../Header/Graphics.h"
 
-
-
 // PRIVATE 
 
 void Graphics::ClearScreen()
