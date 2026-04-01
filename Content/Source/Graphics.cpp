@@ -19,10 +19,13 @@ void Graphics::SetModel(SceneObject* object)
     //reset the objects transform to identity before applying position, rotation, and scale
     object->transform = glm::mat4(1.0f);
 
-    object->transform = glm::scale(object->transform, object->scale);
     object->transform = glm::translate(object->transform, object->position);
+    object->transform = glm::scale(object->transform, object->scale);
     object->transform = glm::rotate(object->transform, glm::radians(object->rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+    
+    //object->transform = glm::rotate(object->transform, glm::radians(float(glfwGetTime()) * -10.0f), glm::vec3(0.0, 1.0, 0.0));
     object->transform = glm::rotate(object->transform, glm::radians(object->rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+    
     object->transform = glm::rotate(object->transform, glm::radians(object->rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 }
 
@@ -85,6 +88,7 @@ void Graphics::Render(SceneObject* object)
     glBindVertexArray(object->mesh->VAO);
 
     int drawMode = object->mesh->GetDrawMode();
+
     if (drawMode == GL_TRIANGLES)
     {
         glDrawElements(GL_TRIANGLES, object->mesh->indexCount, GL_UNSIGNED_INT, 0);

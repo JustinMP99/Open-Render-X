@@ -927,12 +927,12 @@ bool Engine::CreateCube()
     //Right Vertices
     Vertex topLeftRight;
     topLeftRight.position = glm::vec3(0.5f, 0.5f, -0.5f);
-    topLeftRight.normal = glm::vec3(1.0f, 0.0f, 1.0f);
+    topLeftRight.normal = glm::vec3(1.0f, 0.0f, 0.0f);
     topLeftRight.uv = glm::vec2(0.0f, 1.0f);
 
     Vertex topRightRight;
     topRightRight.position = glm::vec3(0.5f, 0.5f, 0.5f);
-    topRightRight.normal = glm::vec3(1.0f, 0.0f, 1.0f);
+    topRightRight.normal = glm::vec3(1.0f, 0.0f, 0.0f);
     topRightRight.uv = glm::vec2(1.0f, 1.0f);
 
     Vertex bottomLeftRight;
@@ -948,22 +948,22 @@ bool Engine::CreateCube()
     //Top Vertices
     Vertex topLeftTop;
     topLeftTop.position = glm::vec3(-0.5f, 0.5f, -0.5f);
-    topLeftTop.normal = glm::vec3(0.0f, 1.0f, 1.0f);
+    topLeftTop.normal = glm::vec3(0.0f, 1.0f, 0.0f);
     topLeftTop.uv = glm::vec2(0.0f, 1.0f);
 
     Vertex topRightTop;
     topRightTop.position = glm::vec3(0.5f, 0.5f, -0.5f);
-    topRightTop.normal = glm::vec3(0.0f, 1.0f, 1.0f);
+    topRightTop.normal = glm::vec3(0.0f, 1.0f, 0.0f);
     topRightTop.uv = glm::vec2(1.0f, 1.0f);
 
     Vertex bottomLeftTop;
     bottomLeftTop.position = glm::vec3(-0.5f, 0.5f, 0.5f);
-    bottomLeftTop.normal = glm::vec3(0.0f, 1.0f, 1.0f);
+    bottomLeftTop.normal = glm::vec3(0.0f, 1.0f, 0.0f);
     bottomLeftTop.uv = glm::vec2(0.0f, 0.0f);
 
     Vertex bottomRightTop;
     bottomRightTop.position = glm::vec3(0.5f, 0.5f, 0.5f);
-    bottomRightTop.normal = glm::vec3(0.0f, 1.0f, 1.0f);
+    bottomRightTop.normal = glm::vec3(0.0f, 1.0f, 0.0f);
     bottomRightTop.uv = glm::vec2(1.0f, 0.0f);
 
     //Bottom Vertices
