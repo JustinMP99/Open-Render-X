@@ -205,7 +205,7 @@ std::string Engine::LoadShaderAsString(const std::string& filename)
     return result;
 }
 
-void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, std::vector<unsigned int> &out_indices)
+void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, std::vector<unsigned int> &out_indices, std::string &objectName)
 {
 
     FILE* file = fopen(filepath.c_str(), "r");
@@ -220,6 +220,7 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
 
     std::vector<unsigned int> uvIndices;
     std::vector<unsigned int> positionIndices;
+    std::vector<unsigned int> normalIndices;
 
     while(1)
     {
@@ -261,10 +262,27 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
             positionIndices.push_back(positionIndex[0]);
             positionIndices.push_back(positionIndex[1]);
             positionIndices.push_back(positionIndex[2]);
-            uvIndices.push_back(uvIndex[0]- 1);
-            uvIndices.push_back(uvIndex[1]- 1);
-            uvIndices.push_back(uvIndex[2]- 1);
+            uvIndices.push_back(uvIndex[0]);
+            uvIndices.push_back(uvIndex[1]);
+            uvIndices.push_back(uvIndex[2]);
+            normalIndices.push_back(normalIndex[0]);
+            normalIndices.push_back(normalIndex[1]);
+            normalIndices.push_back(normalIndex[2]);
+            
 
+        }
+        else if(strcmp(lineHeader, "o") == 0)
+        {
+            char name[128];
+            fscanf(file, "%s\n", name);
+            objectName = name;
+            
+        }
+        else
+        {
+            // Probably a comment, eat up the rest of the line
+            char stupidBuffer[1000];
+            fgets(stupidBuffer, 1000, file);
         }
 
         if (res == EOF)
@@ -277,43 +295,14 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
     {
         Vertex vert;
         unsigned int positionIndex = positionIndices[i];
-
-        std::cout << "> Position Index: " << positionIndex << std::endl;
-
+        unsigned int uvIndex = uvIndices[i];
+        unsigned int normalIndex = normalIndices[i];
         vert.position = temp_position[positionIndex - 1];
-        //vert.uv = temp_uv[uvIndices[i]];
-        out_indices.push_back(positionIndex - 1);
+        vert.uv = temp_uv[uvIndex - 1];
+        vert.normal = temp_normal[normalIndex - 1];
+        out_indices.push_back(i);
         out_vertices.push_back(vert);
-        /* code */
     }
-
-
-    // for (int i = 0; i < temp_position.size(); i++)
-    // {
-    //     Vertex vert;
-    //     vert.position = temp_position[i];
-    //     out_vertices.push_back(vert);
-    // }
-
-
-
-
-
-    std::cout << "> Vertex Count After Data Set: " << out_vertices.size() << std::endl;
-
-    // for (unsigned int i = 0; i < out_indices.size(); i++)
-    // {
-    //     /* code */
-    //     Vertex vert;
-    //     unsigned int vertexIndex = out_indices[i];
-    //     vert.position = temp_vertex[vertexIndex];
-    //     //vert.normal = temp_normal[vertexIndex];
-    //     int uvIndex = uvIndices[i];
-    //     vert.uv = temp_uv[uvIndex];
-    //     out_vertices.push_back(vert);
-
-    // }
-
 
 }
 
@@ -831,6 +820,8 @@ bool Engine::CreateQuad()
 
     quad->mesh->SetDrawMode(DrawMode::TRIANGLES);
 
+    quad->mesh->useEBO = true;
+
     quad->material = new Material();
     quad->material->SetShaders(fallback_VShader, simpleLit_FShader);
     quad->material->SetDiffuseTexture(containerTexture);
@@ -1087,6 +1078,8 @@ bool Engine::CreateCube()
 
     cube->mesh->SetDrawMode(DrawMode::TRIANGLES);
 
+    cube->mesh->useEBO = true;
+
     //create vao
     glGenVertexArrays(1, &cube->mesh->VAO);
     glBindVertexArray(cube->mesh->VAO);
@@ -1128,15 +1121,21 @@ bool Engine::CreateCube()
     return true;
 }
 
-#pragma endregion
-
 bool Engine::CreateSceneObject(const char* objPath)
 {
+
     SceneObject *obj = new SceneObject();
 
     obj->mesh = new Mesh();
 
-    ReadOBJ(objPath, obj->mesh->vertices, obj->mesh->indices);
+    ReadOBJ(objPath, obj->mesh->vertices, obj->mesh->indices, obj->name);
+
+    if (obj->name == std::string(""))
+    {
+        obj->name = "Scene Object";
+    }
+    
+    obj->mesh->useEBO = true;
 
     std::cout << "Vertex Count After Read: " << obj->mesh->vertices.size() << std::endl;
 
@@ -1159,17 +1158,19 @@ bool Engine::CreateSceneObject(const char* objPath)
     SetVertexAttributePointers();
 
     obj->material = new Material();
-    obj->material->SetShaders(fallback_VShader, fallback_FShader);
+    obj->material->SetShaders(fallback_VShader, simpleLit_FShader);
     obj->material->SetDiffuseTexture(containerTexture);
     obj->mesh->SetDrawMode(DrawMode::TRIANGLES);
 
-    obj->position = glm::vec3(0.0f, 0.0f, -5.0f);
+    obj->position = glm::vec3(0.0f, 0.0f, 0.0f);
     obj->scale = glm::vec3(1.0f, 1.0f, 1.0f);
 
-    sceneObjects.push_back(obj);
+    litSceneObjects.push_back(obj);
 
     return true;
 }
+
+#pragma endregion
 
 void Engine::ClearSceneObjects()
 {
@@ -1317,6 +1318,7 @@ bool Engine::Initialize()
     //create Grid
     CreateGrid();
     CreateRays();
+    CreateSceneObject((appleProjectDirectory + objModelPath).c_str());
 
     //Setup ImGui
     ImGuiSetup();

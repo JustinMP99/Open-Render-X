@@ -89,13 +89,15 @@ void Graphics::Render(SceneObject* object)
 
     int drawMode = object->mesh->GetDrawMode();
 
-    if (drawMode == GL_TRIANGLES)
+    if (object->mesh->useEBO)
     {
-        glDrawElements(GL_TRIANGLES, object->mesh->indexCount, GL_UNSIGNED_INT, 0);
+        glDrawElements(drawMode, object->mesh->indexCount, GL_UNSIGNED_INT, 0);
+        //glBufferData(GL_ARRAY_BUFFER, object->mesh->vertices.size() * sizeof(Vertex), &object->mesh->vertices[0], GL_STATIC_DRAW);
+        //glDrawArrays(GL_TRIANGLES, 0, object->mesh->indexCount);
     }
-    else if (drawMode == GL_LINES)
+    else if (!object->mesh->useEBO)
     {
-        glDrawArrays(GL_LINES, 0, object->mesh->indexCount);
+        glDrawArrays(drawMode, 0, object->mesh->indexCount);
     }
 }
 

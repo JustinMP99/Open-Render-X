@@ -20,6 +20,7 @@ private:
 
     public:
     DrawMode drawMode; ///< The OpenGL Draw Mode to use when rendering the Mesh (ex. GL_TRIANGLES, GL_LINES, etc.)
+    bool useEBO = false; ///< Whether or not the Mesh uses an EBO for indexed drawing
     unsigned int VAO; ///< Vertex Array Object
     unsigned int VBO; ///< Vertex Buffer Object - Stores mesh vertex data for use with OpenGL
     unsigned int EBO; ///< Element Buffer Object - Stores mesh index data for use with OpenGL

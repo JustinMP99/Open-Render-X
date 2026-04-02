@@ -135,7 +135,7 @@ private:
     ///Loads the passed in shader file into a string to be compiled for use in rendering
     std::string LoadShaderAsString(const std::string& filename);
 
-    void ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, std::vector<unsigned int> &out_indices);
+    void ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, std::vector<unsigned int> &out_indices, std::string &objectName);
 
     /// Creates a vertex shader using the passed in shader and shader path
     bool CreateVertexShader(unsigned int &shader, const char* shaderPath);
