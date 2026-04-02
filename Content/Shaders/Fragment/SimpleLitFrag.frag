@@ -1,10 +1,5 @@
 #version 330
 
-in vec2 texCoord;
-in vec3 normal;
-
-in vec3 fragPos;
-
 out vec4 FragColor;
 
 //Textures 
@@ -18,6 +13,14 @@ uniform vec3 lightPos;
 uniform vec3 lightColor;
 uniform float lightStrength;
 
+//Interface block
+in VS_OUT
+{
+    vec2 texCoord;
+    vec3 normal;
+    vec3 fragPos;
+}fs_in;
+
 
 vec3 calculateAmbient()
 {
@@ -27,8 +30,8 @@ vec3 calculateAmbient()
 void main()
 {
 
-    vec3 norm = normalize(normal);
-    vec3 lightDir = normalize(lightPos - fragPos);
+    vec3 norm = normalize(fs_in.normal);
+    vec3 lightDir = normalize(lightPos - fs_in.fragPos);
 
     float diff = max(dot(norm, lightDir), 0.0f);
 
@@ -41,7 +44,7 @@ void main()
     vec3 ambient = calculateAmbient();
 
     //Return sampled texture
-    vec4 texColor = texture(diffuseTexture, texCoord);
+    vec4 texColor = texture(diffuseTexture, fs_in.texCoord);
 
     // vec3 result = (ambient + diffuse) * texColor.rgb;
     vec3 result = (ambient + diffuse) * texColor.rgb;

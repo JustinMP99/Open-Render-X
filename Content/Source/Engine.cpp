@@ -14,13 +14,13 @@ void Engine::framebuffer_size_callback(GLFWwindow* window, int width, int height
 float Engine::GetRandomFloat(float min, float max)
 {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    
+
     // 2. Seed a pseudo-random number generator (e.g., Mersenne Twister)
     std::mt19937 gen(seed); // A high-quality engine
-    
+
     // 3. Define the desired range (inclusive) using a distribution
     std::uniform_real_distribution<float> distrib(min, max);
-    
+
     // 4. Generate the random number
     return distrib(gen);
 }
@@ -33,7 +33,7 @@ void Engine::ProcessInput()
     {
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     }
-    
+
     if(glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
     {
         renderDebugWindow = true;
@@ -64,9 +64,9 @@ void Engine::CalculateDelta()
 
 void Engine::CreateDebugSettingsWindow()
 {
-    
+
     ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
-    
+
     ImGui::Begin("Debug Menu", nullptr, ImGuiWindowFlags_NoCollapse || ImGuiWindowFlags_AlwaysAutoResize);
     //ImGui::BeginGroup();
 
@@ -75,7 +75,7 @@ void Engine::CreateDebugSettingsWindow()
     ImGui::Text("Unlit Scene Object Count: %d", sceneObjects.size());
     ImGui::Text("Lit Scene Object Count: %d", litSceneObjects.size());
     ImGui::Separator();
-    
+
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Settings");
 
     ImGui::Checkbox("Render Grid", &renderGrid);
@@ -105,11 +105,18 @@ void Engine::CreateDebugSettingsWindow()
         CreateCube();
     }
 
+    ImGui::SameLine();
+
+    if (ImGui::Button("Create OBJ Cube"))
+    {
+        CreateSceneObject((projectDirectory + objModelPath).c_str());
+    }
+
     if(ImGui::Button("Clear SceneObjects"))
     {
         ClearSceneObjects();
     }
-    
+
     ImGui::End();
 }
 
@@ -118,7 +125,7 @@ void Engine::CreateSceneListWindow()
 
     ImGui::SetNextWindowPos(ImVec2(width / 2, height / 2), ImGuiCond_Once);
     ImGui::Begin("Scene List", nullptr, ImGuiWindowFlags_AlwaysVerticalScrollbar);
-    
+
     int count = 0;
 
     for (int i = 0; i < litSceneObjects.size(); i++)
@@ -130,7 +137,7 @@ void Engine::CreateSceneListWindow()
             renderInspectorWindow = true;
             std::cout << "> Selected SceneObject: " << selectedSceneObject->name.c_str() << std::endl;
         }
-        
+
         count++;
     }
 
@@ -144,11 +151,11 @@ void Engine::CreateSceneListWindow()
             renderInspectorWindow = true;
             std::cout << "> Selected SceneObject: " << selectedSceneObject->name.c_str() << std::endl;
         }
-        
+
         count++;
     }
-    
-    
+
+
     ImGui::End();
 }
 
@@ -176,7 +183,7 @@ void Engine::CreateInspectorWindow()
         ImGui::End();
 
     }
-    
+
 }
 
 #pragma endregion
@@ -268,7 +275,7 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
             normalIndices.push_back(normalIndex[0]);
             normalIndices.push_back(normalIndex[1]);
             normalIndices.push_back(normalIndex[2]);
-            
+
 
         }
         else if(strcmp(lineHeader, "o") == 0)
@@ -276,7 +283,7 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
             char name[128];
             fscanf(file, "%s\n", name);
             objectName = name;
-            
+
         }
         else
         {
@@ -440,8 +447,8 @@ void Engine::ImGuiSetup()
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;    
- 
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
     ImGui_ImplOpenGL3_Init();
@@ -483,8 +490,7 @@ bool Engine::CreateGrid()
             grid->mesh->vertices.push_back(vertOne);
             grid->mesh->vertices.push_back(vertTwo);
         }
-        
-       
+
         z = z + 1.0f;
     }
 
@@ -509,7 +515,7 @@ bool Engine::CreateGrid()
             grid->mesh->vertices.push_back(vertOne);
             grid->mesh->vertices.push_back(vertTwo);
         }
-        
+
         x = x + 1.0f;
     }
 
@@ -553,16 +559,16 @@ bool Engine::CreateRays()
     Vertex xVertOne;
     xVertOne.position = glm::vec3(-500.0f, 0.0f, 0.0f);
     xVertOne.normal = glm::vec3(0.0f, 0.0f, 0.0f);
-    xVertOne.uv = glm::vec2(0.0f, 0.0f);    
+    xVertOne.uv = glm::vec2(0.0f, 0.0f);
     Vertex xVertTwo;
     xVertTwo.position = glm::vec3(500.0f, 0.0f, 0.0f);
     xVertTwo.normal = glm::vec3(0.0f, 0.0f, 0.0f);
-    xVertTwo.uv = glm::vec2(1.0f, 1.0f);    
+    xVertTwo.uv = glm::vec2(1.0f, 1.0f);
 
 
     xRay->mesh->vertices.push_back(xVertOne);
     xRay->mesh->vertices.push_back(xVertTwo);
-    
+
     xRay->mesh->SetDrawMode(DrawMode::LINES);
     xRay->material = new Material();
 
@@ -581,12 +587,12 @@ bool Engine::CreateRays()
     glGenBuffers(1, &xRay->mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, xRay->mesh->EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, xRay->mesh->indices.size() * sizeof(unsigned int), &xRay->mesh->indices[0], GL_STATIC_DRAW);
-    
+
     SetVertexAttributePointers();
 
     xRay->material->SetShaders(grid_VShader, grid_FShader);
     xRay->position = glm::vec3(0.0f, 0.0f, 0.0f);
-    xRay->scale = glm::vec3(1.0f, 1.0f, 1.0f);   
+    xRay->scale = glm::vec3(1.0f, 1.0f, 1.0f);
     xRay->rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
     int colorLocation = glGetUniformLocation(xRay->material->shaderProgram, "color");
@@ -597,16 +603,16 @@ bool Engine::CreateRays()
     Vertex yVertOne;
     yVertOne.position = glm::vec3(0.0f, -500.0f, 0.0f);
     yVertOne.normal = glm::vec3(0.0f, 0.0f, 0.0f);
-    yVertOne.uv = glm::vec2(0.0f, 0.0f);    
+    yVertOne.uv = glm::vec2(0.0f, 0.0f);
     Vertex yVertTwo;
     yVertTwo.position = glm::vec3(0.0f, 500.0f, 0.0f);
     yVertTwo.normal = glm::vec3(0.0f, 0.0f, 0.0f);
-    yVertTwo.uv = glm::vec2(1.0f, 1.0f);    
+    yVertTwo.uv = glm::vec2(1.0f, 1.0f);
 
 
     yRay->mesh->vertices.push_back(yVertOne);
     yRay->mesh->vertices.push_back(yVertTwo);
-    
+
     yRay->mesh->SetDrawMode(DrawMode::LINES);
     yRay->material = new Material();
 
@@ -625,12 +631,12 @@ bool Engine::CreateRays()
     glGenBuffers(1, &yRay->mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, yRay->mesh->EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, yRay->mesh->indices.size() * sizeof(unsigned int), &yRay->mesh->indices[0], GL_STATIC_DRAW);
-    
+
     SetVertexAttributePointers();
 
     yRay->material->SetShaders(grid_VShader, grid_FShader);
     yRay->position = glm::vec3(0.0f, 0.0f, 0.0f);
-    yRay->scale = glm::vec3(1.0f, 1.0f, 1.0f);   
+    yRay->scale = glm::vec3(1.0f, 1.0f, 1.0f);
     yRay->rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
     colorLocation = glGetUniformLocation(yRay->material->shaderProgram, "color");
@@ -641,16 +647,16 @@ bool Engine::CreateRays()
     Vertex zVertOne;
     zVertOne.position = glm::vec3(0.0f, 0.0f, -500.0f);
     zVertOne.normal = glm::vec3(0.0f, 0.0f, 0.0f);
-    zVertOne.uv = glm::vec2(0.0f, 0.0f);    
+    zVertOne.uv = glm::vec2(0.0f, 0.0f);
     Vertex zVertTwo;
     zVertTwo.position = glm::vec3(0.0f, 0.0f, 500.0f);
     zVertTwo.normal = glm::vec3(0.0f, 0.0f, 0.0f);
-    zVertTwo.uv = glm::vec2(1.0f, 1.0f);    
+    zVertTwo.uv = glm::vec2(1.0f, 1.0f);
 
 
     zRay->mesh->vertices.push_back(zVertOne);
     zRay->mesh->vertices.push_back(zVertTwo);
-    
+
     zRay->mesh->SetDrawMode(DrawMode::LINES);
     zRay->material = new Material();
 
@@ -669,12 +675,12 @@ bool Engine::CreateRays()
     glGenBuffers(1, &zRay->mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, zRay->mesh->EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, zRay->mesh->indices.size() * sizeof(unsigned int), &zRay->mesh->indices[0], GL_STATIC_DRAW);
-    
+
     SetVertexAttributePointers();
 
     zRay->material->SetShaders(grid_VShader, grid_FShader);
     zRay->position = glm::vec3(0.0f, 0.0f, 0.0f);
-    zRay->scale = glm::vec3(1.0f, 1.0f, 1.0f);   
+    zRay->scale = glm::vec3(1.0f, 1.0f, 1.0f);
     zRay->rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
     colorLocation = glGetUniformLocation(zRay->material->shaderProgram, "color");
@@ -840,6 +846,7 @@ bool Engine::CreateQuad()
     litSceneObjects.push_back(quad);
 
     return true;
+
 }
 
 bool Engine::CreateCube()
@@ -853,7 +860,7 @@ bool Engine::CreateCube()
     //Create Vertices
 
     //Front Vertices
-    Vertex topLeftFront; 
+    Vertex topLeftFront;
     topLeftFront.position = glm::vec3(-0.5f, 0.5f, 0.5f);
     topLeftFront.normal = glm::vec3(0.0f, 0.0f, 1.0f);
     topLeftFront.uv = glm::vec2(0.0f, 1.0f);
@@ -1099,17 +1106,17 @@ bool Engine::CreateCube()
     //create material
     cube->material = new Material();
 
-    //set shaders 
+    //set shaders
     cube->material->SetShaders(fallback_VShader, simpleLit_FShader);
     cube->material->SetDiffuseTexture(containerTexture);
-    
+
     // 3. Define the desired range (inclusive) using a distribution
     float min = -5.0f;
     float max = 5.0f;
-    
+
     float random_x = GetRandomFloat(min, max);
     float random_z = GetRandomFloat(min, max);
-   
+
     //set initial position and scale
     cube->position = glm::vec3(random_x, 0.0f, -random_z);
     cube->scale = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -1134,7 +1141,7 @@ bool Engine::CreateSceneObject(const char* objPath)
     {
         obj->name = "Scene Object";
     }
-    
+
     obj->mesh->useEBO = true;
 
     std::cout << "Vertex Count After Read: " << obj->mesh->vertices.size() << std::endl;
@@ -1174,7 +1181,7 @@ bool Engine::CreateSceneObject(const char* objPath)
 
 void Engine::ClearSceneObjects()
 {
-    
+
     renderInspectorWindow = false;
     selectedSceneObject = NULL;
 
@@ -1198,7 +1205,7 @@ void Engine::ProcessLit()
         int ambientColorLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "ambientColor");
         glUseProgram(litSceneObjects[i]->material->shaderProgram);
         glUniform3f(ambientColorLocation, ambientColor.x, ambientColor.y, ambientColor.z);
-        
+
         int ambientStrengthLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "ambientStrength");
         glUseProgram(litSceneObjects[i]->material->shaderProgram);
         glUniform1f(ambientStrengthLocation, ambientStrength);
@@ -1234,7 +1241,7 @@ void Engine::ProcessUI()
     ImGui::NewFrame();
     if (renderDebugWindow)
     {
-        CreateDebugSettingsWindow(); 
+        CreateDebugSettingsWindow();
     }
 
     if (renderSceneList)
@@ -1246,10 +1253,10 @@ void Engine::ProcessUI()
     {
         CreateInspectorWindow();
     }
-    
-    
+
+
     ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());   
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 // PUBLIC
@@ -1264,6 +1271,7 @@ bool Engine::Initialize()
             return false;
         }
     #endif
+
     #ifdef Platform_Apple
         if (!CreateWindow(width,  height, appleTitle))
         {
@@ -1287,38 +1295,19 @@ bool Engine::Initialize()
 
     std::cout << projectDirectory << std::endl;
 
-#ifdef Platform_Linux
-
     //create shaders
-    CreateVertexShader(fallback_VShader, (linuxProjectDirectory + fallbackVertexPath).c_str());
-    CreateVertexShader(grid_VShader, (linuxProjectDirectory + gridVertexPath).c_str());
-    CreateFragmentShader(fallback_FShader, (linuxProjectDirectory + fallbackFragmentPath).c_str());
-    CreateFragmentShader(grid_FShader, (linuxProjectDirectory + gridFragmentPath).c_str());
-    CreateFragmentShader(simpleLit_FShader, (linuxProjectDirectory + simpleLitFragmentPath).c_str());
+    CreateVertexShader(fallback_VShader, (projectDirectory + fallbackVertexPath).c_str());
+    CreateVertexShader(grid_VShader, (projectDirectory + gridVertexPath).c_str());
+    CreateFragmentShader(fallback_FShader, (projectDirectory + fallbackFragmentPath).c_str());
+    CreateFragmentShader(grid_FShader, (projectDirectory + gridFragmentPath).c_str());
+    CreateFragmentShader(simpleLit_FShader, (projectDirectory + simpleLitFragmentPath).c_str());
 
     //create textures
-    CreateTexture((linuxProjectDirectory + containerTexturePath).c_str(), containerTexture);
-
-#endif
-
-#ifdef Platform_Apple
-
-    //create shaders
-    CreateVertexShader(fallback_VShader, (appleProjectDirectory + fallbackVertexPath).c_str());
-    CreateVertexShader(grid_VShader, (appleProjectDirectory + gridVertexPath).c_str());
-    CreateFragmentShader(fallback_FShader, (appleProjectDirectory + fallbackFragmentPath).c_str());
-    CreateFragmentShader(grid_FShader, (appleProjectDirectory + gridFragmentPath).c_str());
-    CreateFragmentShader(simpleLit_FShader, (appleProjectDirectory + simpleLitFragmentPath).c_str());
-
-    //create textures
-    CreateTexture((appleProjectDirectory + containerTexturePath).c_str(), containerTexture);
-
-#endif
+    CreateTexture((projectDirectory + containerTexturePath).c_str(), containerTexture);
 
     //create Grid
     CreateGrid();
     CreateRays();
-    CreateSceneObject((appleProjectDirectory + objModelPath).c_str());
 
     //Setup ImGui
     ImGuiSetup();
@@ -1336,18 +1325,18 @@ void Engine::Loop()
         CalculateDelta();
 
         ProcessInput();
-        
+
         camera.Update(deltaTime);
-        
+
         renderer.UpdateViewMatrix(camera.View);
-        
+
         renderer.ClearScreen(clearScreenColor.x, clearScreenColor.y, clearScreenColor.z);
-        
+
         if (renderGrid)
         {
             renderer.Render(grid);
         }
-        
+
         renderer.Render(xRay);
         renderer.Render(yRay);
         renderer.Render(zRay);
@@ -1357,7 +1346,7 @@ void Engine::Loop()
             ProcessLit();
             ProcessUnlit();
         }
-        
+
         ProcessUI();
 
         glfwSwapBuffers(window);
@@ -1367,7 +1356,7 @@ void Engine::Loop()
 bool Engine::Shutdown()
 {
     std::cout << "Shutting down engine..." << std::endl;
-    
+
     renderDebugWindow = false;
     renderInspectorWindow = false;
     renderSceneList = false;
@@ -1382,7 +1371,7 @@ bool Engine::Shutdown()
     glDeleteShader(grid_VShader);
     glDeleteShader(grid_FShader);
     glDeleteShader(simpleLit_FShader);
- 
+
     delete grid;
     delete xRay;
     delete yRay;

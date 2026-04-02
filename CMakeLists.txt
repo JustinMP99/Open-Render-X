@@ -26,6 +26,8 @@ elseif(WIN32)
     find_package(OpenGL REQUIRED)
 endif()
 
+
+
 # Add Source Files
 add_executable(OpenRenderX
        Content/Source/glad.c
@@ -46,6 +48,10 @@ add_executable(OpenRenderX
 
        Content/Additional/include/imgui/backends/imgui_impl_glfw.cpp
        Content/Additional/include/imgui/backends/imgui_impl_opengl3.cpp
+)
+
+target_compile_definitions(OpenRenderX PRIVATE 
+    PROJECT_DIR="${CMAKE_SOURCE_DIR}"
 )
 
 # Include Directories

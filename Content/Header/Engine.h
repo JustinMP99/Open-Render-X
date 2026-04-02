@@ -22,96 +22,80 @@ class Engine
 
 private:
 
-//Window Data
-GLFWwindow* window; ///< Pointer to the window that is created by GLFW
-unsigned int width = 1290;///< The width of the window
-unsigned int height = 720; ///< The height of the window
+    //Window Data
+    GLFWwindow* window; ///< Pointer to the window that is created by GLFW
+    unsigned int width = 1290;///< The width of the window
+    unsigned int height = 720; ///< The height of the window
 
-//Additional Core Data
-Graphics renderer;
-Camera camera;
+    //Additional Core Data
+    Graphics renderer;
+    Camera camera;
 
-float deltaTime = 0.0f; ///< The time it takes to render a single frame
-float lastFrame = 0.0f; ///< The time it took to render the last
+    float deltaTime = 0.0f; ///< The time it takes to render a single frame
+    float lastFrame = 0.0f; ///< The time it took to render the last
 
-std::vector<SceneObject*> sceneObjects;
+    std::vector<SceneObject*> sceneObjects;
+    std::vector<SceneObject*> litSceneObjects; ///< Vector that stores all SceneObjects that use the simple lit shader
+    SceneObject* selectedSceneObject = nullptr; ///< Pointer to the currently selected SceneObject, used for the inspector window
 
-std::vector<SceneObject*> litSceneObjects; ///< Vector that stores all SceneObjects that use the simple lit shader
+    //Debug Settings
+    bool renderSceneObjects = true;
+    bool renderDebugWindow = true;
+    bool renderSceneList = true;
+    bool renderInspectorWindow = false;
+    bool renderGrid = true;
+    glm::vec3 clearScreenColor = glm::vec3(0.0f, 0.0f, 0.0f);
 
-SceneObject* selectedSceneObject = nullptr; ///< Pointer to the currently selected SceneObject, used for the inspector window
+    //Lighting Data
+    glm::vec3 ambientColor = glm::vec3(0.5f, 0.5f, 0.5f);
+    float ambientStrength = 1.0f;
 
-//Debug Settings
-bool renderSceneObjects = true;
-bool renderDebugWindow = true;
-bool renderSceneList = true;
-bool renderInspectorWindow = false;
-bool renderGrid = true;
-glm::vec3 clearScreenColor = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, 0.0f);
+    float lightStrength = 1.0f;
 
-//Lighting Data
-glm::vec3 ambientColor = glm::vec3(0.5f, 0.5f, 0.5f);
-float ambientStrength = 1.0f;
+    //Grid Data
+    SceneObject *grid;
+    SceneObject *xRay;
+    SceneObject *yRay;
+    SceneObject *zRay;
+    int gridHorizontal = 1000;
+    int gridVertical = 1000;
 
-glm::vec3 lightColor = glm::vec3(1.0f, 0.0f, 1.0f);
-glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, 0.0f);
-float lightStrength = 1.0f;
+    //Vertex Shaders
+    unsigned int fallback_VShader;
+    unsigned int grid_VShader;
 
-//Grid Data
-SceneObject *grid;
-SceneObject *xRay;
-SceneObject *yRay;
-SceneObject *zRay;
-int gridHorizontal = 1000;
-int gridVertical = 1000;
+    //Fragment Shaders
+    unsigned int fallback_FShader;
+    unsigned int grid_FShader;
+    unsigned int simpleLit_FShader;
 
-//Vertex Shaders
-unsigned int fallback_VShader;
-unsigned int grid_VShader;
+    //Textures
+    unsigned int containerTexture;
 
-//Fragment Shaders
-unsigned int fallback_FShader;
-unsigned int grid_FShader;
-unsigned int simpleLit_FShader;
+    const char* windowsTitle = "Open Render X - OpenGL - Windows";
+    const char* appleTitle = "Open Render X - OpenGL - MacOS";
+    const char* linuxTitle = "Open Render X - OpenGL - Linux";
 
-//Textures
-unsigned int containerTexture;
+    //File Paths
 
-const char* windowsTitle = "Open Render X - OpenGL - Windows";
-const char* appleTitle = "Open Render X - OpenGL - MacOS";
-const char* linuxTitle = "Open Render X - OpenGL - Linux";
+    std::string projectDirectory = PROJECT_DIR;
 
-//File Paths
+    //Shader Paths
+    const char* fallbackVertexPath = "/Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader
+    const char* gridVertexPath = "/Content/Shaders/Vertex/GridVertex.vert"; ///< The path to the grid vertex shader
+    const char* fallbackFragmentPath = "/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader
+    const char* gridFragmentPath = "/Content/Shaders/Fragment/GridFrag.frag"; ///< The path to the grid fragment shader
+    const char* simpleLitFragmentPath = "/Content/Shaders/Fragment/SimpleLitFrag.frag"; ///< The path to the simple lit fragment shader
 
-std::string projectDirectory = std::filesystem::current_path().string(); ///< The path to the project directory, used as a base for all other file paths
+    //Texture Paths
+    const char* containerTexturePath = "/Content/Additional/Images/container.jpg"; ///< The path to the crate texture
 
-#ifdef Platform_Apple
-
-    std::string appleProjectDirectory = "/Users/justinphilie/Documents/Projects/Graphics/Open-Render-X/";
-
-#endif
-
-#ifdef Platform_Linux
-
-    //Desktop
-    //std::string linuxProjectDirectory = "/mnt/SSD_02/Projects/Graphics/Open-Render-X/";
-
-    //Laptop
-    std::string linuxProjectDirectory = "/mnt/03796401-d644-4d8d-8373-0614cdaf42a0/Projects/Graphics/Open-Render-X/";
-
-#endif
-
-    const char* fallbackVertexPath = "Content/Shaders/Vertex/FallbackVertex.vert"; ///< The path to the fallback vertex shader
-    const char* gridVertexPath = "Content/Shaders/Vertex/GridVertex.vert"; ///< The path to the grid vertex shader
-    const char* fallbackFragmentPath = "Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader
-    const char* gridFragmentPath = "Content/Shaders/Fragment/GridFrag.frag"; ///< The path to the grid fragment shader
-    const char* simpleLitFragmentPath = "Content/Shaders/Fragment/SimpleLitFrag.frag"; ///< The path to the simple lit fragment shader
-
-    const char* containerTexturePath = "Content/Additional/Images/container.jpg"; ///< The path to the crate texture 
-
-    const char* objModelPath = "Content/Additional/mesh/cube.obj"; ///< The path to the OBJ model
+    //Model Paths
+    const char* objModelPath = "/Content/Additional/mesh/cube.obj"; ////< The path to the OBJ model
 
 private:
-
 
     void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -127,7 +111,7 @@ private:
     void CreateDebugSettingsWindow();
 
     void CreateSceneListWindow();
-    
+
     void CreateInspectorWindow();
 
     //SETUP UTILITY FUNCTIONS
@@ -158,6 +142,7 @@ private:
 
     bool CreateRays();
 
+    //Creates a SceneObject and fills it's mesh data by reading the passed in OBJ file path
     bool CreateSceneObject(const char* objPath);
 
     /// Creates the window for the render engine
