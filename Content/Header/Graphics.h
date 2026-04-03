@@ -22,6 +22,8 @@ private:
 	glm::mat4 projection;
   float fov = 60.0f;
 
+  unsigned int uboMatrices; ///< Uniform Buffer Object for storing view and projection matrices
+
   void SetModel(SceneObject* object);
 
   void UpdateTransformUniforms(SceneObject* object);
