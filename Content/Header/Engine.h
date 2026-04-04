@@ -44,6 +44,7 @@ private:
     bool renderSceneList = true;
     bool renderInspectorWindow = false;
     bool renderGrid = true;
+    bool enableWireframe = false;
     glm::vec3 clearScreenColor = glm::vec3(0.0f, 0.0f, 0.0f);
 
     //Lighting Data

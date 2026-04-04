@@ -79,6 +79,20 @@ void Engine::CreateDebugSettingsWindow()
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Settings");
 
     ImGui::Checkbox("Render Grid", &renderGrid);
+    if (ImGui::Checkbox("Enable Wireframe", &enableWireframe))
+    {
+        if (enableWireframe)
+        {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        }
+        else
+        {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        }  
+    };
+    
+    ImGui::Spacing();
+    
     ImGui::ColorEdit3("Clear Color", (float*)&clearScreenColor);
 
     ImGui::Separator();
@@ -1171,6 +1185,7 @@ bool Engine::CreateSceneObject(const char* objPath)
 
     obj->position = glm::vec3(0.0f, 0.0f, 0.0f);
     obj->scale = glm::vec3(1.0f, 1.0f, 1.0f);
+    obj->rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
     litSceneObjects.push_back(obj);
 
@@ -1221,6 +1236,14 @@ void Engine::ProcessLit()
         int lightStrengthLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "lightStrength");
         glUseProgram(litSceneObjects[i]->material->shaderProgram);
         glUniform1f(lightStrengthLocation, lightStrength);
+
+        litSceneObjects[i]->rotation.y += deltaTime * 20.0f;
+        if (litSceneObjects[i]->rotation.y >= 360.0f)
+        {
+            litSceneObjects[i]->rotation.y = 0.0f;
+        }
+        
+        //object->transform = glm::rotate(object->transform, glm::radians(float(glfwGetTime()) * -10.0f), glm::vec3(0.0, 1.0, 0.0));
 
         renderer.Render(litSceneObjects[i]);
       }
@@ -1343,6 +1366,7 @@ void Engine::Loop()
 
         if (renderSceneObjects)
         {
+
             ProcessLit();
             ProcessUnlit();
         }
