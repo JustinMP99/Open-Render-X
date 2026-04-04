@@ -32,11 +32,13 @@ void Graphics::SetModel(SceneObject* object)
 void Graphics::UpdateTransformUniforms(SceneObject* object)
 {
     //update objects transform uniform in shader
-	unsigned int modelLoc = glGetUniformLocation(object->material->shaderProgram, "model");
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(object->transform));
 	
     glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
     glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
+    //glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+    //glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
+    glBufferSubData(GL_UNIFORM_BUFFER, 2 *sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(object->transform));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
 	// int viewLoc = glGetUniformLocation(object->material->shaderProgram, "view");
@@ -74,7 +76,7 @@ bool Graphics::Initialize(GLFWwindow* win)
     //Create Uniform Buffer Object for view and projection matrices
     glGenBuffers(1, &uboMatrices);
     glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
-    glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), NULL, GL_STATIC_DRAW);
+    glBufferData(GL_UNIFORM_BUFFER, 3 * sizeof(glm::mat4), NULL, GL_STATIC_DRAW);
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
     glBindBufferRange(GL_UNIFORM_BUFFER, 0, uboMatrices, 0, 2 * sizeof(glm::mat4));

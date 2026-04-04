@@ -20,7 +20,7 @@ private:
   glm::mat4 model;
 	glm::mat4 view;
 	glm::mat4 projection;
-  float fov = 60.0f;
+  float fov = 200.0f;
 
   unsigned int uboMatrices; ///< Uniform Buffer Object for storing view and projection matrices
 
