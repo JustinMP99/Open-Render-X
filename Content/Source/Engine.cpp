@@ -194,6 +194,11 @@ void Engine::CreateInspectorWindow()
         ImGui::Text("Vertex Count: %d", selectedSceneObject->mesh->vertices.size());
         ImGui::Text("Index Count: %d", selectedSceneObject->mesh->indices.size());
 
+        ImGui::Separator();
+
+        ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Material Data");
+        ImGui::SliderFloat("Shininess: %f", &selectedSceneObject->material->shininess, 32.0f, 256.0f, "%.1f");
+
         ImGui::End();
 
     }
@@ -1319,6 +1324,7 @@ void Engine::ProcessLit()
         glUseProgram(litSceneObjects[i]->material->shaderProgram);
         glUniform1f(lightStrengthLocation, lightStrength);
 
+        litSceneObjects[i]->position.x = 1.0f + sin(glfwGetTime()) * 2.0f;
         litSceneObjects[i]->rotation.y += deltaTime * 20.0f;
         if (litSceneObjects[i]->rotation.y >= 360.0f)
         {

@@ -82,7 +82,6 @@ bool Graphics::Initialize(GLFWwindow* win)
     glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projection));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-
     return true;
 }
 
@@ -109,8 +108,6 @@ void Graphics::Render(SceneObject* object)
     if (object->mesh->useEBO)
     {
         glDrawElements(drawMode, object->mesh->indexCount, GL_UNSIGNED_INT, 0);
-        //glBufferData(GL_ARRAY_BUFFER, object->mesh->vertices.size() * sizeof(Vertex), &object->mesh->vertices[0], GL_STATIC_DRAW);
-        //glDrawArrays(GL_TRIANGLES, 0, object->mesh->indexCount);
     }
     else if (!object->mesh->useEBO)
     {

@@ -41,26 +41,13 @@ void Material::Use()
     glUseProgram(shaderProgram);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, diffuseTexture);
-    SetInt("Material.diffuseTexture", 0);
+    SetInt("diffuseTexture", 0);
 
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, specularTexture);
-    SetInt("Material.specularTexture", 1);
+    SetInt("specularTexture", 1);
 
-    // if(usingDiffuse)
-    // {
-    //     glActiveTexture(GL_TEXTURE0);
-    //     glBindTexture(GL_TEXTURE_2D, diffuseTexture);
-    //     SetInt("Material.diffuseTexture", 0);
-    // }
-    // if (usingSpecular)
-    // {
-    //     glActiveTexture(GL_TEXTURE1);
-    //     glBindTexture(GL_TEXTURE_2D, specularTexture);
-    //     SetInt("Material.specularTexture", 1);
-    // }
-    SetFloat("shininess", shininess);
-    //glUniform1f(glGetUniformLocation(shaderProgram, "Material.shininess"), shininess);
+    glUniform1f(glGetUniformLocation(shaderProgram, "shininess"), shininess);
 
 }
 
