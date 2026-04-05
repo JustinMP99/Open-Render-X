@@ -22,12 +22,14 @@ class Material
 private:
 
     bool usingDiffuse = false;
+    bool usingSpecular = false;
 
 public:
     std::string MaterialName;
     unsigned int shaderProgram;
     unsigned int diffuseTexture;
     unsigned int specularTexture;
+    float shininess = 32.0f;
 
     Material();
     Material(unsigned int vertexShader, unsigned int fragmentShader);
@@ -45,7 +47,8 @@ public:
     /// Creates the Shader Program and attaches and links the vertex and fragment shaders passed in
     /// </summary>
     bool SetShaders(unsigned int vertexShader, unsigned int fragmentShader);
-    bool SetDiffuseTexture(unsigned int diffuese);
+    bool SetDiffuseTexture(unsigned int diffuse);
+    bool SetSpecularTexture(unsigned int specular);
     bool SetBool(const std::string &name, bool value) const;
     bool SetInt(const std::string &name, int value) const;
     bool SetFloat(const std::string &name, float value) const;

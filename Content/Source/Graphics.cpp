@@ -82,6 +82,7 @@ bool Graphics::Initialize(GLFWwindow* win)
     glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projection));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
+
     return true;
 }
 

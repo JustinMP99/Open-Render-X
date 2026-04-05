@@ -23,6 +23,7 @@ private:
   float fov = 200.0f;
 
   unsigned int uboMatrices; ///< Uniform Buffer Object for storing view and projection matrices
+  unsigned int uboMaterial; ///< Uniform Buffer Object for storing material properties
 
   void SetModel(SceneObject* object);
 
