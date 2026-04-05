@@ -48,6 +48,12 @@ void Graphics::UpdateTransformUniforms(SceneObject* object)
 	// glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 }
 
+void Graphics::UpdateViewPosition(glm::vec3 viewPos)
+{
+    int viewPosLocation = glGetUniformLocation(uboMatrices, "viewPos");
+    glUniform3f(viewPosLocation, viewPos.x, viewPos.y, viewPos.z);
+}
+
 // PUBLIC
 Graphics::Graphics()
 {
@@ -102,7 +108,7 @@ void Graphics::Render(SceneObject* object)
     SetModel(object);
     
     //update shader uniforms
-    UpdateTransformUniforms(object);
+    UpdateTransformUniforms(object); 
     
     glBindVertexArray(object->mesh->VAO);
 

@@ -152,3 +152,8 @@ void Camera::Update(float deltaTime)
     //update view matrix
     View = glm::lookAt(cameraPos, cameraPos + cameraDir, cameraUp);
 }
+
+glm::vec3 Camera::GetPosition()
+{
+    return cameraPos;
+}

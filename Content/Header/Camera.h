@@ -39,4 +39,6 @@ public:
     
     void Update(float deltaTime);
 
+    glm::vec3 GetPosition();
+
 };

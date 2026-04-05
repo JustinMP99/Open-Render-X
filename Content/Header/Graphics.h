@@ -41,6 +41,7 @@ public:
     void ClearScreen();
     void ClearScreen(float r, float g, float b);
     void UpdateViewMatrix(glm::mat4 viewMatrix);
+    void UpdateViewPosition(glm::vec3 viewPos);
     void SetFOV(float fov);
     void SetViewport(int x, int y, int width, int height);
 };

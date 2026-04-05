@@ -13,6 +13,9 @@ uniform vec3 lightPos;
 uniform vec3 lightColor;
 uniform float lightStrength;
 
+//camera view position
+uniform vec3 viewPos;
+
 //Interface block
 in VS_OUT
 {

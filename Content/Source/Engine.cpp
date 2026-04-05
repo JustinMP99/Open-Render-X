@@ -92,7 +92,7 @@ void Engine::CreateDebugSettingsWindow()
     };
     
     ImGui::Spacing();
-    
+
     ImGui::ColorEdit3("Clear Color", (float*)&clearScreenColor);
 
     ImGui::Separator();
@@ -1315,6 +1315,7 @@ bool Engine::Initialize()
 
     camera = Camera();
     camera.Setup(glm::vec3(0.0f, 1.0f, 5.0f), window);
+    
 
     std::cout << projectDirectory << std::endl;
 
@@ -1352,6 +1353,8 @@ void Engine::Loop()
         camera.Update(deltaTime);
 
         renderer.UpdateViewMatrix(camera.View);
+
+        renderer.UpdateViewPosition(camera.GetPosition());
 
         renderer.ClearScreen(clearScreenColor.x, clearScreenColor.y, clearScreenColor.z);
 
