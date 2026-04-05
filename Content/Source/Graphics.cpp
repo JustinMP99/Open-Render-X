@@ -32,20 +32,11 @@ void Graphics::SetModel(SceneObject* object)
 void Graphics::UpdateTransformUniforms(SceneObject* object)
 {
     //update objects transform uniform in shader
-	
     glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
     glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
-    //glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-    //glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
     glBufferSubData(GL_UNIFORM_BUFFER, 2 *sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(object->transform));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
-	// int viewLoc = glGetUniformLocation(object->material->shaderProgram, "view");
-	// glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-
-	// int projectionLoc = glGetUniformLocation(object->material->shaderProgram, "projection");
-	// glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 }
 
 void Graphics::UpdateViewPosition(glm::vec3 viewPos)

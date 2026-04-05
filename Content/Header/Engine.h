@@ -94,7 +94,8 @@ private:
     const char* containerTexturePath = "/Content/Additional/Images/container.jpg"; ///< The path to the crate texture
 
     //Model Paths
-    const char* objModelPath = "/Content/Additional/mesh/cube.obj"; ////< The path to the OBJ model
+    const char* cubeMeshPath = "/Content/Additional/mesh/cube.obj"; ////< The path to the OBJ model
+    const char* sphereMeshPath = "/Content/Additional/mesh/Sphere.obj"; ///< The path to the sphere OBJ model
 
 private:
 
@@ -136,6 +137,10 @@ private:
 
     /// Creates a quad to be rendered
     bool CreateQuad();
+
+    bool CreateCube_Old();
+
+    bool CreateSphere();
 
     bool CreateCube();
 

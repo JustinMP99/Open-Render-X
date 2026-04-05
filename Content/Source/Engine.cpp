@@ -121,11 +121,11 @@ void Engine::CreateDebugSettingsWindow()
 
     ImGui::SameLine();
 
-    if (ImGui::Button("Create OBJ Cube"))
+    if (ImGui::Button("Create Sphere"))
     {
-        CreateSceneObject((projectDirectory + objModelPath).c_str());
+        CreateSphere();
     }
-
+    
     if(ImGui::Button("Clear SceneObjects"))
     {
         ClearSceneObjects();
@@ -863,7 +863,7 @@ bool Engine::CreateQuad()
 
 }
 
-bool Engine::CreateCube()
+bool Engine::CreateCube_Old()
 {
 
     //Create SceneObject
@@ -1142,6 +1142,90 @@ bool Engine::CreateCube()
     return true;
 }
 
+bool Engine::CreateSphere()
+{
+    SceneObject *obj = new SceneObject();
+    obj->mesh = new Mesh();
+    obj->material = new Material();
+
+    ReadOBJ((projectDirectory + sphereMeshPath).c_str(), obj->mesh->vertices, obj->mesh->indices, obj->name);
+
+    obj->mesh->useEBO = true;
+
+    obj->mesh->indexCount = static_cast<unsigned int>(obj->mesh->indices.size());
+
+    glGenVertexArrays(1, &obj->mesh->VAO);
+    glBindVertexArray(obj->mesh->VAO);
+
+    glGenBuffers(1, &obj->mesh->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, obj->mesh->VBO);
+    glBufferData(GL_ARRAY_BUFFER, obj->mesh->vertices.size() * sizeof(Vertex), &obj->mesh->vertices[0], GL_STATIC_DRAW);
+
+       //Create EBO
+    glGenBuffers(1, &obj->mesh->EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj->mesh->EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj->mesh->indexCount * sizeof(unsigned int), &obj->mesh->indices[0], GL_STATIC_DRAW);
+
+    //Set vertex attribute pointers
+    SetVertexAttributePointers();
+
+    obj->material = new Material();
+    obj->material->SetShaders(fallback_VShader, simpleLit_FShader);
+    obj->material->SetDiffuseTexture(containerTexture);
+    obj->mesh->SetDrawMode(DrawMode::TRIANGLES);
+
+    obj->position = glm::vec3(0.0f, 0.0f, 0.0f);
+    obj->scale = glm::vec3(1.0f, 1.0f, 1.0f);
+    obj->rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+
+    litSceneObjects.push_back(obj);
+
+    return true;
+
+}
+
+bool Engine::CreateCube()
+{
+
+     SceneObject *obj = new SceneObject();
+    obj->mesh = new Mesh();
+    obj->material = new Material();
+
+    ReadOBJ((projectDirectory + cubeMeshPath).c_str(), obj->mesh->vertices, obj->mesh->indices, obj->name);
+
+    obj->mesh->useEBO = true;
+
+    obj->mesh->indexCount = static_cast<unsigned int>(obj->mesh->indices.size());
+
+    glGenVertexArrays(1, &obj->mesh->VAO);
+    glBindVertexArray(obj->mesh->VAO);
+
+    glGenBuffers(1, &obj->mesh->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, obj->mesh->VBO);
+    glBufferData(GL_ARRAY_BUFFER, obj->mesh->vertices.size() * sizeof(Vertex), &obj->mesh->vertices[0], GL_STATIC_DRAW);
+
+       //Create EBO
+    glGenBuffers(1, &obj->mesh->EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj->mesh->EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj->mesh->indexCount * sizeof(unsigned int), &obj->mesh->indices[0], GL_STATIC_DRAW);
+
+    //Set vertex attribute pointers
+    SetVertexAttributePointers();
+
+    obj->material = new Material();
+    obj->material->SetShaders(fallback_VShader, simpleLit_FShader);
+    obj->material->SetDiffuseTexture(containerTexture);
+    obj->mesh->SetDrawMode(DrawMode::TRIANGLES);
+
+    obj->position = glm::vec3(0.0f, 0.0f, 0.0f);
+    obj->scale = glm::vec3(1.0f, 1.0f, 1.0f);
+    obj->rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+
+    litSceneObjects.push_back(obj);
+
+    return true;
+}
+
 bool Engine::CreateSceneObject(const char* objPath)
 {
 
@@ -1157,8 +1241,6 @@ bool Engine::CreateSceneObject(const char* objPath)
     }
 
     obj->mesh->useEBO = true;
-
-    std::cout << "Vertex Count After Read: " << obj->mesh->vertices.size() << std::endl;
 
     obj->mesh->indexCount = static_cast<unsigned int>(obj->mesh->indices.size());
 
@@ -1332,7 +1414,7 @@ bool Engine::Initialize()
     //create Grid
     CreateGrid();
     CreateRays();
-
+  
     //Setup ImGui
     ImGuiSetup();
 
