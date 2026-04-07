@@ -1392,6 +1392,15 @@ bool Engine::Initialize()
 
     #endif
 
+    #ifdef Platform_Windows
+    if (!CreateWindow(width,  height, windowsTitle))
+    {
+        std::cout << "Failed to create window!" << std::endl;
+        return false;
+    }
+
+    #endif
+
     renderer = Graphics(width, height);
     renderer.SetFOV(60.0f);
 
@@ -1451,16 +1460,16 @@ void Engine::Loop()
             renderer.Render(grid);
         }
 
-        renderer.Render(xRay);
-        renderer.Render(yRay);
-        renderer.Render(zRay);
+        // renderer.Render(xRay);
+        // renderer.Render(yRay);
+        // renderer.Render(zRay);
 
-        if (renderSceneObjects)
-        {
+        // if (renderSceneObjects)
+        // {
 
-            ProcessLit();
-            ProcessUnlit();
-        }
+        //     ProcessLit();
+        //     ProcessUnlit();
+        // }
 
         ProcessUI();
 

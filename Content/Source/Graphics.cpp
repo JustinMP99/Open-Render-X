@@ -35,7 +35,7 @@ void Graphics::UpdateTransformUniforms(SceneObject* object)
     glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
     glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
 
-    glBufferSubData(GL_UNIFORM_BUFFER, 2 *sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(object->transform));
+    glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(object->transform));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
