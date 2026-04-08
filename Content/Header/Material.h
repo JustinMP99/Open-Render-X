@@ -55,5 +55,4 @@ public:
 
 };
 
-
 #endif //OPENRENDERX_MATERIAL_H

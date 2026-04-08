@@ -258,7 +258,7 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
             glm::vec3 position;
             fscanf(file, "%f %f %f\n", &position.x, &position.y, &position.z);
             temp_position.push_back(position);
-            std::cout << "> Read vertex: " << "X " << position.x << " Y " << position.y << " Z " << position.z << std::endl;
+            //std::cout << "> Read vertex: " << "X " << position.x << " Y " << position.y << " Z " << position.z << std::endl;
         }
         else if( strcmp(lineHeader, "vt") == 0 )
         {
@@ -365,6 +365,7 @@ bool Engine::CreateFragmentShader(unsigned int &shader, const char *shaderPath)
     if (!success)
     {
         glGetShaderInfoLog(shader, 512, nullptr, infoLog);
+        std::cout << "Error with Shader: " << shaderPath << std::endl;
         std::cout << "Failed to compile fragment shader: " << infoLog << std::endl;
         return false;
     }
@@ -1326,6 +1327,9 @@ void Engine::ProcessLit()
 
         litSceneObjects[i]->position.x = 1.0f + sin(glfwGetTime()) * 2.0f;
         litSceneObjects[i]->rotation.y += deltaTime * 20.0f;
+
+        litSceneObjects[i]->Update();
+
         if (litSceneObjects[i]->rotation.y >= 360.0f)
         {
             litSceneObjects[i]->rotation.y = 0.0f;
@@ -1457,19 +1461,22 @@ void Engine::Loop()
 
         if (renderGrid)
         {
+            grid->Update();
             renderer.Render(grid);
         }
 
-        // renderer.Render(xRay);
-        // renderer.Render(yRay);
-        // renderer.Render(zRay);
+        xRay->Update();
+        renderer.Render(xRay);
+        yRay->Update();
+        renderer.Render(yRay);
+        zRay->Update();
+        renderer.Render(zRay);
 
-        // if (renderSceneObjects)
-        // {
-
-        //     ProcessLit();
-        //     ProcessUnlit();
-        // }
+        if (renderSceneObjects)
+        {
+            ProcessLit();
+            ProcessUnlit();
+        }
 
         ProcessUI();
 

@@ -5,6 +5,9 @@
 #include <vector>
 
 #include "Material.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 // #ifndef OPENRENDERX_MATERIAL_H
 // #define OPENRENDERX_MATERIAL_H
@@ -43,5 +46,7 @@ public:
 
     SceneObject();
     ~SceneObject();
+
+    void Update();
 
 };
