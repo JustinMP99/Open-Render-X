@@ -188,6 +188,16 @@ void Engine::CreateInspectorWindow()
         ImGui::InputFloat3("Rotation", (float*)&selectedSceneObject->rotation);
         ImGui::InputFloat3("Scale", (float*)&selectedSceneObject->scale);
 
+        ImGui::Spacing();
+        ImGui::Checkbox("Sin Slide", &selectedSceneObject->sinSlide);
+        if (selectedSceneObject->sinSlide)
+        {
+            ImGui::SliderFloat("Slide Speed", &selectedSceneObject->sinSlideSpeed, 1.0f, 10.0f, "%.1f");
+            ImGui::SliderFloat("Slide Frequency", &selectedSceneObject->sinSlideFrequency, 0.1f, 3.0f, "%.1f");
+        }
+        
+        ImGui::Checkbox("rotate", &selectedSceneObject->rotate);
+
         ImGui::Separator();
 
         ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Mesh Data");
@@ -1325,18 +1335,8 @@ void Engine::ProcessLit()
         glUseProgram(litSceneObjects[i]->material->shaderProgram);
         glUniform1f(lightStrengthLocation, lightStrength);
 
-        litSceneObjects[i]->position.x = 1.0f + sin(glfwGetTime()) * 2.0f;
-        litSceneObjects[i]->rotation.y += deltaTime * 20.0f;
-
-        litSceneObjects[i]->Update();
-
-        if (litSceneObjects[i]->rotation.y >= 360.0f)
-        {
-            litSceneObjects[i]->rotation.y = 0.0f;
-        }
+        litSceneObjects[i]->Update(deltaTime);
         
-        //object->transform = glm::rotate(object->transform, glm::radians(float(glfwGetTime()) * -10.0f), glm::vec3(0.0, 1.0, 0.0));
-
         renderer.Render(litSceneObjects[i]);
       }
 }
@@ -1461,15 +1461,15 @@ void Engine::Loop()
 
         if (renderGrid)
         {
-            grid->Update();
+            grid->Update(deltaTime);
             renderer.Render(grid);
         }
 
-        xRay->Update();
+        xRay->Update(deltaTime);
         renderer.Render(xRay);
-        yRay->Update();
+        yRay->Update(deltaTime);
         renderer.Render(yRay);
-        zRay->Update();
+        zRay->Update(deltaTime);
         renderer.Render(zRay);
 
         if (renderSceneObjects)

@@ -30,6 +30,8 @@ class SceneObject
 
 private:
 
+float sinMoveVal = 0.0f;
+
 public:
 
     std::string name; ///< The name of the SceneObject, used for organization and debugging purposes
@@ -41,12 +43,17 @@ public:
     Mesh* mesh; ///< Stores mesh data for the SceneObject
     Material* material; ///< Stores material data for SceneObject
 
+    bool rotate;
+    bool sinSlide;
+    float sinSlideSpeed = 1.0f;
+    float sinSlideFrequency = 1.0f;
+
     //Temp object material data
     // GLuint shaderProgram;
 
     SceneObject();
     ~SceneObject();
 
-    void Update();
+    void Update(float delta);
 
 };
