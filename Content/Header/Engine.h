@@ -48,6 +48,7 @@ private:
     glm::vec3 clearScreenColor = glm::vec3(0.0f, 0.0f, 0.0f);
 
     //Lighting Data
+    unsigned int ambientLightUBO;
     glm::vec3 ambientColor = glm::vec3(0.5f, 0.5f, 0.5f);
     float ambientStrength = 1.0f;
 

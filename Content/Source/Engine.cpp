@@ -1437,6 +1437,16 @@ bool Engine::Initialize()
     //Setup ImGui
     ImGuiSetup();
 
+    glGenBuffers(1, &ambientLightUBO);
+    glBindBuffer(GL_UNIFORM_BUFFER, ambientLightUBO);
+    glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::vec3) + sizeof(float), NULL, GL_STATIC_DRAW);
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+    //glBindBufferBase(GL_UNIFORM_BUFFER, 1, ambientLightUBO);
+
+    //glBindBufferRange(GL_UNIFORM_BUFFER, 0, ambientLightUBO, 0, sizeof(glm::vec3) + sizeof(float));
+
+
     return true;
 }
 
@@ -1458,6 +1468,11 @@ void Engine::Loop()
         renderer.UpdateViewPosition(camera.GetPosition());
 
         renderer.ClearScreen(clearScreenColor.x, clearScreenColor.y, clearScreenColor.z);
+
+        glBindBuffer(GL_UNIFORM_BUFFER, ambientLightUBO);
+        glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::vec3), glm::value_ptr(ambientColor));
+        glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::vec3), sizeof(float), &ambientStrength);
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
         if (renderGrid)
         {

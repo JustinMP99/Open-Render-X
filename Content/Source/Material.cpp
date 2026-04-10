@@ -43,9 +43,9 @@ void Material::Use()
     glBindTexture(GL_TEXTURE_2D, diffuseTexture);
     SetInt("diffuseTexture", 0);
 
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, specularTexture);
-    SetInt("specularTexture", 1);
+    // glActiveTexture(GL_TEXTURE1);
+    // glBindTexture(GL_TEXTURE_2D, specularTexture);
+    // SetInt("specularTexture", 1);
 
     glUniform1f(glGetUniformLocation(shaderProgram, "shininess"), shininess);
 

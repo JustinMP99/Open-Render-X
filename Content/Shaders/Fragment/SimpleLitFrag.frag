@@ -17,8 +17,11 @@ uniform sampler2D specularTexture;
 uniform float shininess;
 
 //Lighting
-uniform vec3 ambientColor;
-uniform float ambientStrength;
+layout (std140) uniform AmbientLightData
+{
+    vec3 ambientColor;
+    float ambientStrength;
+};
 
 uniform vec3 lightPos;
 uniform vec3 lightColor;
@@ -37,7 +40,7 @@ in VS_OUT
 
 vec3 calculateAmbient()
 {
-    return ambientColor * ambientStrength;
+    return ambientColor.rgb * ambientStrength;
 }
 
 vec3 calculateDiffuse(float diff)
