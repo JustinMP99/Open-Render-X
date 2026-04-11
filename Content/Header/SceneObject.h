@@ -43,8 +43,8 @@ public:
     Mesh* mesh; ///< Stores mesh data for the SceneObject
     Material* material; ///< Stores material data for SceneObject
 
-    bool rotate;
-    bool sinSlide;
+    bool rotate = false;
+    bool sinSlide = false;
     float sinSlideSpeed = 1.0f;
     float sinSlideFrequency = 1.0f;
 

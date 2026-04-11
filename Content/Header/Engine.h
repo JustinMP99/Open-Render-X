@@ -23,7 +23,7 @@ struct AmbientLightData
     glm::vec4 ambientColor;
     float ambientStrength;
 
-}
+};
 
 
 class Engine
@@ -58,7 +58,8 @@ private:
 
     //Lighting Data
     unsigned int ambientLightUBO;
-    glm::vec3 ambientColor = glm::vec3(0.5f, 0.5f, 0.5f);
+    AmbientLightData ambientLightData;
+    glm::vec4 ambientColor = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
     float ambientStrength = 1.0f;
 
     glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);

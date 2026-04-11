@@ -43,9 +43,9 @@ void Material::Use()
     glBindTexture(GL_TEXTURE_2D, diffuseTexture);
     SetInt("diffuseTexture", 0);
 
-    // glActiveTexture(GL_TEXTURE1);
-    // glBindTexture(GL_TEXTURE_2D, specularTexture);
-    // SetInt("specularTexture", 1);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, specularTexture);
+    SetInt("specularTexture", 1);
 
     glUniform1f(glGetUniformLocation(shaderProgram, "shininess"), shininess);
 
@@ -73,6 +73,13 @@ bool Material::SetShaders(unsigned int vertexShader, unsigned int fragmentShader
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
         return false;
     }
+
+    // Bind uniform blocks to binding points
+    GLuint ambientBlockIndex = glGetUniformBlockIndex(shaderProgram, "AmbientLightData");
+    if (ambientBlockIndex != GL_INVALID_INDEX) {
+        glUniformBlockBinding(shaderProgram, ambientBlockIndex, 1);
+    }
+
     return true;
 }
 

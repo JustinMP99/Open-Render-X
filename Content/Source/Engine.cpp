@@ -97,8 +97,10 @@ void Engine::CreateDebugSettingsWindow()
 
     ImGui::Separator();
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Lighting");
-    ImGui::SliderFloat("Ambient Strength", &ambientStrength, 0.0f, 1.0f);
-    ImGui::ColorEdit3("Ambient Color", (float*)&ambientColor);
+    ImGui::SliderFloat("Ambient Strength", &ambientLightData.ambientStrength, 0.0f, 1.0f);
+    ImGui::ColorEdit3("Ambient Color", (float*)&ambientLightData.ambientColor);
+
+     ImGui::Spacing();
 
     ImGui::SliderFloat("Light Strength", &lightStrength, 0.0f, 1.0f);
     ImGui::ColorEdit3("Light Color", (float*)&lightColor);
@@ -193,7 +195,7 @@ void Engine::CreateInspectorWindow()
         if (selectedSceneObject->sinSlide)
         {
             ImGui::SliderFloat("Slide Speed", &selectedSceneObject->sinSlideSpeed, 1.0f, 10.0f, "%.1f");
-            ImGui::SliderFloat("Slide Frequency", &selectedSceneObject->sinSlideFrequency, 0.1f, 3.0f, "%.1f");
+            ImGui::SliderFloat("Slide Frequency", &selectedSceneObject->sinSlideFrequency, 0.1f, 5.0f, "%.1f");
         }
         
         ImGui::Checkbox("rotate", &selectedSceneObject->rotate);
@@ -212,6 +214,19 @@ void Engine::CreateInspectorWindow()
         ImGui::End();
 
     }
+
+}
+
+void Engine::UpdateAmbient()
+{
+
+    ambientColor.a = ambientStrength;
+    glBindBuffer(GL_UNIFORM_BUFFER, ambientLightUBO);
+    glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::vec4), glm::value_ptr(ambientLightData.ambientColor));
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+    glBindBuffer(GL_UNIFORM_BUFFER, ambientLightUBO);
+    glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::vec4), sizeof(float), &ambientLightData.ambientStrength);
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
 }
 
@@ -1437,15 +1452,19 @@ bool Engine::Initialize()
     //Setup ImGui
     ImGuiSetup();
 
+    ambientLightData.ambientColor = glm::vec4(ambientColor.r, ambientColor.g, ambientColor.b, 1.0f);
+    ambientLightData.ambientStrength = ambientStrength;
+
+    //Generate Ambient Light uniform buffer
     glGenBuffers(1, &ambientLightUBO);
+    //bind buffer
     glBindBuffer(GL_UNIFORM_BUFFER, ambientLightUBO);
-    glBufferData(GL_UNIFORM_BUFFER, 32, NULL, GL_STATIC_DRAW);
+    //set buffer size
+    glBufferData(GL_UNIFORM_BUFFER, sizeof(AmbientLightData), NULL, GL_STATIC_DRAW);
+    //unbind buffer
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
-    //glBindBufferBase(GL_UNIFORM_BUFFER, 1, ambientLightUBO);
-
-    glBindBufferRange(GL_UNIFORM_BUFFER, 1, ambientLightUBO, 0, 32);
-
+    //bind uniform buffer to binding point 1
+    glBindBufferRange(GL_UNIFORM_BUFFER, 1, ambientLightUBO, 0, sizeof(AmbientLightData));
 
     return true;
 }
@@ -1461,6 +1480,8 @@ void Engine::Loop()
 
         ProcessInput();
 
+        UpdateAmbient();
+
         camera.Update(deltaTime);
 
         renderer.UpdateViewMatrix(camera.View);
@@ -1468,14 +1489,6 @@ void Engine::Loop()
         renderer.UpdateViewPosition(camera.GetPosition());
 
         renderer.ClearScreen(clearScreenColor.x, clearScreenColor.y, clearScreenColor.z);
-
-        glBindBuffer(GL_UNIFORM_BUFFER, ambientLightUBO);
-        glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::vec3), glm::value_ptr(ambientColor));
-        glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
-        glBindBuffer(GL_UNIFORM_BUFFER, ambientLightUBO);
-        glBufferSubData(GL_UNIFORM_BUFFER, 16, sizeof(float), &ambientStrength);
-        glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
         if (renderGrid)
         {

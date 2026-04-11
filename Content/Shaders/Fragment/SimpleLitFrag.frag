@@ -19,7 +19,7 @@ uniform float shininess;
 //Lighting
 layout (std140) uniform AmbientLightData
 {
-    vec3 ambientColor;
+    vec4 ambientColor;
     float ambientStrength;
 };
 
