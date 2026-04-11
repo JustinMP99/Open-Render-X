@@ -17,6 +17,15 @@
 
 #define GL_SILENCE_DEPRICATION
 
+struct AmbientLightData
+{
+
+    glm::vec4 ambientColor;
+    float ambientStrength;
+
+}
+
+
 class Engine
 {
 
@@ -116,6 +125,8 @@ private:
     void CreateSceneListWindow();
 
     void CreateInspectorWindow();
+
+    void UpdateAmbient();
 
     //SETUP UTILITY FUNCTIONS
 

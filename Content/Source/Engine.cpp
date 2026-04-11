@@ -1315,13 +1315,13 @@ void Engine::ProcessLit()
 {
       for (unsigned int i = 0; i < litSceneObjects.size(); i++)
       {
-        int ambientColorLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "ambientColor");
-        glUseProgram(litSceneObjects[i]->material->shaderProgram);
-        glUniform3f(ambientColorLocation, ambientColor.x, ambientColor.y, ambientColor.z);
+        // int ambientColorLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "ambientColor");
+        // glUseProgram(litSceneObjects[i]->material->shaderProgram);
+        // glUniform3f(ambientColorLocation, ambientColor.x, ambientColor.y, ambientColor.z);
 
-        int ambientStrengthLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "ambientStrength");
-        glUseProgram(litSceneObjects[i]->material->shaderProgram);
-        glUniform1f(ambientStrengthLocation, ambientStrength);
+        // int ambientStrengthLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "ambientStrength");
+        // glUseProgram(litSceneObjects[i]->material->shaderProgram);
+        // glUniform1f(ambientStrengthLocation, ambientStrength);
 
         int lightPosLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "lightPos");
         glUseProgram(litSceneObjects[i]->material->shaderProgram);
@@ -1439,12 +1439,12 @@ bool Engine::Initialize()
 
     glGenBuffers(1, &ambientLightUBO);
     glBindBuffer(GL_UNIFORM_BUFFER, ambientLightUBO);
-    glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::vec3) + sizeof(float), NULL, GL_STATIC_DRAW);
+    glBufferData(GL_UNIFORM_BUFFER, 32, NULL, GL_STATIC_DRAW);
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
     //glBindBufferBase(GL_UNIFORM_BUFFER, 1, ambientLightUBO);
 
-    //glBindBufferRange(GL_UNIFORM_BUFFER, 0, ambientLightUBO, 0, sizeof(glm::vec3) + sizeof(float));
+    glBindBufferRange(GL_UNIFORM_BUFFER, 1, ambientLightUBO, 0, 32);
 
 
     return true;
@@ -1471,7 +1471,10 @@ void Engine::Loop()
 
         glBindBuffer(GL_UNIFORM_BUFFER, ambientLightUBO);
         glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::vec3), glm::value_ptr(ambientColor));
-        glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::vec3), sizeof(float), &ambientStrength);
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+        glBindBuffer(GL_UNIFORM_BUFFER, ambientLightUBO);
+        glBufferSubData(GL_UNIFORM_BUFFER, 16, sizeof(float), &ambientStrength);
         glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
         if (renderGrid)
