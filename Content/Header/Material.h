@@ -21,9 +21,6 @@ class Material
 {
 private:
 
-    bool usingDiffuse = false;
-    bool usingSpecular = false;
-
 public:
     std::string MaterialName;
     unsigned int shaderProgram;

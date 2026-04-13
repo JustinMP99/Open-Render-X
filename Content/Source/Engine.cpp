@@ -220,7 +220,6 @@ void Engine::CreateInspectorWindow()
 void Engine::UpdateAmbient()
 {
 
-    ambientColor.a = ambientStrength;
     glBindBuffer(GL_UNIFORM_BUFFER, ambientLightUBO);
     glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::vec4), glm::value_ptr(ambientLightData.ambientColor));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
@@ -433,7 +432,7 @@ bool Engine::CreateTexture(const char* filepath, unsigned int &texture)
     }
 
     stbi_image_free(data);
-    glBindTexture(GL_TEXTURE_2D, texture);
+    //glBindTexture(GL_TEXTURE_2D, texture);
     return true;
 }
 
@@ -1204,6 +1203,7 @@ bool Engine::CreateSphere()
     obj->material->SetShaders(fallback_VShader, simpleLit_FShader);
     obj->material->SetDiffuseTexture(containerTexture);
     obj->mesh->SetDrawMode(DrawMode::TRIANGLES);
+    obj->material->shininess = 64.0f;
 
     obj->position = glm::vec3(0.0f, 0.0f, 0.0f);
     obj->scale = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -1295,6 +1295,7 @@ bool Engine::CreateSceneObject(const char* objPath)
     obj->material->SetShaders(fallback_VShader, simpleLit_FShader);
     obj->material->SetDiffuseTexture(containerTexture);
     obj->mesh->SetDrawMode(DrawMode::TRIANGLES);
+    obj->material->shininess = 64.0f;
 
     obj->position = glm::vec3(0.0f, 0.0f, 0.0f);
     obj->scale = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -1452,8 +1453,8 @@ bool Engine::Initialize()
     //Setup ImGui
     ImGuiSetup();
 
-    ambientLightData.ambientColor = glm::vec4(ambientColor.r, ambientColor.g, ambientColor.b, 1.0f);
-    ambientLightData.ambientStrength = ambientStrength;
+    ambientLightData.ambientColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+    ambientLightData.ambientStrength = 1.0f;
 
     //Generate Ambient Light uniform buffer
     glGenBuffers(1, &ambientLightUBO);

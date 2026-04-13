@@ -26,8 +26,10 @@ std::string GetFileContents(const char* filename)
 
 Material::Material()
 {
-    usingDiffuse = false;
     shininess = 32.0f;
+    shaderProgram = 0;
+    diffuseTexture = 0;
+    specularTexture = 0;
 }
 
 Material::~Material()
@@ -37,18 +39,29 @@ Material::~Material()
 
 void Material::Use()
 {
-    
-    glUseProgram(shaderProgram);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, diffuseTexture);
-    SetInt("diffuseTexture", 0);
-
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, specularTexture);
-    SetInt("specularTexture", 1);
-
-    glUniform1f(glGetUniformLocation(shaderProgram, "shininess"), shininess);
-
+    if (shaderProgram != 0)
+    {
+        if (shaderProgram != 0)
+        {
+            glUseProgram(shaderProgram);
+        }
+        
+        if (diffuseTexture != 0)
+        {
+            SetInt("material.diffuseTexture", 0);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, diffuseTexture);
+        }
+        
+        if (specularTexture != 0)
+        {
+            SetInt("material.specularTexture", 1);
+            glActiveTexture(GL_TEXTURE1);
+            glBindTexture(GL_TEXTURE_2D, specularTexture);
+        }
+        
+        SetFloat("material.shininess", shininess);
+    }
 }
 
 bool Material::SetMaterialName(const char* name)
@@ -85,14 +98,12 @@ bool Material::SetShaders(unsigned int vertexShader, unsigned int fragmentShader
 
 bool Material::SetDiffuseTexture(unsigned int diffuse)
 {
-    usingDiffuse = true;
     diffuseTexture = diffuse;
     return true;
 }
 
 bool Material::SetSpecularTexture(unsigned int specular)
 {
-    usingSpecular = true;
     specularTexture = specular;
     return true;
 }
