@@ -1,36 +1,13 @@
 #version 330
 
-out vec4 FragColor;
-
-//Material 
-struct Material
-{
-    sampler2D diffuseTexture;
-    sampler2D specularTexture;
-    float shininess;
-};
-
-uniform Material material;
-
-//uniform sampler2D diffuseTexture;
-uniform sampler2D specularTexture;
-uniform float shininess;
-
-//Lighting
+//UNIFORM BUFFERS
 layout (std140) uniform AmbientLightData
 {
     vec4 ambientColor;
     float ambientStrength;
 };
 
-uniform vec3 lightPos;
-uniform vec3 lightColor;
-uniform float lightStrength;
-
-//camera view position
-uniform vec3 viewPos;
-
-//Interface block
+//INTERFACE BLOCK
 in VS_OUT
 {
     vec2 texCoord;
@@ -38,14 +15,44 @@ in VS_OUT
     vec3 fragPos;
 }fs_in;
 
+//DATA STRUCTS
+struct Material
+{
+    sampler2D diffuseTexture;
+    sampler2D specularTexture;
+    float shininess;
+};
+
+struct LightData
+{
+    vec3 position;
+};
+
+//Uniforms
+uniform Material material;
+uniform LightData light;
+uniform vec3 lightPos;
+uniform vec3 lightColor;
+uniform float lightStrength;
+uniform vec3 viewPos; //camera position
+
+//local variables
+float ndotl;
+vec3 diffuse;
+vec3 specular;
+vec3 ambient;
+
+//output value
+out vec4 FragColor;
+
 vec3 calculateAmbient()
 {
     return ambientColor.rgb * ambientStrength;
 }
 
-vec3 calculateDiffuse(float diff)
+vec3 calculateDiffuse()
 {
-    return diff * lightColor * lightStrength;   
+    return ndotl * lightColor * lightStrength;   
 }
 
 vec3 calculateSpecular(vec3 lightDir, vec3 norm)
@@ -56,30 +63,31 @@ vec3 calculateSpecular(vec3 lightDir, vec3 norm)
     vec3 reflectDir = reflect(-lightDir, norm);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0f), material.shininess);
     return lightColor * (spec * specSample.rgb);
-    //return specularStrength * spec * lightColor;
 }
 
 void main()
 {
-    //vec4 texColor = texture(diffuseTexture, fs_in.texCoord);
+    //Return sampled texture
     vec4 texColor = texture(material.diffuseTexture, fs_in.texCoord);
 
-    //Return sampled texture
+    //normalize normal
     vec3 norm = normalize(fs_in.normal);
-    vec3 lightDir = normalize(lightPos - fs_in.fragPos); 
 
-    float diff = max(dot(norm, lightDir), 0.0f);
+    //calculate the normalized direction of the light
+    // vec3 lightDir = normalize(lightPos - fs_in.fragPos); 
+    vec3 lightDir = normalize(light.position - fs_in.fragPos); 
+    //calculate dot product of the normal and light direction
+    ndotl = max(dot(norm, lightDir), 0.0f);
 
     //calculate diffuse
-    vec3 diffuse = diff * lightColor * lightStrength;
+    diffuse = calculateDiffuse();
 
     //calculate ambient 
-    vec3 ambient = calculateAmbient();
+    ambient = calculateAmbient();
 
     //specular
-    vec3 specular = calculateSpecular(lightDir, norm);
+    specular = calculateSpecular(lightDir, norm);
 
-    //vec3 result = (ambient + diffuse + outputColor.rgb) * texColor.rgb;
     vec3 result = (ambient + diffuse + specular) * texColor.rgb;
 
     FragColor = vec4(result, 1.0f);

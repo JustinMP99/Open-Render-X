@@ -420,9 +420,25 @@ bool Engine::CreateTexture(const char* filepath, unsigned int &texture)
 
     //load passed in texture image
     unsigned char *data = stbi_load(filepath, &width, &height, &nrChannels, 0);
+    
     if (data)
     {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+        GLenum format;
+        if (nrChannels == 1)
+        {
+            format = GL_RED;
+        }
+        else if(nrChannels == 3)
+        {
+            format = GL_RGB;
+        }
+        else if(nrChannels == 4)
+        {
+            format = GL_RGBA;
+        }
+        
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else
@@ -432,7 +448,6 @@ bool Engine::CreateTexture(const char* filepath, unsigned int &texture)
     }
 
     stbi_image_free(data);
-    //glBindTexture(GL_TEXTURE_2D, texture);
     return true;
 }
 
@@ -508,8 +523,6 @@ bool Engine::CreateGrid()
     //Create SceneObject
     grid = new SceneObject();
 
-    grid->mesh = new Mesh();
-
     float z = -500.0f;
     float x = -500.0f;
 
@@ -574,7 +587,7 @@ bool Engine::CreateGrid()
     glBufferData(GL_ARRAY_BUFFER, grid->mesh->vertices.size() * sizeof(Vertex), &grid->mesh->vertices[0], GL_STATIC_DRAW);
     SetVertexAttributePointers();
     grid->mesh->SetDrawMode(DrawMode::LINES);
-    grid->material = new Material();
+
     grid->material->SetShaders(grid_VShader, grid_FShader);
     grid->position = glm::vec3(0.0f, 0.0f, 0.0f);
     grid->scale = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -596,9 +609,6 @@ bool Engine::CreateRays()
     yRay = new SceneObject();
     zRay = new SceneObject();
 
-    xRay->mesh = new Mesh();
-    yRay->mesh = new Mesh();
-    zRay->mesh = new Mesh();
 
     Vertex xVertOne;
     xVertOne.position = glm::vec3(-500.0f, 0.0f, 0.0f);
@@ -614,7 +624,6 @@ bool Engine::CreateRays()
     xRay->mesh->vertices.push_back(xVertTwo);
 
     xRay->mesh->SetDrawMode(DrawMode::LINES);
-    xRay->material = new Material();
 
     xRay->mesh->indices.push_back(0);
     xRay->mesh->indices.push_back(1);
@@ -658,7 +667,6 @@ bool Engine::CreateRays()
     yRay->mesh->vertices.push_back(yVertTwo);
 
     yRay->mesh->SetDrawMode(DrawMode::LINES);
-    yRay->material = new Material();
 
     yRay->mesh->indices.push_back(0);
     yRay->mesh->indices.push_back(1);
@@ -702,7 +710,6 @@ bool Engine::CreateRays()
     zRay->mesh->vertices.push_back(zVertTwo);
 
     zRay->mesh->SetDrawMode(DrawMode::LINES);
-    zRay->material = new Material();
 
     zRay->mesh->indices.push_back(0);
     zRay->mesh->indices.push_back(1);
@@ -832,8 +839,6 @@ bool Engine::CreateQuad()
     bottomRight.normal = glm::vec3(0.0f, 0.0f, 1.0f);
     bottomRight.uv = glm::vec2(1.0f, 0.0f);
 
-    quad->mesh = new Mesh();
-
     quad->mesh->vertices.push_back(bottomLeft);
     quad->mesh->vertices.push_back(bottomRight);
     quad->mesh->vertices.push_back(topRight);
@@ -872,7 +877,6 @@ bool Engine::CreateQuad()
 
     quad->mesh->useEBO = true;
 
-    quad->material = new Material();
     quad->material->SetShaders(fallback_VShader, simpleLit_FShader);
     quad->material->SetDiffuseTexture(containerTexture);
 
@@ -1175,8 +1179,6 @@ bool Engine::CreateCube_Old()
 bool Engine::CreateSphere()
 {
     SceneObject *obj = new SceneObject();
-    obj->mesh = new Mesh();
-    obj->material = new Material();
 
     ReadOBJ((projectDirectory + sphereMeshPath).c_str(), obj->mesh->vertices, obj->mesh->indices, obj->name);
 
@@ -1199,7 +1201,6 @@ bool Engine::CreateSphere()
     //Set vertex attribute pointers
     SetVertexAttributePointers();
 
-    obj->material = new Material();
     obj->material->SetShaders(fallback_VShader, simpleLit_FShader);
     obj->material->SetDiffuseTexture(containerTexture);
     obj->mesh->SetDrawMode(DrawMode::TRIANGLES);
@@ -1218,9 +1219,8 @@ bool Engine::CreateSphere()
 bool Engine::CreateCube()
 {
 
-     SceneObject *obj = new SceneObject();
-    obj->mesh = new Mesh();
-    obj->material = new Material();
+    SceneObject *obj = new SceneObject();
+ 
 
     ReadOBJ((projectDirectory + cubeMeshPath).c_str(), obj->mesh->vertices, obj->mesh->indices, obj->name);
 
@@ -1235,7 +1235,7 @@ bool Engine::CreateCube()
     glBindBuffer(GL_ARRAY_BUFFER, obj->mesh->VBO);
     glBufferData(GL_ARRAY_BUFFER, obj->mesh->vertices.size() * sizeof(Vertex), &obj->mesh->vertices[0], GL_STATIC_DRAW);
 
-       //Create EBO
+    //Create EBO
     glGenBuffers(1, &obj->mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj->mesh->EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj->mesh->indexCount * sizeof(unsigned int), &obj->mesh->indices[0], GL_STATIC_DRAW);
@@ -1243,9 +1243,9 @@ bool Engine::CreateCube()
     //Set vertex attribute pointers
     SetVertexAttributePointers();
 
-    obj->material = new Material();
     obj->material->SetShaders(fallback_VShader, simpleLit_FShader);
-    obj->material->SetDiffuseTexture(containerTexture);
+    obj->material->SetDiffuseTexture(container_diffuse_texture);
+    obj->material->SetSpecularTexture(container_specular_texture);
     obj->mesh->SetDrawMode(DrawMode::TRIANGLES);
 
     obj->position = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -1339,9 +1339,11 @@ void Engine::ProcessLit()
         // glUseProgram(litSceneObjects[i]->material->shaderProgram);
         // glUniform1f(ambientStrengthLocation, ambientStrength);
 
-        int lightPosLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "lightPos");
-        glUseProgram(litSceneObjects[i]->material->shaderProgram);
-        glUniform3f(lightPosLocation, lightPos.x, lightPos.y, lightPos.z);
+        litSceneObjects[i]->material->SetVec3("light.position", lightPos.x, lightPos.y, lightPos.z);
+
+        // int lightPosLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "lightPos");
+        // glUseProgram(litSceneObjects[i]->material->shaderProgram);
+        // glUniform3f(lightPosLocation, lightPos.x, lightPos.y, lightPos.z);
 
         int lightColorLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "lightColor");
         glUseProgram(litSceneObjects[i]->material->shaderProgram);
@@ -1445,6 +1447,8 @@ bool Engine::Initialize()
 
     //create textures
     CreateTexture((projectDirectory + containerTexturePath).c_str(), containerTexture);
+    CreateTexture((projectDirectory + container_diffuse).c_str(), container_diffuse_texture);
+    CreateTexture((projectDirectory + container_diffuse).c_str(), container_specular_texture);
 
     //create Grid
     CreateGrid();

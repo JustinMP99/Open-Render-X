@@ -125,3 +125,9 @@ bool Material::SetFloat(const std::string& name, float value) const
 	glUniform1f(glGetUniformLocation(shaderProgram, name.c_str()), value);
 	return true;
 }
+
+bool Material::SetVec3(const std::string& name, float x, float y, float z) const
+{
+    glUniform3f(glGetUniformLocation(shaderProgram, name.c_str()), x, y, z);
+	return true;
+}

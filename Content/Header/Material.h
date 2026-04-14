@@ -49,7 +49,7 @@ public:
     bool SetBool(const std::string &name, bool value) const;
     bool SetInt(const std::string &name, int value) const;
     bool SetFloat(const std::string &name, float value) const;
-
+    bool SetVec3(const std::string& name, float x, float y, float z) const;
 };
 
 #endif //OPENRENDERX_MATERIAL_H

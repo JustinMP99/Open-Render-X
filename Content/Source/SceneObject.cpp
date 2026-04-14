@@ -4,9 +4,27 @@
 
 #include "../Header/SceneObject.h"
 
+//PRIVATE
+
+void SceneObject::UpdateTransforms()
+{
+    //reset the objects transform to identity before applying position, rotation, and scale
+    transform = glm::mat4(1.0f);
+
+    transform = glm::translate(transform, position);
+    transform = glm::scale(transform, scale);
+    transform = glm::rotate(transform, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+    transform = glm::rotate(transform, glm::radians(rotation.y),  glm::vec3(0.0f, 1.0f, 0.0f));
+    transform = glm::rotate(transform, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+}
+
+
+//PUBLLIC
+
 SceneObject::SceneObject()
 {
-
+    mesh = new Mesh();
+    material = new Material();
 }
 
 SceneObject::~SceneObject()
@@ -39,16 +57,8 @@ void SceneObject::Update(float delta)
     //==============================================================================================
 
     //Update Transforms
-    //reset the objects transform to identity before applying position, rotation, and scale
-    transform = glm::mat4(1.0f);
-
-    transform = glm::translate(transform, position);
-    transform = glm::scale(transform, scale);
-    transform = glm::rotate(transform, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-    transform = glm::rotate(transform, glm::radians(rotation.y),  glm::vec3(0.0f, 1.0f, 0.0f));
-    transform = glm::rotate(transform, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+    UpdateTransforms();
     
-
     //use material
     material->Use();
 

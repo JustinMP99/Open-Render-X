@@ -85,6 +85,8 @@ private:
 
     //Textures
     unsigned int containerTexture;
+    unsigned int container_diffuse_texture;
+    unsigned int container_specular_texture;
 
     const char* windowsTitle = "Open Render X - OpenGL - Windows";
     const char* appleTitle = "Open Render X - OpenGL - MacOS";
@@ -103,6 +105,8 @@ private:
 
     //Texture Paths
     const char* containerTexturePath = "/Content/Additional/Images/container.jpg"; ///< The path to the crate texture
+    const char* container_diffuse = "/Content/Additional/Images/container2.png";
+    const char* container_specular = "/Content/Additional/Images/container2_specular.png";
 
     //Model Paths
     const char* cubeMeshPath = "/Content/Additional/mesh/cube.obj"; ////< The path to the OBJ model

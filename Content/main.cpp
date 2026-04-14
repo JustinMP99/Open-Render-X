@@ -7,5 +7,5 @@ int main(int, char**)
     engine.Initialize();
     engine.Loop();
     engine.Shutdown();
-   return 0;
+    return 0;
 }

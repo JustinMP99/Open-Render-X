@@ -1,11 +1,5 @@
 #version 330
 
-in vec2 texCoord;
-
-out vec4 FragColor;
-
-uniform sampler2D diffuseTexture;
-
 //Interface block
 in VS_OUT
 {
@@ -14,6 +8,15 @@ in VS_OUT
     vec3 fragPos;
 }fs_in;
 
+//DATA STRUCTS
+struct Material
+{
+    sampler2D diffuseTexture;
+    sampler2D specularTexture;
+    float shininess;
+};
+
+out vec4 FragColor;
 
 void main()
 {

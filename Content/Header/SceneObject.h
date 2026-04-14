@@ -30,7 +30,10 @@ class SceneObject
 
 private:
 
-float sinMoveVal = 0.0f;
+    float sinMoveVal = 0.0f;
+
+    /// @brief Updates transform matrix by applying position, scale and rotation vectors
+    void UpdateTransforms();
 
 public:
 
@@ -47,9 +50,6 @@ public:
     bool sinSlide = false;
     float sinSlideSpeed = 1.0f;
     float sinSlideFrequency = 1.0f;
-
-    //Temp object material data
-    // GLuint shaderProgram;
 
     SceneObject();
     ~SceneObject();
