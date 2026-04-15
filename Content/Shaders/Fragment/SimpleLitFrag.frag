@@ -26,14 +26,13 @@ struct Material
 struct LightData
 {
     vec3 position;
+    vec3 color;
+    float strength;
 };
 
 //Uniforms
 uniform Material material;
 uniform LightData light;
-uniform vec3 lightPos;
-uniform vec3 lightColor;
-uniform float lightStrength;
 uniform vec3 viewPos; //camera position
 
 //local variables
@@ -52,7 +51,7 @@ vec3 calculateAmbient()
 
 vec3 calculateDiffuse()
 {
-    return ndotl * lightColor * lightStrength;   
+    return ndotl * light.color * light.strength;   
 }
 
 vec3 calculateSpecular(vec3 lightDir, vec3 norm)
@@ -62,7 +61,7 @@ vec3 calculateSpecular(vec3 lightDir, vec3 norm)
     vec3 viewDir = normalize(viewPos - fs_in.fragPos);
     vec3 reflectDir = reflect(-lightDir, norm);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0f), material.shininess);
-    return lightColor * (spec * specSample.rgb);
+    return light.color * (spec * specSample.rgb);
 }
 
 void main()

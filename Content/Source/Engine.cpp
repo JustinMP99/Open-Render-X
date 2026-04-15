@@ -1329,34 +1329,16 @@ void Engine::ClearSceneObjects()
 
 void Engine::ProcessLit()
 {
-      for (unsigned int i = 0; i < litSceneObjects.size(); i++)
-      {
-        // int ambientColorLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "ambientColor");
-        // glUseProgram(litSceneObjects[i]->material->shaderProgram);
-        // glUniform3f(ambientColorLocation, ambientColor.x, ambientColor.y, ambientColor.z);
-
-        // int ambientStrengthLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "ambientStrength");
-        // glUseProgram(litSceneObjects[i]->material->shaderProgram);
-        // glUniform1f(ambientStrengthLocation, ambientStrength);
-
-        litSceneObjects[i]->material->SetVec3("light.position", lightPos.x, lightPos.y, lightPos.z);
-
-        // int lightPosLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "lightPos");
-        // glUseProgram(litSceneObjects[i]->material->shaderProgram);
-        // glUniform3f(lightPosLocation, lightPos.x, lightPos.y, lightPos.z);
-
-        int lightColorLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "lightColor");
-        glUseProgram(litSceneObjects[i]->material->shaderProgram);
-        glUniform3f(lightColorLocation, lightColor.x, lightColor.y, lightColor.z);
-
-        int lightStrengthLocation = glGetUniformLocation(litSceneObjects[i]->material->shaderProgram, "lightStrength");
-        glUseProgram(litSceneObjects[i]->material->shaderProgram);
-        glUniform1f(lightStrengthLocation, lightStrength);
-
-        litSceneObjects[i]->Update(deltaTime);
-        
-        renderer.Render(litSceneObjects[i]);
-      }
+    for (unsigned int i = 0; i < litSceneObjects.size(); i++)
+    {
+     
+      litSceneObjects[i]->Update(deltaTime);
+      
+      litSceneObjects[i]->material->SetVec3("light.position", lightPos.x, lightPos.y, lightPos.z);
+      litSceneObjects[i]->material->SetVec3("light.color", lightColor.x, lightColor.y, lightColor.z);
+      litSceneObjects[i]->material->SetFloat("light.strength", lightStrength);
+      renderer.Render(litSceneObjects[i]);
+    }
 }
 
 void Engine::ProcessUnlit()
@@ -1458,7 +1440,7 @@ bool Engine::Initialize()
     ImGuiSetup();
 
     ambientLightData.ambientColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-    ambientLightData.ambientStrength = 1.0f;
+    ambientLightData.ambientStrength = 0.5f;
 
     //Generate Ambient Light uniform buffer
     glGenBuffers(1, &ambientLightUBO);
