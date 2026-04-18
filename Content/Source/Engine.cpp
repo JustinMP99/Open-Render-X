@@ -120,6 +120,7 @@ void Engine::CreateDebugSettingsWindow()
     {
         CreateCube();
     }
+    ImGui::SetItemTooltip("This creates a cube mesh in the 3D scene");
 
     ImGui::SameLine();
 
@@ -210,7 +211,8 @@ void Engine::CreateInspectorWindow()
 
         ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Material Data");
         ImGui::SliderFloat("Shininess: %f", &selectedSceneObject->material->shininess, 32.0f, 256.0f, "%.1f");
-
+        ImGui::Checkbox("Use Diffuse Texture", &selectedSceneObject->material->useDiffuse);
+        ImGui::Checkbox("Use Specular Texture", &selectedSceneObject->material->useSpecular);
         ImGui::End();
 
     }
@@ -1331,9 +1333,7 @@ void Engine::ProcessLit()
 {
     for (unsigned int i = 0; i < litSceneObjects.size(); i++)
     {
-     
       litSceneObjects[i]->Update(deltaTime);
-      
       litSceneObjects[i]->material->SetVec3("light.position", lightPos.x, lightPos.y, lightPos.z);
       litSceneObjects[i]->material->SetVec3("light.color", lightColor.x, lightColor.y, lightColor.z);
       litSceneObjects[i]->material->SetFloat("light.strength", lightStrength);

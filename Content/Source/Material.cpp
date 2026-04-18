@@ -30,6 +30,8 @@ Material::Material()
     shaderProgram = 0;
     diffuseTexture = 0;
     specularTexture = 0;
+    useDiffuse = true;
+    useSpecular = true;
 }
 
 Material::~Material()
@@ -46,14 +48,14 @@ void Material::Use()
             glUseProgram(shaderProgram);
         }
         
-        if (diffuseTexture != 0)
+        if (diffuseTexture != 0 && useDiffuse)
         {
             SetInt("material.diffuseTexture", 0);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, diffuseTexture);
         }
         
-        if (specularTexture != 0)
+        if (specularTexture != 0 && useSpecular)
         {
             SetInt("material.specularTexture", 1);
             glActiveTexture(GL_TEXTURE1);

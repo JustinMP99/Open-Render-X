@@ -62,6 +62,7 @@ vec3 calculateSpecular(vec3 lightDir, vec3 norm)
     vec3 reflectDir = reflect(-lightDir, norm);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0f), material.shininess);
     return light.color * (spec * specSample.rgb);
+    //return light.color * (spec * vec3(1.0));
 }
 
 void main()
@@ -88,6 +89,7 @@ void main()
     specular = calculateSpecular(lightDir, norm);
 
     vec3 result = (ambient + diffuse + specular) * texColor.rgb;
+    //vec3 result = (ambient + diffuse + specular) * vec3(0.5);
 
     FragColor = vec4(result, 1.0f);
 

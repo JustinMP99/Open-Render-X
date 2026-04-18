@@ -26,7 +26,9 @@ public:
     unsigned int shaderProgram;
     unsigned int diffuseTexture;
     unsigned int specularTexture;
-    float shininess = 32.0f;
+    float shininess;
+    bool useDiffuse;
+    bool useSpecular;
 
     Material();
     Material(unsigned int vertexShader, unsigned int fragmentShader);
