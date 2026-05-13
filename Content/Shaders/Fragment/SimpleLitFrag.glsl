@@ -34,12 +34,15 @@ struct LightData
 uniform Material material;
 uniform LightData light;
 uniform vec3 viewPos; //camera position
+uniform bool useDiffuse;
+uniform bool useSpecular;
 
 //local variables
 float ndotl;
 vec3 diffuse;
 vec3 specular;
 vec3 ambient;
+vec4 texColor;
 
 //output value
 out vec4 FragColor;
@@ -67,9 +70,17 @@ vec3 calculateSpecular(vec3 lightDir, vec3 norm)
 
 void main()
 {
-    //Return sampled texture
-    vec4 texColor = texture(material.diffuseTexture, fs_in.texCoord);
-
+   
+   
+   if(useDiffuse)
+   {
+        texColor = texture(material.diffuseTexture, fs_in.texCoord);
+   }
+   else
+   {
+        texColor = vec4(1.0f);
+   }
+   
     //normalize normal
     vec3 norm = normalize(fs_in.normal);
 
@@ -86,10 +97,18 @@ void main()
     ambient = calculateAmbient();
 
     //specular
-    specular = calculateSpecular(lightDir, norm);
-
-    vec3 result = (ambient + diffuse + specular) * texColor.rgb;
-    //vec3 result = (ambient + diffuse + specular) * vec3(0.5);
+    if(useSpecular)
+    {
+        specular = calculateSpecular(lightDir, norm);
+    }
+    else
+    {
+        specular = vec3(0.0f);
+    }
+   
+     vec3 result;
+    //Return sampled texture
+    result = (ambient + diffuse + specular) * texColor.rgb;
 
     FragColor = vec4(result, 1.0f);
 

@@ -1,0 +1,61 @@
+\doxysection{Material.\+h}
+\hypertarget{_material_8h_source}{}\label{_material_8h_source}\index{Content/Header/Material.h@{Content/Header/Material.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ Justin\ Philie\ on\ 1/4/26.}}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00005}00005\ \textcolor{preprocessor}{\#ifndef\ OPENRENDERX\_MATERIAL\_H}}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <glad/glad.h>}\ \textcolor{comment}{//\ include\ glad\ to\ get\ all\ the\ required\ OpenGL\ headers}}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00011}00011\ \textcolor{preprocessor}{\#define\ OPENRENDERX\_MATERIAL\_H}}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00018}00018\ std::string\ GetFileContents(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename);}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00020}00020\ \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00023}\doxymbox{\hyperlink{class_material}{00023}}\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_material_a137e987401b63eb7c6c27c3e38bc74b5}{Material}}}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00024}00024\ \{}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00025}00025\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00027}00027\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00029}\doxymbox{\hyperlink{class_material_a9b6dc2cd561853e65069005b621685e8}{00029}}\ \ \ \ \ std::string\ \doxymbox{\hyperlink{class_material_a9b6dc2cd561853e65069005b621685e8}{MaterialName}};\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00030}\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{00030}}\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}};\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00031}\doxymbox{\hyperlink{class_material_a2474ef3a4dff54228db3c09a2c1a935f}{00031}}\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_material_a2474ef3a4dff54228db3c09a2c1a935f}{diffuseTexture}};\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00032}\doxymbox{\hyperlink{class_material_a6199200446d0baa7634321bad92a1802}{00032}}\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_material_a6199200446d0baa7634321bad92a1802}{specularTexture}};\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00033}\doxymbox{\hyperlink{class_material_a9dc184c883ec135ace28c1917af3fe84}{00033}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_material_a9dc184c883ec135ace28c1917af3fe84}{shininess}};\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00034}\doxymbox{\hyperlink{class_material_a2e12475f31be3ec578d794cc24feb0a9}{00034}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_material_a2e12475f31be3ec578d794cc24feb0a9}{useDiffuse}};\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00035}\doxymbox{\hyperlink{class_material_a5674c13333bceac6b4377fda71979be2}{00035}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_material_a5674c13333bceac6b4377fda71979be2}{useSpecular}};\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00037}00037\ \ \ \ \ \doxymbox{\hyperlink{class_material_a137e987401b63eb7c6c27c3e38bc74b5}{Material}}();}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00038}00038\ \ \ \ \ \doxymbox{\hyperlink{class_material_a137e987401b63eb7c6c27c3e38bc74b5}{Material}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ vertexShader,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ fragmentShader);}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00039}00039\ \ \ \ \ \doxymbox{\hyperlink{class_material_a137e987401b63eb7c6c27c3e38bc74b5}{Material}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ vertexShader,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ fragmentShader,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_material_a2474ef3a4dff54228db3c09a2c1a935f}{diffuseTexture}});}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00040}00040\ \ \ \ \ \doxymbox{\hyperlink{class_material_a137e987401b63eb7c6c27c3e38bc74b5}{\string~Material}}();}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00045}00045\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_material_a9b5febb3dd010b1b40efefe8df94d642}{Use}}();}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00050}00050\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_material_ae80cd91ba2bf7b7e6c0169ef52b6bbcb}{SetMaterialName}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name);}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00056}00056\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_material_ac43103312c2b250ba3211341683df129}{SetShaders}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ vertexShader,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ fragmentShader);}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00059}00059\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_material_a1aa26e1f38cef8ef4c9f75d60ce8504f}{SetDiffuseTexture}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ diffuse);}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00062}00062\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_material_afeaa4b999384a90442fa45d305b62469}{SetSpecularTexture}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ specular);}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00064}00064\ \ \ \ \ \textcolor{comment}{//sets\ a\ bool\ uniforms\ value}}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00065}00065\ \ \ \ \ \textcolor{keywordtype}{bool}\ SetBool(\textcolor{keyword}{const}\ std::string\ \&name,\ \textcolor{keywordtype}{bool}\ value)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00071}00071\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_material_a7c794c6ccba00644d0704123714029d2}{SetInt}}(\textcolor{keyword}{const}\ std::string\ \&name,\ \textcolor{keywordtype}{int}\ value)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00077}00077\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_material_a71b80b16d26db3ec3c06c80c4146f441}{SetFloat}}(\textcolor{keyword}{const}\ std::string\ \&name,\ \textcolor{keywordtype}{float}\ value)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00085}00085\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_material_a787ee04c8fbad25f81c948dc2ea99736}{SetVec3}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y,\ \textcolor{keywordtype}{float}\ z)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00086}00086\ \};}
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_material_8h_source_l00088}00088\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//OPENRENDERX\_MATERIAL\_H}}
+
+\end{DoxyCode}

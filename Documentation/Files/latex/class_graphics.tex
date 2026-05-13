@@ -1,34 +1,464 @@
 \doxysection{Graphics Class Reference}
 \hypertarget{class_graphics}{}\label{class_graphics}\index{Graphics@{Graphics}}
+
+
+{\ttfamily \+\#include $<$Graphics.\+h$>$}
+
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{class_graphics_a524992082055f3ef0e9c16260a42517b}\label{class_graphics_a524992082055f3ef0e9c16260a42517b} 
-{\bfseries Graphics} (int width, int height)
+\doxymbox{\hyperlink{class_graphics_a524992082055f3ef0e9c16260a42517b}{Graphics}} (int width, int height)
 \item 
-\Hypertarget{class_graphics_a3c902cb1a48fcd71dda4aa9581570308}\label{class_graphics_a3c902cb1a48fcd71dda4aa9581570308} 
-bool {\bfseries Initialize} (GLFWwindow \texorpdfstring{$\ast$}{*}win)
+bool \doxymbox{\hyperlink{class_graphics_a3c902cb1a48fcd71dda4aa9581570308}{Initialize}} (GLFWwindow \texorpdfstring{$\ast$}{*}win)
 \item 
-\Hypertarget{class_graphics_adb004cd5c2ccd9c0d8c38dedd8b4f959}\label{class_graphics_adb004cd5c2ccd9c0d8c38dedd8b4f959} 
-void {\bfseries Render} ()
+void \doxymbox{\hyperlink{class_graphics_adb004cd5c2ccd9c0d8c38dedd8b4f959}{Render}} ()
 \item 
-\Hypertarget{class_graphics_a124e0badcab8764fa1f7bbbd769464e6}\label{class_graphics_a124e0badcab8764fa1f7bbbd769464e6} 
-bool {\bfseries Shutdown} ()
+void \doxymbox{\hyperlink{class_graphics_afb30ea697629a960aace0ada6cbeafb1}{Render}} (\doxymbox{\hyperlink{class_scene_object}{Scene\+Object}} \texorpdfstring{$\ast$}{*}object)
+\item 
+bool \doxymbox{\hyperlink{class_graphics_a124e0badcab8764fa1f7bbbd769464e6}{Shutdown}} ()
+\item 
+void \doxymbox{\hyperlink{class_graphics_ac8545dc7e80c28157dde0d0cb7a6d326}{Clear\+Screen}} ()
+\item 
+void \doxymbox{\hyperlink{class_graphics_adfbc78b71bebc685deccb69ca503e229}{Clear\+Screen}} (float r, float g, float b)
+\item 
+void \doxymbox{\hyperlink{class_graphics_ac940dbabeb826e8a8966e3e8daed6557}{Update\+View\+Matrix}} (glm::\+mat4 view\+Matrix)
+\item 
+void \doxymbox{\hyperlink{class_graphics_a42c5a03902fb3afdea0c194b41c99d95}{Update\+View\+Position}} (glm::\+vec3 view\+Pos)
+\item 
+void \doxymbox{\hyperlink{class_graphics_ad0ff654f372d4274faa52dd34a52ba9e}{Set\+FOV}} (float fov)
+\item 
+void \doxymbox{\hyperlink{class_graphics_a3a1709dc7a76ebf71f0452ec8acf03b9}{Set\+Viewport}} (int x, int y, int width, int height)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_graphics_afc5f586160d8f152cc77d8694afe7353}{Update\+Transform\+Uniforms}} (\doxymbox{\hyperlink{class_scene_object}{Scene\+Object}} \texorpdfstring{$\ast$}{*}object)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{class_graphics_a2c4e01da45cd9ecd71abc55a7c465db7}\label{class_graphics_a2c4e01da45cd9ecd71abc55a7c465db7} 
-GLFWwindow \texorpdfstring{$\ast$}{*} {\bfseries window}
+GLFWwindow \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_graphics_a2c4e01da45cd9ecd71abc55a7c465db7}{window}}
 \item 
-\Hypertarget{class_graphics_a9880629faf2189367bacca82b794696c}\label{class_graphics_a9880629faf2189367bacca82b794696c} 
-int {\bfseries width}
+int \doxymbox{\hyperlink{class_graphics_a9880629faf2189367bacca82b794696c}{width}}
 \item 
-\Hypertarget{class_graphics_a9843765f37e567c3b6f24dbc0bb56a62}\label{class_graphics_a9843765f37e567c3b6f24dbc0bb56a62} 
-int {\bfseries height}
-\end{DoxyCompactItemize}
+int \doxymbox{\hyperlink{class_graphics_a9843765f37e567c3b6f24dbc0bb56a62}{height}}
+\item 
+glm::\+mat4 \doxymbox{\hyperlink{class_graphics_acef47ff2fb5bb5de0df186a57b236947}{model}}
+\item 
+glm::\+mat4 \doxymbox{\hyperlink{class_graphics_aea7ddd4a13b7d44d6563501e86ee80cc}{view}}
+\item 
+glm::\+mat4 \doxymbox{\hyperlink{class_graphics_aeb133f8d106cd2c94bcc69d2cb9f559d}{projection}}
+\item 
+float \doxymbox{\hyperlink{class_graphics_a48e3cde04836b9c9cbd5ddfb5c138115}{fov}} = 60.\+0f
+\item 
+unsigned int \doxymbox{\hyperlink{class_graphics_a2cdf6e18f849a5ce7da6779412bb868b}{ubo\+Matrices}}
+\begin{DoxyCompactList}\small\item\em Uniform Buffer Object for storing view and projection matrices. \end{DoxyCompactList}\item 
+unsigned int \doxymbox{\hyperlink{class_graphics_a0d9163f0fd6b464be8502145b6a47901}{ubo\+Material}}
+\begin{DoxyCompactList}\small\item\em Uniform Buffer Object for storing material properties. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\doxysubsection{Detailed Description}
+The \doxylink{class_graphics}{Graphics} class handles rendering of Scene\+Objects to the screen. It contains a pointer to the window where rendering occurs, as well as methods for initializing the graphics context, rendering objects, and shutting down the graphics system. 
+
+Definition at line \doxymbox{\hyperlink{_graphics_8h_source_l00013}{13}} of file \doxymbox{\hyperlink{_graphics_8h_source}{Graphics.\+h}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_graphics_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_graphics_af2e8fe67fd31ec263c843a6e28b29d3c}\index{Graphics@{Graphics}!Graphics@{Graphics}}
+\index{Graphics@{Graphics}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{Graphics()}{Graphics()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_graphics_af2e8fe67fd31ec263c843a6e28b29d3c} 
+Graphics::\+\+Graphics (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8cpp_source_l00034}{34}} of file \doxymbox{\hyperlink{_graphics_8cpp_source}{Graphics.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00035\ \{}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_graphics_a524992082055f3ef0e9c16260a42517b}\index{Graphics@{Graphics}!Graphics@{Graphics}}
+\index{Graphics@{Graphics}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{Graphics()}{Graphics()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_graphics_a524992082055f3ef0e9c16260a42517b} 
+Graphics::\+\+Graphics (\begin{DoxyParamCaption}\item[{int}]{width}{, }\item[{int}]{height}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8cpp_source_l00039}{39}} of file \doxymbox{\hyperlink{_graphics_8cpp_source}{Graphics.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ width\ =\ width;}
+\DoxyCodeLine{00042\ \ \ \ \ height\ =\ height;}
+\DoxyCodeLine{00043\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_graphics_a7841c9a961ac9bca33bd30ddf8066cdb}\index{Graphics@{Graphics}!````~Graphics@{\texorpdfstring{$\sim$}{\string~}Graphics}}
+\index{````~Graphics@{\texorpdfstring{$\sim$}{\string~}Graphics}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Graphics()}{\string~Graphics()}}
+{\footnotesize\ttfamily \label{class_graphics_a7841c9a961ac9bca33bd30ddf8066cdb} 
+Graphics::\+\texorpdfstring{$\sim$}{\string~}\+Graphics (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8cpp_source_l00045}{45}} of file \doxymbox{\hyperlink{_graphics_8cpp_source}{Graphics.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00046\ \{}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_graphics_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_graphics_ac8545dc7e80c28157dde0d0cb7a6d326}\index{Graphics@{Graphics}!ClearScreen@{ClearScreen}}
+\index{ClearScreen@{ClearScreen}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{ClearScreen()}{ClearScreen()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_graphics_ac8545dc7e80c28157dde0d0cb7a6d326} 
+void Graphics::\+\+Clear\+Screen (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8cpp_source_l00005}{5}} of file \doxymbox{\hyperlink{_graphics_8cpp_source}{Graphics.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00006\ \{}
+\DoxyCodeLine{00007\ \ \ \ \ glClearColor(0.1f,\ 0.1f,\ 0.1f,\ 1.0f);}
+\DoxyCodeLine{00008\ \ \ \ \ glClear(GL\_COLOR\_BUFFER\_BIT\ |\ GL\_DEPTH\_BUFFER\_BIT);}
+\DoxyCodeLine{00009\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_graphics_adfbc78b71bebc685deccb69ca503e229}\index{Graphics@{Graphics}!ClearScreen@{ClearScreen}}
+\index{ClearScreen@{ClearScreen}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{ClearScreen()}{ClearScreen()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_graphics_adfbc78b71bebc685deccb69ca503e229} 
+void Graphics::\+\+Clear\+Screen (\begin{DoxyParamCaption}\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8cpp_source_l00011}{11}} of file \doxymbox{\hyperlink{_graphics_8cpp_source}{Graphics.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ glClearColor(r,\ g,\ b,\ 1.0f);}
+\DoxyCodeLine{00014\ \ \ \ \ glClear(GL\_COLOR\_BUFFER\_BIT\ |\ GL\_DEPTH\_BUFFER\_BIT);}
+\DoxyCodeLine{00015\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_graphics_a3c902cb1a48fcd71dda4aa9581570308}\index{Graphics@{Graphics}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_graphics_a3c902cb1a48fcd71dda4aa9581570308} 
+bool Graphics::\+\+Initialize (\begin{DoxyParamCaption}\item[{GLFWwindow \texorpdfstring{$\ast$}{*}}]{win}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8cpp_source_l00050}{50}} of file \doxymbox{\hyperlink{_graphics_8cpp_source}{Graphics.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00051\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ window\ =\ win;}
+\DoxyCodeLine{00053\ \ \ \ \ glfwGetWindowSize(window,\ \&width,\ \ \&height);}
+\DoxyCodeLine{00054\ \ \ \ \ projection\ =\ glm::perspective(glm::radians(fov),\ (\textcolor{keywordtype}{float})width\ /\ (\textcolor{keywordtype}{float})height,\ 0.1f,\ 100.0f);}
+\DoxyCodeLine{00055\ \ \ \ \ SetViewport(0,\ 0,\ width,\ height);}
+\DoxyCodeLine{00056\ \ \ \ \ glEnable(GL\_DEPTH\_TEST);}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{comment}{//Create\ Uniform\ Buffer\ Object\ for\ view\ and\ projection\ matrices}}
+\DoxyCodeLine{00059\ \ \ \ \ glGenBuffers(1,\ \&\doxymbox{\hyperlink{class_graphics_a2cdf6e18f849a5ce7da6779412bb868b}{uboMatrices}});}
+\DoxyCodeLine{00060\ \ \ \ \ glBindBuffer(GL\_UNIFORM\_BUFFER,\ \doxymbox{\hyperlink{class_graphics_a2cdf6e18f849a5ce7da6779412bb868b}{uboMatrices}});}
+\DoxyCodeLine{00061\ \ \ \ \ glBufferData(GL\_UNIFORM\_BUFFER,\ 3\ *\ \textcolor{keyword}{sizeof}(glm::mat4),\ NULL,\ GL\_STATIC\_DRAW);}
+\DoxyCodeLine{00062\ \ \ \ \ glBindBuffer(GL\_UNIFORM\_BUFFER,\ 0);}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{comment}{//bind\ uniform\ buffer\ to\ binding\ point\ 0}}
+\DoxyCodeLine{00065\ \ \ \ \ glBindBufferRange(GL\_UNIFORM\_BUFFER,\ 0,\ \doxymbox{\hyperlink{class_graphics_a2cdf6e18f849a5ce7da6779412bb868b}{uboMatrices}},\ 0,\ 3\ *\ \textcolor{keyword}{sizeof}(glm::mat4));}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ glBindBuffer(GL\_UNIFORM\_BUFFER,\ \doxymbox{\hyperlink{class_graphics_a2cdf6e18f849a5ce7da6779412bb868b}{uboMatrices}});}
+\DoxyCodeLine{00068\ \ \ \ \ glBufferSubData(GL\_UNIFORM\_BUFFER,\ 0,\ \textcolor{keyword}{sizeof}(glm::mat4),\ glm::value\_ptr(projection));}
+\DoxyCodeLine{00069\ \ \ \ \ glBindBuffer(GL\_UNIFORM\_BUFFER,\ 0);}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00072\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_graphics_adb004cd5c2ccd9c0d8c38dedd8b4f959}\index{Graphics@{Graphics}!Render@{Render}}
+\index{Render@{Render}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_graphics_adb004cd5c2ccd9c0d8c38dedd8b4f959} 
+void Graphics::\+\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8cpp_source_l00074}{74}} of file \doxymbox{\hyperlink{_graphics_8cpp_source}{Graphics.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075\ \{}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_graphics_afb30ea697629a960aace0ada6cbeafb1}\index{Graphics@{Graphics}!Render@{Render}}
+\index{Render@{Render}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_graphics_afb30ea697629a960aace0ada6cbeafb1} 
+void Graphics::\+\+Render (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_scene_object}{Scene\+Object}} \texorpdfstring{$\ast$}{*}}]{object}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8cpp_source_l00079}{79}} of file \doxymbox{\hyperlink{_graphics_8cpp_source}{Graphics.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{comment}{//update\ shader\ uniforms}}
+\DoxyCodeLine{00083\ \ \ \ \ UpdateTransformUniforms(\textcolor{keywordtype}{object});\ }
+\DoxyCodeLine{00084\ \ \ \ \ }
+\DoxyCodeLine{00085\ \ \ \ \ glBindVertexArray(object-\/>\doxymbox{\hyperlink{class_scene_object_a9322d98db21a981890eccf7c65fd997b}{mesh}}-\/>\doxymbox{\hyperlink{class_mesh_a79afa055e485fb65b1a7aa5b8eda2940}{VAO}});}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{int}\ drawMode\ =\ \textcolor{keywordtype}{object}-\/>mesh-\/>GetDrawMode();}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordflow}{if}\ (object-\/>\doxymbox{\hyperlink{class_scene_object_a9322d98db21a981890eccf7c65fd997b}{mesh}}-\/>\doxymbox{\hyperlink{class_mesh_a73001a4b3012b863b8058ab17bb58cf2}{useEBO}})}
+\DoxyCodeLine{00090\ \ \ \ \ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ glDrawElements(drawMode,\ object-\/>\doxymbox{\hyperlink{class_scene_object_a9322d98db21a981890eccf7c65fd997b}{mesh}}-\/>\doxymbox{\hyperlink{class_mesh_a0639c1d0e097c60a64bb205e0b6f4d0f}{indexCount}},\ GL\_UNSIGNED\_INT,\ 0);}
+\DoxyCodeLine{00092\ \ \ \ \ \}}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (!object-\/>\doxymbox{\hyperlink{class_scene_object_a9322d98db21a981890eccf7c65fd997b}{mesh}}-\/>\doxymbox{\hyperlink{class_mesh_a73001a4b3012b863b8058ab17bb58cf2}{useEBO}})}
+\DoxyCodeLine{00094\ \ \ \ \ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ glDrawArrays(drawMode,\ 0,\ object-\/>\doxymbox{\hyperlink{class_scene_object_a9322d98db21a981890eccf7c65fd997b}{mesh}}-\/>\doxymbox{\hyperlink{class_mesh_a0639c1d0e097c60a64bb205e0b6f4d0f}{indexCount}});}
+\DoxyCodeLine{00096\ \ \ \ \ \}}
+\DoxyCodeLine{00097\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_graphics_ad0ff654f372d4274faa52dd34a52ba9e}\index{Graphics@{Graphics}!SetFOV@{SetFOV}}
+\index{SetFOV@{SetFOV}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{SetFOV()}{SetFOV()}}
+{\footnotesize\ttfamily \label{class_graphics_ad0ff654f372d4274faa52dd34a52ba9e} 
+void Graphics::\+\+Set\+FOV (\begin{DoxyParamCaption}\item[{float}]{fov}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8cpp_source_l00109}{109}} of file \doxymbox{\hyperlink{_graphics_8cpp_source}{Graphics.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00110\ \{}
+\DoxyCodeLine{00111\ \ \ \ \ fov\ =\ newFOV;}
+\DoxyCodeLine{00112\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_graphics_a3a1709dc7a76ebf71f0452ec8acf03b9}\index{Graphics@{Graphics}!SetViewport@{SetViewport}}
+\index{SetViewport@{SetViewport}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{SetViewport()}{SetViewport()}}
+{\footnotesize\ttfamily \label{class_graphics_a3a1709dc7a76ebf71f0452ec8acf03b9} 
+void Graphics::\+\+Set\+Viewport (\begin{DoxyParamCaption}\item[{int}]{x}{, }\item[{int}]{y}{, }\item[{int}]{width}{, }\item[{int}]{height}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8cpp_source_l00114}{114}} of file \doxymbox{\hyperlink{_graphics_8cpp_source}{Graphics.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00115\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ glViewport(x,\ y,\ width,\ height);}
+\DoxyCodeLine{00117\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_graphics_a124e0badcab8764fa1f7bbbd769464e6}\index{Graphics@{Graphics}!Shutdown@{Shutdown}}
+\index{Shutdown@{Shutdown}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{Shutdown()}{Shutdown()}}
+{\footnotesize\ttfamily \label{class_graphics_a124e0badcab8764fa1f7bbbd769464e6} 
+bool Graphics::\+\+Shutdown (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8cpp_source_l00099}{99}} of file \doxymbox{\hyperlink{_graphics_8cpp_source}{Graphics.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00100\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00102\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_graphics_afc5f586160d8f152cc77d8694afe7353}\index{Graphics@{Graphics}!UpdateTransformUniforms@{UpdateTransformUniforms}}
+\index{UpdateTransformUniforms@{UpdateTransformUniforms}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{UpdateTransformUniforms()}{UpdateTransformUniforms()}}
+{\footnotesize\ttfamily \label{class_graphics_afc5f586160d8f152cc77d8694afe7353} 
+void Graphics::\+\+Update\+Transform\+Uniforms (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_scene_object}{Scene\+Object}} \texorpdfstring{$\ast$}{*}}]{object}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8cpp_source_l00017}{17}} of file \doxymbox{\hyperlink{_graphics_8cpp_source}{Graphics.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00018\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{comment}{//update\ objects\ transform\ uniform\ in\ shader}}
+\DoxyCodeLine{00020\ \ \ \ \ glBindBuffer(GL\_UNIFORM\_BUFFER,\ \doxymbox{\hyperlink{class_graphics_a2cdf6e18f849a5ce7da6779412bb868b}{uboMatrices}});}
+\DoxyCodeLine{00021\ \ \ \ \ glBufferSubData(GL\_UNIFORM\_BUFFER,\ \textcolor{keyword}{sizeof}(glm::mat4),\ \textcolor{keyword}{sizeof}(glm::mat4),\ glm::value\_ptr(view));}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ glBufferSubData(GL\_UNIFORM\_BUFFER,\ 2\ *\ \textcolor{keyword}{sizeof}(glm::mat4),\ \textcolor{keyword}{sizeof}(glm::mat4),\ glm::value\_ptr(object-\/>transform));}
+\DoxyCodeLine{00024\ \ \ \ \ glBindBuffer(GL\_UNIFORM\_BUFFER,\ 0);}
+\DoxyCodeLine{00025\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_graphics_ac940dbabeb826e8a8966e3e8daed6557}\index{Graphics@{Graphics}!UpdateViewMatrix@{UpdateViewMatrix}}
+\index{UpdateViewMatrix@{UpdateViewMatrix}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{UpdateViewMatrix()}{UpdateViewMatrix()}}
+{\footnotesize\ttfamily \label{class_graphics_ac940dbabeb826e8a8966e3e8daed6557} 
+void Graphics::\+\+Update\+View\+Matrix (\begin{DoxyParamCaption}\item[{glm::\+mat4}]{view\+Matrix}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8cpp_source_l00104}{104}} of file \doxymbox{\hyperlink{_graphics_8cpp_source}{Graphics.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00105\ \{}
+\DoxyCodeLine{00106\ \ \ \ \ view\ =\ viewMatrix;}
+\DoxyCodeLine{00107\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_graphics_a42c5a03902fb3afdea0c194b41c99d95}\index{Graphics@{Graphics}!UpdateViewPosition@{UpdateViewPosition}}
+\index{UpdateViewPosition@{UpdateViewPosition}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{UpdateViewPosition()}{UpdateViewPosition()}}
+{\footnotesize\ttfamily \label{class_graphics_a42c5a03902fb3afdea0c194b41c99d95} 
+void Graphics::\+\+Update\+View\+Position (\begin{DoxyParamCaption}\item[{glm::\+vec3}]{view\+Pos}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8cpp_source_l00027}{27}} of file \doxymbox{\hyperlink{_graphics_8cpp_source}{Graphics.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00028\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ viewPosLocation\ =\ glGetUniformLocation(\doxymbox{\hyperlink{class_graphics_a2cdf6e18f849a5ce7da6779412bb868b}{uboMatrices}},\ \textcolor{stringliteral}{"{}viewPos"{}});}
+\DoxyCodeLine{00030\ \ \ \ \ glUniform3f(viewPosLocation,\ viewPos.x,\ viewPos.y,\ viewPos.z);}
+\DoxyCodeLine{00031\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-variable-members}
+\Hypertarget{class_graphics_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_graphics_a48e3cde04836b9c9cbd5ddfb5c138115}\index{Graphics@{Graphics}!fov@{fov}}
+\index{fov@{fov}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{fov}{fov}}
+{\footnotesize\ttfamily \label{class_graphics_a48e3cde04836b9c9cbd5ddfb5c138115} 
+float Graphics::\+fov = 60.\+0f\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8h_source_l00023}{23}} of file \doxymbox{\hyperlink{_graphics_8h_source}{Graphics.\+h}}.
+
+\Hypertarget{class_graphics_a9843765f37e567c3b6f24dbc0bb56a62}\index{Graphics@{Graphics}!height@{height}}
+\index{height@{height}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{height}{height}}
+{\footnotesize\ttfamily \label{class_graphics_a9843765f37e567c3b6f24dbc0bb56a62} 
+int Graphics::\+height\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8h_source_l00019}{19}} of file \doxymbox{\hyperlink{_graphics_8h_source}{Graphics.\+h}}.
+
+\Hypertarget{class_graphics_acef47ff2fb5bb5de0df186a57b236947}\index{Graphics@{Graphics}!model@{model}}
+\index{model@{model}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{model}{model}}
+{\footnotesize\ttfamily \label{class_graphics_acef47ff2fb5bb5de0df186a57b236947} 
+glm::\+mat4 Graphics::\+model\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8h_source_l00020}{20}} of file \doxymbox{\hyperlink{_graphics_8h_source}{Graphics.\+h}}.
+
+\Hypertarget{class_graphics_aeb133f8d106cd2c94bcc69d2cb9f559d}\index{Graphics@{Graphics}!projection@{projection}}
+\index{projection@{projection}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{projection}{projection}}
+{\footnotesize\ttfamily \label{class_graphics_aeb133f8d106cd2c94bcc69d2cb9f559d} 
+glm::\+mat4 Graphics::\+projection\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8h_source_l00022}{22}} of file \doxymbox{\hyperlink{_graphics_8h_source}{Graphics.\+h}}.
+
+\Hypertarget{class_graphics_a0d9163f0fd6b464be8502145b6a47901}\index{Graphics@{Graphics}!uboMaterial@{uboMaterial}}
+\index{uboMaterial@{uboMaterial}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{uboMaterial}{uboMaterial}}
+{\footnotesize\ttfamily \label{class_graphics_a0d9163f0fd6b464be8502145b6a47901} 
+unsigned int Graphics::\+ubo\+Material\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Uniform Buffer Object for storing material properties. 
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8h_source_l00026}{26}} of file \doxymbox{\hyperlink{_graphics_8h_source}{Graphics.\+h}}.
+
+\Hypertarget{class_graphics_a2cdf6e18f849a5ce7da6779412bb868b}\index{Graphics@{Graphics}!uboMatrices@{uboMatrices}}
+\index{uboMatrices@{uboMatrices}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{uboMatrices}{uboMatrices}}
+{\footnotesize\ttfamily \label{class_graphics_a2cdf6e18f849a5ce7da6779412bb868b} 
+unsigned int Graphics::\+ubo\+Matrices\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Uniform Buffer Object for storing view and projection matrices. 
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8h_source_l00025}{25}} of file \doxymbox{\hyperlink{_graphics_8h_source}{Graphics.\+h}}.
+
+\Hypertarget{class_graphics_aea7ddd4a13b7d44d6563501e86ee80cc}\index{Graphics@{Graphics}!view@{view}}
+\index{view@{view}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{view}{view}}
+{\footnotesize\ttfamily \label{class_graphics_aea7ddd4a13b7d44d6563501e86ee80cc} 
+glm::\+mat4 Graphics::\+view\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8h_source_l00021}{21}} of file \doxymbox{\hyperlink{_graphics_8h_source}{Graphics.\+h}}.
+
+\Hypertarget{class_graphics_a9880629faf2189367bacca82b794696c}\index{Graphics@{Graphics}!width@{width}}
+\index{width@{width}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{width}{width}}
+{\footnotesize\ttfamily \label{class_graphics_a9880629faf2189367bacca82b794696c} 
+int Graphics::\+width\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8h_source_l00018}{18}} of file \doxymbox{\hyperlink{_graphics_8h_source}{Graphics.\+h}}.
+
+\Hypertarget{class_graphics_a2c4e01da45cd9ecd71abc55a7c465db7}\index{Graphics@{Graphics}!window@{window}}
+\index{window@{window}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{window}{window}}
+{\footnotesize\ttfamily \label{class_graphics_a2c4e01da45cd9ecd71abc55a7c465db7} 
+GLFWwindow\texorpdfstring{$\ast$}{*} Graphics::\+window\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_graphics_8h_source_l00017}{17}} of file \doxymbox{\hyperlink{_graphics_8h_source}{Graphics.\+h}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
 \item 
-/\+Users/justinphilie/\+Documents/\+Projects/\+Graphics/\+Open-\/\+Render-\/\+X/\+Content/\+Header/Graphics.\+h\end{DoxyCompactItemize}
+Content/\+\+Header/\+Graphics.\+h\item 
+Content/\+\+Source/\+Graphics.\+cpp\end{DoxyCompactItemize}

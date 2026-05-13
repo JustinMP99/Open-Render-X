@@ -1,0 +1,59 @@
+\doxysection{Scene\+Object.\+h}
+\hypertarget{_scene_object_8h_source}{}\label{_scene_object_8h_source}\index{Content/Header/SceneObject.h@{Content/Header/SceneObject.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ Justin\ Philie\ on\ 1/3/26.}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00004}00004\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}Material.h"{}}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <glm/gtc/matrix\_transform.hpp>}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <glm/gtc/type\_ptr.hpp>}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00012}00012\ \textcolor{comment}{//\ \#ifndef\ OPENRENDERX\_MATERIAL\_H}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00013}00013\ \textcolor{comment}{//\ \#define\ OPENRENDERX\_MATERIAL\_H}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00014}00014\ \textcolor{comment}{//\ \#include\ "{}Material.h"{}}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00015}00015\ \textcolor{comment}{//\ \#endif}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00017}00017\ \textcolor{preprocessor}{\#ifndef\ OPENRENDERX\_MESH\_H}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00018}00018\ \textcolor{preprocessor}{\#define\ OPENRENDERX\_MESH\_H}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include\ "{}Mesh.h"{}}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00020}00020\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00022}00022\ \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00028}\doxymbox{\hyperlink{class_scene_object}{00028}}\ \textcolor{keyword}{class\ }SceneObject}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00029}00029\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00031}00031\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00033}00033\ \ \ \ \ \textcolor{keywordtype}{float}\ sinMoveVal\ =\ 0.0f;}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00036}00036\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_scene_object_a652a6fb4641909846b024d5de90aad4b}{UpdateTransforms}}();}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00038}00038\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00040}\doxymbox{\hyperlink{class_scene_object_a6c5ece15b6c7fe5b4d41ebcf4b13e9fc}{00040}}\ \ \ \ \ std::string\ \doxymbox{\hyperlink{class_scene_object_a6c5ece15b6c7fe5b4d41ebcf4b13e9fc}{name}};\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00041}00041\ \ \ \ \ glm::mat4\ transform;}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00042}00042\ \ \ \ \ glm::vec3\ position;}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00043}00043\ \ \ \ \ glm::vec3\ rotation;}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00044}00044\ \ \ \ \ glm::vec3\ scale;}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00046}\doxymbox{\hyperlink{class_scene_object_a9322d98db21a981890eccf7c65fd997b}{00046}}\ \ \ \ \ \doxymbox{\hyperlink{class_mesh}{Mesh}}*\ \doxymbox{\hyperlink{class_scene_object_a9322d98db21a981890eccf7c65fd997b}{mesh}};\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00047}\doxymbox{\hyperlink{class_scene_object_a4d8054106181076a01056a0508cdfbd4}{00047}}\ \ \ \ \ \doxymbox{\hyperlink{class_material}{Material}}*\ \doxymbox{\hyperlink{class_scene_object_a4d8054106181076a01056a0508cdfbd4}{material}};\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00049}00049\ \ \ \ \ \textcolor{keywordtype}{bool}\ rotate\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00050}00050\ \ \ \ \ \textcolor{keywordtype}{bool}\ sinSlide\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00051}00051\ \ \ \ \ \textcolor{keywordtype}{float}\ sinSlideSpeed\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00052}00052\ \ \ \ \ \textcolor{keywordtype}{float}\ sinSlideFrequency\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00054}00054\ \ \ \ \ SceneObject();}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00055}00055\ \ \ \ \ \string~SceneObject();}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00057}00057\ \ \ \ \ \textcolor{keywordtype}{void}\ Update(\textcolor{keywordtype}{float}\ delta);}
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8h_source_l00059}00059\ \};}
+
+\end{DoxyCode}

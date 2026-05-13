@@ -1,0 +1,317 @@
+\doxysection{Scene\+Object Class Reference}
+\hypertarget{class_scene_object}{}\label{class_scene_object}\index{SceneObject@{SceneObject}}
+
+
+{\ttfamily \+\#include $<$Scene\+Object.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_scene_object_aa56e025794424dbf9976ba95336cb4ef}{Update}} (float delta)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_scene_object_a6c5ece15b6c7fe5b4d41ebcf4b13e9fc}{name}}
+\begin{DoxyCompactList}\small\item\em The name of the \doxylink{class_scene_object}{Scene\+Object}, used for organization and debugging purposes. \end{DoxyCompactList}\item 
+glm::\+mat4 \doxymbox{\hyperlink{class_scene_object_a4f34091b8f5ce43adca833f9a522d3df}{transform}}
+\item 
+glm::\+vec3 \doxymbox{\hyperlink{class_scene_object_a3fc9eafe43fe119a594caa55b7afea21}{position}}
+\item 
+glm::\+vec3 \doxymbox{\hyperlink{class_scene_object_a4089eb0c9b9f92902f84dfb021d6bc15}{rotation}}
+\item 
+glm::\+vec3 \doxymbox{\hyperlink{class_scene_object_a62c686b880fe4f58dec64a409e56de26}{scale}}
+\item 
+\doxymbox{\hyperlink{class_mesh}{Mesh}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_scene_object_a9322d98db21a981890eccf7c65fd997b}{mesh}}
+\begin{DoxyCompactList}\small\item\em Stores mesh data for the \doxylink{class_scene_object}{Scene\+Object}. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_material}{Material}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_scene_object_a4d8054106181076a01056a0508cdfbd4}{material}}
+\begin{DoxyCompactList}\small\item\em Stores material data for \doxylink{class_scene_object}{Scene\+Object}. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_scene_object_acb695f7f5380f52ad6edab8b395ad0db}{rotate}} = false
+\item 
+bool \doxymbox{\hyperlink{class_scene_object_ad613c1b1d1c58d8e0bae54567e51c1fd}{sin\+Slide}} = false
+\item 
+float \doxymbox{\hyperlink{class_scene_object_a1bea78d76972d8bd4f2a3a17ab9462c2}{sin\+Slide\+Speed}} = 1.\+0f
+\item 
+float \doxymbox{\hyperlink{class_scene_object_a075e2957fd884c04cd8b4edf455067f6}{sin\+Slide\+Frequency}} = 1.\+0f
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_scene_object_a652a6fb4641909846b024d5de90aad4b}{Update\+Transforms}} ()
+\begin{DoxyCompactList}\small\item\em Updates transform matrix by applying position, scale and rotation vectors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \doxymbox{\hyperlink{class_scene_object_aec5aaea9a035d8260d0fb187935122f1}{sin\+Move\+Val}} = 0.\+0f
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \doxylink{class_scene_object}{Scene\+Object} class stores all data related to object present in the renderer. This includes:\+
+\begin{DoxyItemize}
+\item \doxylink{class_mesh}{Mesh} Data
+\item \doxylink{class_material}{Material} Data
+\item etc. 
+\end{DoxyItemize}
+
+Definition at line \doxymbox{\hyperlink{_scene_object_8h_source_l00028}{28}} of file \doxymbox{\hyperlink{_scene_object_8h_source}{Scene\+Object.\+h}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_scene_object_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_scene_object_a0d268d96d77dbeb45b07a6442e2f4d0d}\index{SceneObject@{SceneObject}!SceneObject@{SceneObject}}
+\index{SceneObject@{SceneObject}!SceneObject@{SceneObject}}
+\doxysubsubsection{\texorpdfstring{SceneObject()}{SceneObject()}}
+{\footnotesize\ttfamily \label{class_scene_object_a0d268d96d77dbeb45b07a6442e2f4d0d} 
+Scene\+Object::\+\+Scene\+Object (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_scene_object_8cpp_source_l00024}{24}} of file \doxymbox{\hyperlink{_scene_object_8cpp_source}{Scene\+Object.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00025\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \doxymbox{\hyperlink{class_scene_object_a9322d98db21a981890eccf7c65fd997b}{mesh}}\ =\ \textcolor{keyword}{new}\ Mesh();}
+\DoxyCodeLine{00027\ \ \ \ \ \doxymbox{\hyperlink{class_scene_object_a4d8054106181076a01056a0508cdfbd4}{material}}\ =\ \textcolor{keyword}{new}\ Material();}
+\DoxyCodeLine{00028\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_scene_object_ab258d6b94e982d5ae71ad4d7652381f4}\index{SceneObject@{SceneObject}!````~SceneObject@{\texorpdfstring{$\sim$}{\string~}SceneObject}}
+\index{````~SceneObject@{\texorpdfstring{$\sim$}{\string~}SceneObject}!SceneObject@{SceneObject}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}SceneObject()}{\string~SceneObject()}}
+{\footnotesize\ttfamily \label{class_scene_object_ab258d6b94e982d5ae71ad4d7652381f4} 
+Scene\+Object::\+\texorpdfstring{$\sim$}{\string~}\+Scene\+Object (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_scene_object_8cpp_source_l00030}{30}} of file \doxymbox{\hyperlink{_scene_object_8cpp_source}{Scene\+Object.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00031\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{delete}\ \doxymbox{\hyperlink{class_scene_object_a9322d98db21a981890eccf7c65fd997b}{mesh}};}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{delete}\ \doxymbox{\hyperlink{class_scene_object_a4d8054106181076a01056a0508cdfbd4}{material}};}
+\DoxyCodeLine{00034\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_scene_object_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_scene_object_aa56e025794424dbf9976ba95336cb4ef}\index{SceneObject@{SceneObject}!Update@{Update}}
+\index{Update@{Update}!SceneObject@{SceneObject}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_scene_object_aa56e025794424dbf9976ba95336cb4ef} 
+void Scene\+Object::\+\+Update (\begin{DoxyParamCaption}\item[{float}]{delta}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_scene_object_8cpp_source_l00037}{37}} of file \doxymbox{\hyperlink{_scene_object_8cpp_source}{Scene\+Object.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00038\ \{}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{comment}{//==============================================================================================}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{if}\ (sinSlide)}
+\DoxyCodeLine{00043\ \ \ \ \ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ sinMoveVal\ +=\ delta\ *\ sinSlideSpeed;}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ position.x\ =\ sin(sinMoveVal)\ *\ sinSlideFrequency;}
+\DoxyCodeLine{00046\ \ \ \ \ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordflow}{if}\ (rotate)}
+\DoxyCodeLine{00049\ \ \ \ \ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ rotation.y\ +=\ delta\ *\ 20.0f;}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rotation.y\ >=\ 360.0f)}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ rotation.y\ =\ 0.0f;}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00055\ \ \ \ \ \}}
+\DoxyCodeLine{00056\ \ \ \ \ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//==============================================================================================}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//Update\ Transforms}}
+\DoxyCodeLine{00060\ \ \ \ \ \doxymbox{\hyperlink{class_scene_object_a652a6fb4641909846b024d5de90aad4b}{UpdateTransforms}}();}
+\DoxyCodeLine{00061\ \ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//use\ material}}
+\DoxyCodeLine{00063\ \ \ \ \ \doxymbox{\hyperlink{class_scene_object_a4d8054106181076a01056a0508cdfbd4}{material}}-\/>Use();}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_scene_object_a652a6fb4641909846b024d5de90aad4b}\index{SceneObject@{SceneObject}!UpdateTransforms@{UpdateTransforms}}
+\index{UpdateTransforms@{UpdateTransforms}!SceneObject@{SceneObject}}
+\doxysubsubsection{\texorpdfstring{UpdateTransforms()}{UpdateTransforms()}}
+{\footnotesize\ttfamily \label{class_scene_object_a652a6fb4641909846b024d5de90aad4b} 
+void Scene\+Object::\+\+Update\+Transforms (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Updates transform matrix by applying position, scale and rotation vectors. 
+
+
+
+Definition at line \doxymbox{\hyperlink{_scene_object_8cpp_source_l00009}{9}} of file \doxymbox{\hyperlink{_scene_object_8cpp_source}{Scene\+Object.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{comment}{//reset\ the\ objects\ transform\ to\ identity\ before\ applying\ position,\ rotation,\ and\ scale}}
+\DoxyCodeLine{00012\ \ \ \ \ transform\ =\ glm::mat4(1.0f);}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ transform\ =\ glm::translate(transform,\ position);}
+\DoxyCodeLine{00015\ \ \ \ \ transform\ =\ glm::scale(transform,\ scale);}
+\DoxyCodeLine{00016\ \ \ \ \ transform\ =\ glm::rotate(transform,\ glm::radians(rotation.x),\ glm::vec3(1.0f,\ 0.0f,\ 0.0f));}
+\DoxyCodeLine{00017\ \ \ \ \ transform\ =\ glm::rotate(transform,\ glm::radians(rotation.y),\ \ glm::vec3(0.0f,\ 1.0f,\ 0.0f));}
+\DoxyCodeLine{00018\ \ \ \ \ transform\ =\ glm::rotate(transform,\ glm::radians(rotation.z),\ glm::vec3(0.0f,\ 0.0f,\ 1.0f));}
+\DoxyCodeLine{00019\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-variable-members}
+\Hypertarget{class_scene_object_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_scene_object_a4d8054106181076a01056a0508cdfbd4}\index{SceneObject@{SceneObject}!material@{material}}
+\index{material@{material}!SceneObject@{SceneObject}}
+\doxysubsubsection{\texorpdfstring{material}{material}}
+{\footnotesize\ttfamily \label{class_scene_object_a4d8054106181076a01056a0508cdfbd4} 
+\doxymbox{\hyperlink{class_material}{Material}}\texorpdfstring{$\ast$}{*} Scene\+Object::\+material}
+
+
+
+Stores material data for \doxylink{class_scene_object}{Scene\+Object}. 
+
+
+
+Definition at line \doxymbox{\hyperlink{_scene_object_8h_source_l00047}{47}} of file \doxymbox{\hyperlink{_scene_object_8h_source}{Scene\+Object.\+h}}.
+
+\Hypertarget{class_scene_object_a9322d98db21a981890eccf7c65fd997b}\index{SceneObject@{SceneObject}!mesh@{mesh}}
+\index{mesh@{mesh}!SceneObject@{SceneObject}}
+\doxysubsubsection{\texorpdfstring{mesh}{mesh}}
+{\footnotesize\ttfamily \label{class_scene_object_a9322d98db21a981890eccf7c65fd997b} 
+\doxymbox{\hyperlink{class_mesh}{Mesh}}\texorpdfstring{$\ast$}{*} Scene\+Object::\+mesh}
+
+
+
+Stores mesh data for the \doxylink{class_scene_object}{Scene\+Object}. 
+
+
+
+Definition at line \doxymbox{\hyperlink{_scene_object_8h_source_l00046}{46}} of file \doxymbox{\hyperlink{_scene_object_8h_source}{Scene\+Object.\+h}}.
+
+\Hypertarget{class_scene_object_a6c5ece15b6c7fe5b4d41ebcf4b13e9fc}\index{SceneObject@{SceneObject}!name@{name}}
+\index{name@{name}!SceneObject@{SceneObject}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily \label{class_scene_object_a6c5ece15b6c7fe5b4d41ebcf4b13e9fc} 
+std::\+string Scene\+Object::\+name}
+
+
+
+The name of the \doxylink{class_scene_object}{Scene\+Object}, used for organization and debugging purposes. 
+
+
+
+Definition at line \doxymbox{\hyperlink{_scene_object_8h_source_l00040}{40}} of file \doxymbox{\hyperlink{_scene_object_8h_source}{Scene\+Object.\+h}}.
+
+\Hypertarget{class_scene_object_a3fc9eafe43fe119a594caa55b7afea21}\index{SceneObject@{SceneObject}!position@{position}}
+\index{position@{position}!SceneObject@{SceneObject}}
+\doxysubsubsection{\texorpdfstring{position}{position}}
+{\footnotesize\ttfamily \label{class_scene_object_a3fc9eafe43fe119a594caa55b7afea21} 
+glm::\+vec3 Scene\+Object::\+position}
+
+
+
+Definition at line \doxymbox{\hyperlink{_scene_object_8h_source_l00042}{42}} of file \doxymbox{\hyperlink{_scene_object_8h_source}{Scene\+Object.\+h}}.
+
+\Hypertarget{class_scene_object_acb695f7f5380f52ad6edab8b395ad0db}\index{SceneObject@{SceneObject}!rotate@{rotate}}
+\index{rotate@{rotate}!SceneObject@{SceneObject}}
+\doxysubsubsection{\texorpdfstring{rotate}{rotate}}
+{\footnotesize\ttfamily \label{class_scene_object_acb695f7f5380f52ad6edab8b395ad0db} 
+bool Scene\+Object::\+rotate = false}
+
+
+
+Definition at line \doxymbox{\hyperlink{_scene_object_8h_source_l00049}{49}} of file \doxymbox{\hyperlink{_scene_object_8h_source}{Scene\+Object.\+h}}.
+
+\Hypertarget{class_scene_object_a4089eb0c9b9f92902f84dfb021d6bc15}\index{SceneObject@{SceneObject}!rotation@{rotation}}
+\index{rotation@{rotation}!SceneObject@{SceneObject}}
+\doxysubsubsection{\texorpdfstring{rotation}{rotation}}
+{\footnotesize\ttfamily \label{class_scene_object_a4089eb0c9b9f92902f84dfb021d6bc15} 
+glm::\+vec3 Scene\+Object::\+rotation}
+
+
+
+Definition at line \doxymbox{\hyperlink{_scene_object_8h_source_l00043}{43}} of file \doxymbox{\hyperlink{_scene_object_8h_source}{Scene\+Object.\+h}}.
+
+\Hypertarget{class_scene_object_a62c686b880fe4f58dec64a409e56de26}\index{SceneObject@{SceneObject}!scale@{scale}}
+\index{scale@{scale}!SceneObject@{SceneObject}}
+\doxysubsubsection{\texorpdfstring{scale}{scale}}
+{\footnotesize\ttfamily \label{class_scene_object_a62c686b880fe4f58dec64a409e56de26} 
+glm::\+vec3 Scene\+Object::\+scale}
+
+
+
+Definition at line \doxymbox{\hyperlink{_scene_object_8h_source_l00044}{44}} of file \doxymbox{\hyperlink{_scene_object_8h_source}{Scene\+Object.\+h}}.
+
+\Hypertarget{class_scene_object_aec5aaea9a035d8260d0fb187935122f1}\index{SceneObject@{SceneObject}!sinMoveVal@{sinMoveVal}}
+\index{sinMoveVal@{sinMoveVal}!SceneObject@{SceneObject}}
+\doxysubsubsection{\texorpdfstring{sinMoveVal}{sinMoveVal}}
+{\footnotesize\ttfamily \label{class_scene_object_aec5aaea9a035d8260d0fb187935122f1} 
+float Scene\+Object::\+sin\+Move\+Val = 0.\+0f\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_scene_object_8h_source_l00033}{33}} of file \doxymbox{\hyperlink{_scene_object_8h_source}{Scene\+Object.\+h}}.
+
+\Hypertarget{class_scene_object_ad613c1b1d1c58d8e0bae54567e51c1fd}\index{SceneObject@{SceneObject}!sinSlide@{sinSlide}}
+\index{sinSlide@{sinSlide}!SceneObject@{SceneObject}}
+\doxysubsubsection{\texorpdfstring{sinSlide}{sinSlide}}
+{\footnotesize\ttfamily \label{class_scene_object_ad613c1b1d1c58d8e0bae54567e51c1fd} 
+bool Scene\+Object::\+sin\+Slide = false}
+
+
+
+Definition at line \doxymbox{\hyperlink{_scene_object_8h_source_l00050}{50}} of file \doxymbox{\hyperlink{_scene_object_8h_source}{Scene\+Object.\+h}}.
+
+\Hypertarget{class_scene_object_a075e2957fd884c04cd8b4edf455067f6}\index{SceneObject@{SceneObject}!sinSlideFrequency@{sinSlideFrequency}}
+\index{sinSlideFrequency@{sinSlideFrequency}!SceneObject@{SceneObject}}
+\doxysubsubsection{\texorpdfstring{sinSlideFrequency}{sinSlideFrequency}}
+{\footnotesize\ttfamily \label{class_scene_object_a075e2957fd884c04cd8b4edf455067f6} 
+float Scene\+Object::\+sin\+Slide\+Frequency = 1.\+0f}
+
+
+
+Definition at line \doxymbox{\hyperlink{_scene_object_8h_source_l00052}{52}} of file \doxymbox{\hyperlink{_scene_object_8h_source}{Scene\+Object.\+h}}.
+
+\Hypertarget{class_scene_object_a1bea78d76972d8bd4f2a3a17ab9462c2}\index{SceneObject@{SceneObject}!sinSlideSpeed@{sinSlideSpeed}}
+\index{sinSlideSpeed@{sinSlideSpeed}!SceneObject@{SceneObject}}
+\doxysubsubsection{\texorpdfstring{sinSlideSpeed}{sinSlideSpeed}}
+{\footnotesize\ttfamily \label{class_scene_object_a1bea78d76972d8bd4f2a3a17ab9462c2} 
+float Scene\+Object::\+sin\+Slide\+Speed = 1.\+0f}
+
+
+
+Definition at line \doxymbox{\hyperlink{_scene_object_8h_source_l00051}{51}} of file \doxymbox{\hyperlink{_scene_object_8h_source}{Scene\+Object.\+h}}.
+
+\Hypertarget{class_scene_object_a4f34091b8f5ce43adca833f9a522d3df}\index{SceneObject@{SceneObject}!transform@{transform}}
+\index{transform@{transform}!SceneObject@{SceneObject}}
+\doxysubsubsection{\texorpdfstring{transform}{transform}}
+{\footnotesize\ttfamily \label{class_scene_object_a4f34091b8f5ce43adca833f9a522d3df} 
+glm::\+mat4 Scene\+Object::\+transform}
+
+
+
+Definition at line \doxymbox{\hyperlink{_scene_object_8h_source_l00041}{41}} of file \doxymbox{\hyperlink{_scene_object_8h_source}{Scene\+Object.\+h}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Content/\+\+Header/\+Scene\+Object.\+h\item 
+Content/\+\+Source/\+Scene\+Object.\+cpp\end{DoxyCompactItemize}

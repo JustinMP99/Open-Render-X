@@ -1,34 +1,49 @@
 \doxysection{Graphics.\+h}
-\hypertarget{_graphics_8h_source}{}\label{_graphics_8h_source}\index{/Users/justinphilie/Documents/Projects/Graphics/Open-\/Render-\/X/Content/Header/Graphics.h@{/Users/justinphilie/Documents/Projects/Graphics/Open-\/Render-\/X/Content/Header/Graphics.h}}
+\hypertarget{_graphics_8h_source}{}\label{_graphics_8h_source}\index{Content/Header/Graphics.h@{Content/Header/Graphics.h}}
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00001\ }
-\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <GLFW/glfw3.h>}}
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <glm/gtc/matrix\_transform.hpp>}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <glm/gtc/type\_ptr.hpp>}}
-\DoxyCodeLine{00006\ }
-\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }Graphics}
-\DoxyCodeLine{00008\ \{}
-\DoxyCodeLine{00009\ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00010\ }
-\DoxyCodeLine{00011\ \ \ GLFWwindow*\ window;}
-\DoxyCodeLine{00012\ \ \ \textcolor{keywordtype}{int}\ width;}
-\DoxyCodeLine{00013\ \ \ \textcolor{keywordtype}{int}\ height;}
-\DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00016\ }
-\DoxyCodeLine{00017\ \ \ Graphics();}
-\DoxyCodeLine{00018\ \ \ Graphics(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height);}
-\DoxyCodeLine{00019\ \ \ \string~Graphics();}
-\DoxyCodeLine{00020\ }
-\DoxyCodeLine{00021\ \ \ \textcolor{keywordtype}{bool}\ Initialize(GLFWwindow*\ win);}
-\DoxyCodeLine{00022\ }
-\DoxyCodeLine{00023\ \ \ \textcolor{keywordtype}{void}\ Render();}
-\DoxyCodeLine{00024\ }
-\DoxyCodeLine{00025\ \ \ \textcolor{keywordtype}{bool}\ Shutdown();}
-\DoxyCodeLine{00026\ \ \ \ \ }
-\DoxyCodeLine{00027\ }
-\DoxyCodeLine{00028\ \};}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}SceneObject.h"{}}}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <GLFW/glfw3.h>}}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <glm/gtc/matrix\_transform.hpp>}}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <glm/gtc/type\_ptr.hpp>}}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00009}00009\ \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00013}\doxymbox{\hyperlink{class_graphics}{00013}}\ \textcolor{keyword}{class\ }Graphics}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00014}00014\ \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00015}00015\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00017}00017\ \ \ GLFWwindow*\ window;}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00018}00018\ \ \ \textcolor{keywordtype}{int}\ width;}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00019}00019\ \ \ \textcolor{keywordtype}{int}\ height;}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00020}00020\ \ \ glm::mat4\ model;}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00021}00021\ \ \ \ \ glm::mat4\ view;}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00022}00022\ \ \ \ \ glm::mat4\ projection;}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00023}00023\ \ \ \textcolor{keywordtype}{float}\ fov\ =\ 60.0f;}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00025}\doxymbox{\hyperlink{class_graphics_a2cdf6e18f849a5ce7da6779412bb868b}{00025}}\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_graphics_a2cdf6e18f849a5ce7da6779412bb868b}{uboMatrices}};\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00026}\doxymbox{\hyperlink{class_graphics_a0d9163f0fd6b464be8502145b6a47901}{00026}}\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_graphics_a0d9163f0fd6b464be8502145b6a47901}{uboMaterial}};\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00028}00028\ \ \ \textcolor{keywordtype}{void}\ UpdateTransformUniforms(\doxymbox{\hyperlink{class_scene_object}{SceneObject}}*\ \textcolor{keywordtype}{object});}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00030}00030\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00032}00032\ \ \ \ \ Graphics();}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00033}00033\ \ \ \ \ Graphics(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height);}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00034}00034\ \ \ \ \ \string~Graphics();}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00036}00036\ \ \ \ \ \textcolor{keywordtype}{bool}\ Initialize(GLFWwindow*\ win);}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00037}00037\ \ \ \ \ \textcolor{keywordtype}{void}\ Render();}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00038}00038\ \ \ \ \ \textcolor{keywordtype}{void}\ Render(\doxymbox{\hyperlink{class_scene_object}{SceneObject}}*\ \textcolor{keywordtype}{object});}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00039}00039\ \ \ \ \ \textcolor{keywordtype}{bool}\ Shutdown();}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00040}00040\ \ \ \ \ \textcolor{keywordtype}{void}\ ClearScreen();}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00041}00041\ \ \ \ \ \textcolor{keywordtype}{void}\ ClearScreen(\textcolor{keywordtype}{float}\ r,\ \textcolor{keywordtype}{float}\ g,\ \textcolor{keywordtype}{float}\ b);}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00042}00042\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateViewMatrix(glm::mat4\ viewMatrix);}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00043}00043\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateViewPosition(glm::vec3\ viewPos);}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00044}00044\ \ \ \ \ \textcolor{keywordtype}{void}\ SetFOV(\textcolor{keywordtype}{float}\ fov);}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00045}00045\ \ \ \ \ \textcolor{keywordtype}{void}\ SetViewport(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height);}
+\DoxyCodeLine{\Hypertarget{_graphics_8h_source_l00046}00046\ \};}
 
 \end{DoxyCode}

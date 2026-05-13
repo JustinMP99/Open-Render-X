@@ -1,0 +1,521 @@
+\doxysection{Material Class Reference}
+\hypertarget{class_material}{}\label{class_material}\index{Material@{Material}}
+
+
+{\ttfamily \+\#include $<$Material.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_material_a137e987401b63eb7c6c27c3e38bc74b5}{Material}} ()
+\begin{DoxyCompactList}\small\item\em PUBLIC. \end{DoxyCompactList}\item 
+\Hypertarget{class_material_ae71e2493924b3eab447752bccaf6dc78}\label{class_material_ae71e2493924b3eab447752bccaf6dc78} 
+{\bfseries Material} (unsigned int vertex\+Shader, unsigned int fragment\+Shader)
+\item 
+\Hypertarget{class_material_a4ce3afb55ecf014cb421b34a9db55284}\label{class_material_a4ce3afb55ecf014cb421b34a9db55284} 
+{\bfseries Material} (unsigned int vertex\+Shader, unsigned int fragment\+Shader, unsigned int \doxymbox{\hyperlink{class_material_a2474ef3a4dff54228db3c09a2c1a935f}{diffuse\+Texture}})
+\item 
+void \doxymbox{\hyperlink{class_material_a9b5febb3dd010b1b40efefe8df94d642}{Use}} ()
+\begin{DoxyCompactList}\small\item\em Activates the shader program and binds the textures associated with this material. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_material_ae80cd91ba2bf7b7e6c0169ef52b6bbcb}{Set\+Material\+Name}} (const char \texorpdfstring{$\ast$}{*}name)
+\begin{DoxyCompactList}\small\item\em stes the name of the material \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_material_ac43103312c2b250ba3211341683df129}{Set\+Shaders}} (unsigned int vertex\+Shader, unsigned int fragment\+Shader)
+\begin{DoxyCompactList}\small\item\em creates the Shader Program and attaches and links the vertex and fragment shaders passed in \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_material_a1aa26e1f38cef8ef4c9f75d60ce8504f}{Set\+Diffuse\+Texture}} (unsigned int diffuse)
+\begin{DoxyCompactList}\small\item\em sets the diffuse texture on the material \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_material_afeaa4b999384a90442fa45d305b62469}{Set\+Specular\+Texture}} (unsigned int specular)
+\begin{DoxyCompactList}\small\item\em sets the specular texture on the material \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_material_af56adc32181a0cc8b75561b38a791ab3}{Set\+Bool}} (const std::\+string \&name, bool value) const
+\item 
+bool \doxymbox{\hyperlink{class_material_a7c794c6ccba00644d0704123714029d2}{Set\+Int}} (const std::\+string \&name, int value) const
+\begin{DoxyCompactList}\small\item\em sets the value of an int in the attached shader program \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_material_a71b80b16d26db3ec3c06c80c4146f441}{Set\+Float}} (const std::\+string \&name, float value) const
+\begin{DoxyCompactList}\small\item\em sets the value of a float in the attached shader program \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_material_a787ee04c8fbad25f81c948dc2ea99736}{Set\+Vec3}} (const std::\+string \&name, float x, float y, float z) const
+\begin{DoxyCompactList}\small\item\em sets the value of a vec3 uniform in the attached shader program \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_material_a9b6dc2cd561853e65069005b621685e8}{Material\+Name}}
+\begin{DoxyCompactList}\small\item\em string that holds the name of the material \end{DoxyCompactList}\item 
+unsigned int \doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shader\+Program}}
+\begin{DoxyCompactList}\small\item\em the id of the Shader\+Program \end{DoxyCompactList}\item 
+unsigned int \doxymbox{\hyperlink{class_material_a2474ef3a4dff54228db3c09a2c1a935f}{diffuse\+Texture}}
+\begin{DoxyCompactList}\small\item\em the id of the attached diffuse texture \end{DoxyCompactList}\item 
+unsigned int \doxymbox{\hyperlink{class_material_a6199200446d0baa7634321bad92a1802}{specular\+Texture}}
+\begin{DoxyCompactList}\small\item\em the id of the specular texture \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{class_material_a9dc184c883ec135ace28c1917af3fe84}{shininess}}
+\begin{DoxyCompactList}\small\item\em value for shininess \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_material_a2e12475f31be3ec578d794cc24feb0a9}{use\+Diffuse}}
+\begin{DoxyCompactList}\small\item\em bool to determine if the diffuse texture should be used \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_material_a5674c13333bceac6b4377fda71979be2}{use\+Specular}}
+\begin{DoxyCompactList}\small\item\em bool to determine if the specular texture should be used \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The Materials class handles contains data related to shaders, textures and other rendering data 
+
+Definition at line \doxymbox{\hyperlink{_material_8h_source_l00023}{23}} of file \doxymbox{\hyperlink{_material_8h_source}{Material.\+h}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_material_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_material_a137e987401b63eb7c6c27c3e38bc74b5}\index{Material@{Material}!Material@{Material}}
+\index{Material@{Material}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{Material()}{Material()}}
+{\footnotesize\ttfamily \label{class_material_a137e987401b63eb7c6c27c3e38bc74b5} 
+Material::\+\+Material (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+PUBLIC. 
+
+
+
+Definition at line \doxymbox{\hyperlink{_material_8cpp_source_l00027}{27}} of file \doxymbox{\hyperlink{_material_8cpp_source}{Material.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00028\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \doxymbox{\hyperlink{class_material_a9dc184c883ec135ace28c1917af3fe84}{shininess}}\ =\ 32.0f;}
+\DoxyCodeLine{00030\ \ \ \ \ \doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}}\ =\ 0;}
+\DoxyCodeLine{00031\ \ \ \ \ \doxymbox{\hyperlink{class_material_a2474ef3a4dff54228db3c09a2c1a935f}{diffuseTexture}}\ =\ 0;}
+\DoxyCodeLine{00032\ \ \ \ \ \doxymbox{\hyperlink{class_material_a6199200446d0baa7634321bad92a1802}{specularTexture}}\ =\ 0;}
+\DoxyCodeLine{00033\ \ \ \ \ \doxymbox{\hyperlink{class_material_a2e12475f31be3ec578d794cc24feb0a9}{useDiffuse}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00034\ \ \ \ \ \doxymbox{\hyperlink{class_material_a5674c13333bceac6b4377fda71979be2}{useSpecular}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00035\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_material_a2c19452d71f54075df8f5405b03129f4}\index{Material@{Material}!````~Material@{\texorpdfstring{$\sim$}{\string~}Material}}
+\index{````~Material@{\texorpdfstring{$\sim$}{\string~}Material}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Material()}{\string~Material()}}
+{\footnotesize\ttfamily \label{class_material_a2c19452d71f54075df8f5405b03129f4} 
+Material::\+\texorpdfstring{$\sim$}{\string~}\+Material (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_material_8cpp_source_l00037}{37}} of file \doxymbox{\hyperlink{_material_8cpp_source}{Material.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00038\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ glDeleteProgram(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}});}
+\DoxyCodeLine{00040\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_material_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_material_af56adc32181a0cc8b75561b38a791ab3}\index{Material@{Material}!SetBool@{SetBool}}
+\index{SetBool@{SetBool}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{SetBool()}{SetBool()}}
+{\footnotesize\ttfamily \label{class_material_af56adc32181a0cc8b75561b38a791ab3} 
+bool Material::\+\+Set\+Bool (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{name}{, }\item[{bool}]{value}{}\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \doxymbox{\hyperlink{_material_8cpp_source_l00126}{126}} of file \doxymbox{\hyperlink{_material_8cpp_source}{Material.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00127\ \{}
+\DoxyCodeLine{00128\ \ \ \ \ glUniform1i(glGetUniformLocation(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ name.c\_str()),\ (\textcolor{keywordtype}{int})value);}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00130\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_material_a1aa26e1f38cef8ef4c9f75d60ce8504f}\index{Material@{Material}!SetDiffuseTexture@{SetDiffuseTexture}}
+\index{SetDiffuseTexture@{SetDiffuseTexture}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{SetDiffuseTexture()}{SetDiffuseTexture()}}
+{\footnotesize\ttfamily \label{class_material_a1aa26e1f38cef8ef4c9f75d60ce8504f} 
+bool Material::\+\+Set\+Diffuse\+Texture (\begin{DoxyParamCaption}\item[{unsigned int}]{diffuse}{}\end{DoxyParamCaption})}
+
+
+
+sets the diffuse texture on the material 
+
+
+
+Definition at line \doxymbox{\hyperlink{_material_8cpp_source_l00112}{112}} of file \doxymbox{\hyperlink{_material_8cpp_source}{Material.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00113\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \doxymbox{\hyperlink{class_material_a2474ef3a4dff54228db3c09a2c1a935f}{diffuseTexture}}\ =\ diffuse;}
+\DoxyCodeLine{00115\ \ \ \ \ \doxymbox{\hyperlink{class_material_a2e12475f31be3ec578d794cc24feb0a9}{useDiffuse}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00117\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_material_a71b80b16d26db3ec3c06c80c4146f441}\index{Material@{Material}!SetFloat@{SetFloat}}
+\index{SetFloat@{SetFloat}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{SetFloat()}{SetFloat()}}
+{\footnotesize\ttfamily \label{class_material_a71b80b16d26db3ec3c06c80c4146f441} 
+bool Material::\+\+Set\+Float (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{name}{, }\item[{float}]{value}{}\end{DoxyParamCaption}) const}
+
+
+
+sets the value of a float in the attached shader program 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & string that holds the name of the float uniform \\
+\hline
+{\em value} & the new value for the float \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful 
+\end{DoxyReturn}
+
+
+Definition at line \doxymbox{\hyperlink{_material_8cpp_source_l00138}{138}} of file \doxymbox{\hyperlink{_material_8cpp_source}{Material.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00139\ \{}
+\DoxyCodeLine{00140\ \ \ \ \ glUniform1f(glGetUniformLocation(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ name.c\_str()),\ value);}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00142\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_material_a7c794c6ccba00644d0704123714029d2}\index{Material@{Material}!SetInt@{SetInt}}
+\index{SetInt@{SetInt}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{SetInt()}{SetInt()}}
+{\footnotesize\ttfamily \label{class_material_a7c794c6ccba00644d0704123714029d2} 
+bool Material::\+\+Set\+Int (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{name}{, }\item[{int}]{value}{}\end{DoxyParamCaption}) const}
+
+
+
+sets the value of an int in the attached shader program 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & string that holds the name of the int uniform \\
+\hline
+{\em value} & the new value for the int \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful 
+\end{DoxyReturn}
+
+
+Definition at line \doxymbox{\hyperlink{_material_8cpp_source_l00132}{132}} of file \doxymbox{\hyperlink{_material_8cpp_source}{Material.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00133\ \{}
+\DoxyCodeLine{00134\ \ \ \ \ glUniform1i(glGetUniformLocation(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ name.c\_str()),\ value);}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00136\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_material_ae80cd91ba2bf7b7e6c0169ef52b6bbcb}\index{Material@{Material}!SetMaterialName@{SetMaterialName}}
+\index{SetMaterialName@{SetMaterialName}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{SetMaterialName()}{SetMaterialName()}}
+{\footnotesize\ttfamily \label{class_material_ae80cd91ba2bf7b7e6c0169ef52b6bbcb} 
+bool Material::\+\+Set\+Material\+Name (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{}\end{DoxyParamCaption})}
+
+
+
+stes the name of the material 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & string containing the name that will be given to the material \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful 
+\end{DoxyReturn}
+
+
+Definition at line \doxymbox{\hyperlink{_material_8cpp_source_l00080}{80}} of file \doxymbox{\hyperlink{_material_8cpp_source}{Material.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00081\ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \doxymbox{\hyperlink{class_material_a9b6dc2cd561853e65069005b621685e8}{MaterialName}}\ =\ std::string(name);}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00084\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_material_ac43103312c2b250ba3211341683df129}\index{Material@{Material}!SetShaders@{SetShaders}}
+\index{SetShaders@{SetShaders}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{SetShaders()}{SetShaders()}}
+{\footnotesize\ttfamily \label{class_material_ac43103312c2b250ba3211341683df129} 
+bool Material::\+\+Set\+Shaders (\begin{DoxyParamCaption}\item[{unsigned int}]{vertex\+Shader}{, }\item[{unsigned int}]{fragment\+Shader}{}\end{DoxyParamCaption})}
+
+
+
+creates the Shader Program and attaches and links the vertex and fragment shaders passed in 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex\+Shader} & the id for the vertex shader \\
+\hline
+{\em fragment\+Shader} & the id for the fragment shader \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful 
+\end{DoxyReturn}
+
+
+Definition at line \doxymbox{\hyperlink{_material_8cpp_source_l00086}{86}} of file \doxymbox{\hyperlink{_material_8cpp_source}{Material.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}}\ =\ glCreateProgram();}
+\DoxyCodeLine{00089\ \ \ \ \ glAttachShader(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ vertexShader);}
+\DoxyCodeLine{00090\ \ \ \ \ glAttachShader(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ fragmentShader);}
+\DoxyCodeLine{00091\ \ \ \ \ glLinkProgram(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}});}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{comment}{//\ check\ for\ linking\ errors}}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{int}\ success;}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{char}\ infoLog[512];}
+\DoxyCodeLine{00096\ \ \ \ \ glGetProgramiv(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ GL\_LINK\_STATUS,\ \&success);}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordflow}{if}\ (!success)\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ glGetProgramInfoLog(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ 512,\ NULL,\ infoLog);}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}ERROR::SHADER::PROGRAM::LINKING\_FAILED\(\backslash\)n"{}}\ <<\ infoLog\ <<\ std::endl;}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00101\ \ \ \ \ \}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{comment}{//\ Bind\ uniform\ blocks\ to\ binding\ points}}
+\DoxyCodeLine{00104\ \ \ \ \ GLuint\ ambientBlockIndex\ =\ glGetUniformBlockIndex(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ \textcolor{stringliteral}{"{}AmbientLightData"{}});}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordflow}{if}\ (ambientBlockIndex\ !=\ GL\_INVALID\_INDEX)\ \{}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ glUniformBlockBinding(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ ambientBlockIndex,\ 1);}
+\DoxyCodeLine{00107\ \ \ \ \ \}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00110\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_material_afeaa4b999384a90442fa45d305b62469}\index{Material@{Material}!SetSpecularTexture@{SetSpecularTexture}}
+\index{SetSpecularTexture@{SetSpecularTexture}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{SetSpecularTexture()}{SetSpecularTexture()}}
+{\footnotesize\ttfamily \label{class_material_afeaa4b999384a90442fa45d305b62469} 
+bool Material::\+\+Set\+Specular\+Texture (\begin{DoxyParamCaption}\item[{unsigned int}]{specular}{}\end{DoxyParamCaption})}
+
+
+
+sets the specular texture on the material 
+
+
+
+Definition at line \doxymbox{\hyperlink{_material_8cpp_source_l00119}{119}} of file \doxymbox{\hyperlink{_material_8cpp_source}{Material.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00120\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ \doxymbox{\hyperlink{class_material_a6199200446d0baa7634321bad92a1802}{specularTexture}}\ =\ specular;}
+\DoxyCodeLine{00122\ \ \ \ \ \doxymbox{\hyperlink{class_material_a5674c13333bceac6b4377fda71979be2}{useSpecular}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00124\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_material_a787ee04c8fbad25f81c948dc2ea99736}\index{Material@{Material}!SetVec3@{SetVec3}}
+\index{SetVec3@{SetVec3}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{SetVec3()}{SetVec3()}}
+{\footnotesize\ttfamily \label{class_material_a787ee04c8fbad25f81c948dc2ea99736} 
+bool Material::\+\+Set\+Vec3 (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{name}{, }\item[{float}]{x}{, }\item[{float}]{y}{, }\item[{float}]{z}{}\end{DoxyParamCaption}) const}
+
+
+
+sets the value of a vec3 uniform in the attached shader program 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & string that holds the name of the vec3 uniform \\
+\hline
+{\em x} & x value of the vec3 \\
+\hline
+{\em y} & y value of the vec3 \\
+\hline
+{\em z} & z value of the vec3 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful 
+\end{DoxyReturn}
+
+
+Definition at line \doxymbox{\hyperlink{_material_8cpp_source_l00144}{144}} of file \doxymbox{\hyperlink{_material_8cpp_source}{Material.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00145\ \{}
+\DoxyCodeLine{00146\ \ \ \ \ glUniform3f(glGetUniformLocation(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ name.c\_str()),\ x,\ y,\ z);}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00148\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_material_a9b5febb3dd010b1b40efefe8df94d642}\index{Material@{Material}!Use@{Use}}
+\index{Use@{Use}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{Use()}{Use()}}
+{\footnotesize\ttfamily \label{class_material_a9b5febb3dd010b1b40efefe8df94d642} 
+void Material::\+\+Use (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Activates the shader program and binds the textures associated with this material. 
+
+
+
+Definition at line \doxymbox{\hyperlink{_material_8cpp_source_l00042}{42}} of file \doxymbox{\hyperlink{_material_8cpp_source}{Material.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00043\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}}\ !=\ 0)}
+\DoxyCodeLine{00045\ \ \ \ \ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}}\ !=\ 0)}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ glUseProgram(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}});}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_material_a2474ef3a4dff54228db3c09a2c1a935f}{diffuseTexture}}\ !=\ 0\ \&\&\ \doxymbox{\hyperlink{class_material_a2e12475f31be3ec578d794cc24feb0a9}{useDiffuse}})}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_material_a7c794c6ccba00644d0704123714029d2}{SetInt}}(\textcolor{stringliteral}{"{}material.diffuseTexture"{}},\ 0);}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ glActiveTexture(GL\_TEXTURE0);}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ glBindTexture(GL\_TEXTURE\_2D,\ \doxymbox{\hyperlink{class_material_a2474ef3a4dff54228db3c09a2c1a935f}{diffuseTexture}});}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ else}}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ glBindTexture(GL\_TEXTURE\_2D,\ 0);}}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ SetBool(\textcolor{stringliteral}{"{}useDiffuse"{}},\ \doxymbox{\hyperlink{class_material_a2e12475f31be3ec578d794cc24feb0a9}{useDiffuse}});}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_material_a6199200446d0baa7634321bad92a1802}{specularTexture}}\ !=\ 0\ \&\&\ \doxymbox{\hyperlink{class_material_a5674c13333bceac6b4377fda71979be2}{useSpecular}})}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_material_a7c794c6ccba00644d0704123714029d2}{SetInt}}(\textcolor{stringliteral}{"{}material.specularTexture"{}},\ 1);}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ glActiveTexture(GL\_TEXTURE1);}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ glBindTexture(GL\_TEXTURE\_2D,\ \doxymbox{\hyperlink{class_material_a6199200446d0baa7634321bad92a1802}{specularTexture}});}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ SetBool(\textcolor{stringliteral}{"{}useSpecular"{}},\ \doxymbox{\hyperlink{class_material_a5674c13333bceac6b4377fda71979be2}{useSpecular}});}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_material_a71b80b16d26db3ec3c06c80c4146f441}{SetFloat}}(\textcolor{stringliteral}{"{}material.shininess"{}},\ \doxymbox{\hyperlink{class_material_a9dc184c883ec135ace28c1917af3fe84}{shininess}});}
+\DoxyCodeLine{00077\ \ \ \ \ \}}
+\DoxyCodeLine{00078\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-variable-members}
+\Hypertarget{class_material_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_material_a2474ef3a4dff54228db3c09a2c1a935f}\index{Material@{Material}!diffuseTexture@{diffuseTexture}}
+\index{diffuseTexture@{diffuseTexture}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{diffuseTexture}{diffuseTexture}}
+{\footnotesize\ttfamily \label{class_material_a2474ef3a4dff54228db3c09a2c1a935f} 
+unsigned int Material::\+diffuse\+Texture}
+
+
+
+the id of the attached diffuse texture 
+
+
+
+Definition at line \doxymbox{\hyperlink{_material_8h_source_l00031}{31}} of file \doxymbox{\hyperlink{_material_8h_source}{Material.\+h}}.
+
+\Hypertarget{class_material_a9b6dc2cd561853e65069005b621685e8}\index{Material@{Material}!MaterialName@{MaterialName}}
+\index{MaterialName@{MaterialName}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{MaterialName}{MaterialName}}
+{\footnotesize\ttfamily \label{class_material_a9b6dc2cd561853e65069005b621685e8} 
+std::\+string Material::\+\+Material\+Name}
+
+
+
+string that holds the name of the material 
+
+
+
+Definition at line \doxymbox{\hyperlink{_material_8h_source_l00029}{29}} of file \doxymbox{\hyperlink{_material_8h_source}{Material.\+h}}.
+
+\Hypertarget{class_material_a91b188c7205700f7341128af19ac02b1}\index{Material@{Material}!shaderProgram@{shaderProgram}}
+\index{shaderProgram@{shaderProgram}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{shaderProgram}{shaderProgram}}
+{\footnotesize\ttfamily \label{class_material_a91b188c7205700f7341128af19ac02b1} 
+unsigned int Material::\+shader\+Program}
+
+
+
+the id of the Shader\+Program 
+
+
+
+Definition at line \doxymbox{\hyperlink{_material_8h_source_l00030}{30}} of file \doxymbox{\hyperlink{_material_8h_source}{Material.\+h}}.
+
+\Hypertarget{class_material_a9dc184c883ec135ace28c1917af3fe84}\index{Material@{Material}!shininess@{shininess}}
+\index{shininess@{shininess}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{shininess}{shininess}}
+{\footnotesize\ttfamily \label{class_material_a9dc184c883ec135ace28c1917af3fe84} 
+float Material::\+shininess}
+
+
+
+value for shininess 
+
+
+
+Definition at line \doxymbox{\hyperlink{_material_8h_source_l00033}{33}} of file \doxymbox{\hyperlink{_material_8h_source}{Material.\+h}}.
+
+\Hypertarget{class_material_a6199200446d0baa7634321bad92a1802}\index{Material@{Material}!specularTexture@{specularTexture}}
+\index{specularTexture@{specularTexture}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{specularTexture}{specularTexture}}
+{\footnotesize\ttfamily \label{class_material_a6199200446d0baa7634321bad92a1802} 
+unsigned int Material::\+specular\+Texture}
+
+
+
+the id of the specular texture 
+
+
+
+Definition at line \doxymbox{\hyperlink{_material_8h_source_l00032}{32}} of file \doxymbox{\hyperlink{_material_8h_source}{Material.\+h}}.
+
+\Hypertarget{class_material_a2e12475f31be3ec578d794cc24feb0a9}\index{Material@{Material}!useDiffuse@{useDiffuse}}
+\index{useDiffuse@{useDiffuse}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{useDiffuse}{useDiffuse}}
+{\footnotesize\ttfamily \label{class_material_a2e12475f31be3ec578d794cc24feb0a9} 
+bool Material::\+use\+Diffuse}
+
+
+
+bool to determine if the diffuse texture should be used 
+
+
+
+Definition at line \doxymbox{\hyperlink{_material_8h_source_l00034}{34}} of file \doxymbox{\hyperlink{_material_8h_source}{Material.\+h}}.
+
+\Hypertarget{class_material_a5674c13333bceac6b4377fda71979be2}\index{Material@{Material}!useSpecular@{useSpecular}}
+\index{useSpecular@{useSpecular}!Material@{Material}}
+\doxysubsubsection{\texorpdfstring{useSpecular}{useSpecular}}
+{\footnotesize\ttfamily \label{class_material_a5674c13333bceac6b4377fda71979be2} 
+bool Material::\+use\+Specular}
+
+
+
+bool to determine if the specular texture should be used 
+
+
+
+Definition at line \doxymbox{\hyperlink{_material_8h_source_l00035}{35}} of file \doxymbox{\hyperlink{_material_8h_source}{Material.\+h}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Content/\+\+Header/\+Material.\+h\item 
+Content/\+\+Source/\+Material.\+cpp\end{DoxyCompactItemize}

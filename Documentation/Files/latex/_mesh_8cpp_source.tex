@@ -1,0 +1,83 @@
+\doxysection{Mesh.\+cpp}
+\hypertarget{_mesh_8cpp_source}{}\label{_mesh_8cpp_source}\index{Content/Source/Mesh.cpp@{Content/Source/Mesh.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ Justin\ Philie\ on\ 1/4/26.}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}../Header/Mesh.h"{}}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00007}00007\ \textcolor{comment}{//\ PRIVATE}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00009}00009\ Mesh::Mesh()}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00010}00010\ \{}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00012}00012\ \}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00014}00014\ Mesh::\string~Mesh()}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00015}00015\ \{}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00016}00016\ \ \ \ \ \doxymbox{\hyperlink{class_mesh_a3f0fb09a2355f0b20e3ce0a388cd8c4b}{DestroyMeshData}}();}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00017}00017\ \}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00019}\doxymbox{\hyperlink{class_mesh_aa27c7edfdab8e42339908a50deb922b7}{00019}}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_mesh_aa27c7edfdab8e42339908a50deb922b7}{Mesh::AddMeshData}}(std::vector<Vertex>\ \&newVertices,\ std::vector<unsigned\ int>\ \&newIndices)}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00020}00020\ \{}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00022}00022\ \ \ \ \ \doxymbox{\hyperlink{class_mesh_a3f0fb09a2355f0b20e3ce0a388cd8c4b}{DestroyMeshData}}();}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00024}00024\ \ \ \ \ \textcolor{comment}{//Copy\ vertices}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00025}00025\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ newVertices.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00026}00026\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_mesh_a6465a888c97232a39e12aad008c969c3}{vertices}}.push\_back(newVertices[i]);}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00028}00028\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00030}00030\ \ \ \ \ \textcolor{comment}{//Copy\ indices}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00031}00031\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ newIndices.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00032}00032\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_mesh_a26632e27b772f24b069a738e7983b9da}{indices}}.push\_back(newIndices[i]);}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00034}00034\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00036}00036\ \ \ \ \ \textcolor{comment}{//create\ vao}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00037}00037\ \ \ \ \ glGenVertexArrays(1,\ \&\doxymbox{\hyperlink{class_mesh_a79afa055e485fb65b1a7aa5b8eda2940}{VAO}});}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00038}00038\ \ \ \ \ glBindVertexArray(\doxymbox{\hyperlink{class_mesh_a79afa055e485fb65b1a7aa5b8eda2940}{VAO}});}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00040}00040\ \ \ \ \ \textcolor{comment}{//create\ vbo}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00041}00041\ \ \ \ \ glGenBuffers(1,\ \&\doxymbox{\hyperlink{class_mesh_af08e5f92b0cf587817841104c16fa803}{VBO}});}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00042}00042\ \ \ \ \ glBindBuffer(GL\_ARRAY\_BUFFER,\ \doxymbox{\hyperlink{class_mesh_af08e5f92b0cf587817841104c16fa803}{VBO}});}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00043}00043\ \ \ \ \ glBufferData(GL\_ARRAY\_BUFFER,\ \doxymbox{\hyperlink{class_mesh_a6465a888c97232a39e12aad008c969c3}{vertices}}.size()\ *\ \textcolor{keyword}{sizeof}(\doxymbox{\hyperlink{class_vertex}{Vertex}}),\ \&\doxymbox{\hyperlink{class_mesh_a6465a888c97232a39e12aad008c969c3}{vertices}}[0],\ GL\_STATIC\_DRAW);}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00045}00045\ \ \ \ \ \textcolor{comment}{//create\ ebo}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00046}00046\ \ \ \ \ glGenBuffers(1,\ \&\doxymbox{\hyperlink{class_mesh_a25262f446aea3107da7c23f126a81faa}{EBO}});}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00047}00047\ \ \ \ \ glBindBuffer(GL\_ELEMENT\_ARRAY\_BUFFER,\ \doxymbox{\hyperlink{class_mesh_a25262f446aea3107da7c23f126a81faa}{EBO}});}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00048}00048\ \ \ \ \ glBufferData(GL\_ELEMENT\_ARRAY\_BUFFER,\ \doxymbox{\hyperlink{class_mesh_a26632e27b772f24b069a738e7983b9da}{indices}}.size()\ *\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}),\ \&\doxymbox{\hyperlink{class_mesh_a26632e27b772f24b069a738e7983b9da}{indices}}[0],\ GL\_STATIC\_DRAW);}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00050}00050\ \ \ \ \ \textcolor{comment}{//set\ vertex\ attribute\ layout}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00051}00051\ \ \ \ \ glVertexAttribPointer(0,\ 3,\ GL\_FLOAT,\ GL\_FALSE,\ \textcolor{keyword}{sizeof}(glm::vec3),\ (\textcolor{keywordtype}{void}*)0);}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00052}00052\ \ \ \ \ glEnableVertexAttribArray(0);}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00054}00054\ \}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00056}\doxymbox{\hyperlink{class_mesh_a3f0fb09a2355f0b20e3ce0a388cd8c4b}{00056}}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_mesh_a3f0fb09a2355f0b20e3ce0a388cd8c4b}{Mesh::DestroyMeshData}}()}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00057}00057\ \{}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00058}00058\ \ \ \ \ \textcolor{comment}{//clear\ vertex\ \&\ index\ array}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00059}00059\ \ \ \ \ \doxymbox{\hyperlink{class_mesh_a6465a888c97232a39e12aad008c969c3}{vertices}}.clear();}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00060}00060\ \ \ \ \ \doxymbox{\hyperlink{class_mesh_a26632e27b772f24b069a738e7983b9da}{indices}}.clear();}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00061}00061\ \ \ \ \ glDeleteVertexArrays(1,\ \&\doxymbox{\hyperlink{class_mesh_a79afa055e485fb65b1a7aa5b8eda2940}{VAO}});}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00062}00062\ \ \ \ \ glDeleteBuffers(1,\ \&\doxymbox{\hyperlink{class_mesh_af08e5f92b0cf587817841104c16fa803}{VBO}});}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00063}00063\ \ \ \ \ glDeleteBuffers(1,\ \&\doxymbox{\hyperlink{class_mesh_a25262f446aea3107da7c23f126a81faa}{EBO}});}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00064}00064\ \}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00067}00067\ \textcolor{comment}{//\ PUBLIC}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00069}00069\ \textcolor{keywordtype}{int}\ Mesh::GetDrawMode()}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00070}00070\ \{}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00071}00071\ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_mesh_ac71384ad5267e80771d3bf9f5d31b338}{drawMode}};}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00072}00072\ \}}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00074}00074\ \textcolor{keywordtype}{void}\ Mesh::SetDrawMode(DrawMode\ mode)}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00075}00075\ \{}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00076}00076\ \ \ \ \ \doxymbox{\hyperlink{class_mesh_ac71384ad5267e80771d3bf9f5d31b338}{drawMode}}\ =\ mode;}
+\DoxyCodeLine{\Hypertarget{_mesh_8cpp_source_l00077}00077\ \}}
+
+\end{DoxyCode}

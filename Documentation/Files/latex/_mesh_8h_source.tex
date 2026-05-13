@@ -1,0 +1,50 @@
+\doxysection{Mesh.\+h}
+\hypertarget{_mesh_8h_source}{}\label{_mesh_8h_source}\index{Content/Header/Mesh.h@{Content/Header/Mesh.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00006}00006\ \textcolor{preprocessor}{\#ifndef\ OPENRENDERX\_VERTEX\_H}}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00007}00007\ \textcolor{preprocessor}{\#define\ OPENRENDERX\_VERTEX\_H}}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}Vertex.h"{}}}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00009}00009\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00011}00011\ \textcolor{keyword}{enum}\ DrawMode}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00012}00012\ \{}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00013}00013\ \ \ \ \ LINES\ =\ 1,}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00014}00014\ \ \ \ \ TRIANGLES\ =\ 4,}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00015}00015\ \};}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00017}\doxymbox{\hyperlink{class_mesh}{00017}}\ \textcolor{keyword}{class\ }Mesh}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00018}00018\ \{}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00019}00019\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00021}00021\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00022}\doxymbox{\hyperlink{class_mesh_ac71384ad5267e80771d3bf9f5d31b338}{00022}}\ \ \ \ \ DrawMode\ \doxymbox{\hyperlink{class_mesh_ac71384ad5267e80771d3bf9f5d31b338}{drawMode}};\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00023}\doxymbox{\hyperlink{class_mesh_a73001a4b3012b863b8058ab17bb58cf2}{00023}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_mesh_a73001a4b3012b863b8058ab17bb58cf2}{useEBO}}\ =\ \textcolor{keyword}{false};\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00024}\doxymbox{\hyperlink{class_mesh_a79afa055e485fb65b1a7aa5b8eda2940}{00024}}\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_mesh_a79afa055e485fb65b1a7aa5b8eda2940}{VAO}};\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00025}\doxymbox{\hyperlink{class_mesh_af08e5f92b0cf587817841104c16fa803}{00025}}\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_mesh_af08e5f92b0cf587817841104c16fa803}{VBO}};\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00026}\doxymbox{\hyperlink{class_mesh_a25262f446aea3107da7c23f126a81faa}{00026}}\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_mesh_a25262f446aea3107da7c23f126a81faa}{EBO}};\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00027}\doxymbox{\hyperlink{class_mesh_a6465a888c97232a39e12aad008c969c3}{00027}}\ \ \ \ \ std::vector<Vertex>\ \doxymbox{\hyperlink{class_mesh_a6465a888c97232a39e12aad008c969c3}{vertices}};\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00028}\doxymbox{\hyperlink{class_mesh_a26632e27b772f24b069a738e7983b9da}{00028}}\ \ \ \ \ std::vector<unsigned\ int>\ \doxymbox{\hyperlink{class_mesh_a26632e27b772f24b069a738e7983b9da}{indices}};\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00029}\doxymbox{\hyperlink{class_mesh_a0639c1d0e097c60a64bb205e0b6f4d0f}{00029}}\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_mesh_a0639c1d0e097c60a64bb205e0b6f4d0f}{indexCount}};\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00031}00031\ \ \ \ \ Mesh();}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00032}00032\ \ \ \ \ \string~Mesh();}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00035}00035\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_mesh_aa27c7edfdab8e42339908a50deb922b7}{AddMeshData}}(std::vector\ <Vertex>\ \&\doxymbox{\hyperlink{class_mesh_a6465a888c97232a39e12aad008c969c3}{vertices}},\ std::vector\ <unsigned\ int>\ \&\doxymbox{\hyperlink{class_mesh_a26632e27b772f24b069a738e7983b9da}{indices}});}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00038}00038\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_mesh_a3f0fb09a2355f0b20e3ce0a388cd8c4b}{DestroyMeshData}}();}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00040}00040\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00042}00042\ \ \ \ \ \textcolor{keywordtype}{int}\ GetDrawMode();}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00043}00043\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00044}00044\ \ \ \ \ \textcolor{keywordtype}{void}\ SetDrawMode(DrawMode\ mode);}
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_mesh_8h_source_l00046}00046\ \};}
+
+\end{DoxyCode}

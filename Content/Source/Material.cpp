@@ -30,8 +30,8 @@ Material::Material()
     shaderProgram = 0;
     diffuseTexture = 0;
     specularTexture = 0;
-    useDiffuse = true;
-    useSpecular = true;
+    useDiffuse = false;
+    useSpecular = false;
 }
 
 Material::~Material()
@@ -50,17 +50,28 @@ void Material::Use()
         
         if (diffuseTexture != 0 && useDiffuse)
         {
+           
             SetInt("material.diffuseTexture", 0);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, diffuseTexture);
         }
-        
+        // else
+        // {
+        //     glBindTexture(GL_TEXTURE_2D, 0);
+        // }
+        SetBool("useDiffuse", useDiffuse);
+
         if (specularTexture != 0 && useSpecular)
         {
             SetInt("material.specularTexture", 1);
             glActiveTexture(GL_TEXTURE1);
             glBindTexture(GL_TEXTURE_2D, specularTexture);
         }
+        else
+        {
+
+        }
+        SetBool("useSpecular", useSpecular);
         
         SetFloat("material.shininess", shininess);
     }
@@ -101,12 +112,14 @@ bool Material::SetShaders(unsigned int vertexShader, unsigned int fragmentShader
 bool Material::SetDiffuseTexture(unsigned int diffuse)
 {
     diffuseTexture = diffuse;
+    useDiffuse = true;
     return true;
 }
 
 bool Material::SetSpecularTexture(unsigned int specular)
 {
     specularTexture = specular;
+    useSpecular = true;
     return true;
 }
 

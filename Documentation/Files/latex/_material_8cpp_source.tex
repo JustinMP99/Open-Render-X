@@ -1,0 +1,153 @@
+\doxysection{Material.\+cpp}
+\hypertarget{_material_8cpp_source}{}\label{_material_8cpp_source}\index{Content/Source/Material.cpp@{Content/Source/Material.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ Justin\ Philie\ on\ 1/4/26.}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}../Header/Material.h"{}}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00007}00007\ std::string\ GetFileContents(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename)}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00008}00008\ \{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00009}00009\ \ \ \ \ std::string\ result\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00010}00010\ \ \ \ \ std::string\ line\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00011}00011\ \ \ \ \ std::ifstream\ in(filename);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00012}00012\ \ \ \ \ \textcolor{keywordflow}{if}\ (in.is\_open())}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00013}00013\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00014}00014\ \ \ \ \ \ \ \ \ std::string\ contents;}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00015}00015\ \ \ \ \ \ \ \ \ in.seekg(0,\ std::ios::end);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00016}00016\ \ \ \ \ \ \ \ \ contents.resize(in.tellg());}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00017}00017\ \ \ \ \ \ \ \ \ in.seekg(0,\ std::ios::beg);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00018}00018\ \ \ \ \ \ \ \ \ in.read(\&contents[0],\ contents.size());}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ in.close();}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}(contents);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00021}00021\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00022}00022\ \ \ \ \ \textcolor{keywordflow}{throw}(errno);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00023}00023\ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00027}\doxymbox{\hyperlink{class_material_a137e987401b63eb7c6c27c3e38bc74b5}{00027}}\ \doxymbox{\hyperlink{class_material_a137e987401b63eb7c6c27c3e38bc74b5}{Material::Material}}()}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00028}00028\ \{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00029}00029\ \ \ \ \ \doxymbox{\hyperlink{class_material_a9dc184c883ec135ace28c1917af3fe84}{shininess}}\ =\ 32.0f;}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00030}00030\ \ \ \ \ \doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00031}00031\ \ \ \ \ \doxymbox{\hyperlink{class_material_a2474ef3a4dff54228db3c09a2c1a935f}{diffuseTexture}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00032}00032\ \ \ \ \ \doxymbox{\hyperlink{class_material_a6199200446d0baa7634321bad92a1802}{specularTexture}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00033}00033\ \ \ \ \ \doxymbox{\hyperlink{class_material_a2e12475f31be3ec578d794cc24feb0a9}{useDiffuse}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00034}00034\ \ \ \ \ \doxymbox{\hyperlink{class_material_a5674c13333bceac6b4377fda71979be2}{useSpecular}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00035}00035\ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00037}00037\ Material::\string~Material()}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00038}00038\ \{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00039}00039\ \ \ \ \ glDeleteProgram(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}});}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00040}00040\ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00042}\doxymbox{\hyperlink{class_material_a9b5febb3dd010b1b40efefe8df94d642}{00042}}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_material_a9b5febb3dd010b1b40efefe8df94d642}{Material::Use}}()}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00043}00043\ \{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00044}00044\ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}}\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00045}00045\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}}\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ glUseProgram(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}});}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_material_a2474ef3a4dff54228db3c09a2c1a935f}{diffuseTexture}}\ !=\ 0\ \&\&\ \doxymbox{\hyperlink{class_material_a2e12475f31be3ec578d794cc24feb0a9}{useDiffuse}})}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_material_a7c794c6ccba00644d0704123714029d2}{SetInt}}(\textcolor{stringliteral}{"{}material.diffuseTexture"{}},\ 0);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ glActiveTexture(GL\_TEXTURE0);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ glBindTexture(GL\_TEXTURE\_2D,\ \doxymbox{\hyperlink{class_material_a2474ef3a4dff54228db3c09a2c1a935f}{diffuseTexture}});}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ else}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ glBindTexture(GL\_TEXTURE\_2D,\ 0);}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ SetBool(\textcolor{stringliteral}{"{}useDiffuse"{}},\ \doxymbox{\hyperlink{class_material_a2e12475f31be3ec578d794cc24feb0a9}{useDiffuse}});}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_material_a6199200446d0baa7634321bad92a1802}{specularTexture}}\ !=\ 0\ \&\&\ \doxymbox{\hyperlink{class_material_a5674c13333bceac6b4377fda71979be2}{useSpecular}})}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_material_a7c794c6ccba00644d0704123714029d2}{SetInt}}(\textcolor{stringliteral}{"{}material.specularTexture"{}},\ 1);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ glActiveTexture(GL\_TEXTURE1);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ glBindTexture(GL\_TEXTURE\_2D,\ \doxymbox{\hyperlink{class_material_a6199200446d0baa7634321bad92a1802}{specularTexture}});}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ SetBool(\textcolor{stringliteral}{"{}useSpecular"{}},\ \doxymbox{\hyperlink{class_material_a5674c13333bceac6b4377fda71979be2}{useSpecular}});}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_material_a71b80b16d26db3ec3c06c80c4146f441}{SetFloat}}(\textcolor{stringliteral}{"{}material.shininess"{}},\ \doxymbox{\hyperlink{class_material_a9dc184c883ec135ace28c1917af3fe84}{shininess}});}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00077}00077\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00078}00078\ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00080}\doxymbox{\hyperlink{class_material_ae80cd91ba2bf7b7e6c0169ef52b6bbcb}{00080}}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_material_ae80cd91ba2bf7b7e6c0169ef52b6bbcb}{Material::SetMaterialName}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name)}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00081}00081\ \{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00082}00082\ \ \ \ \ \doxymbox{\hyperlink{class_material_a9b6dc2cd561853e65069005b621685e8}{MaterialName}}\ =\ std::string(name);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00083}00083\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00084}00084\ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00086}\doxymbox{\hyperlink{class_material_ac43103312c2b250ba3211341683df129}{00086}}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_material_ac43103312c2b250ba3211341683df129}{Material::SetShaders}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ vertexShader,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ fragmentShader)}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00087}00087\ \{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00088}00088\ \ \ \ \ \doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}}\ =\ glCreateProgram();}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00089}00089\ \ \ \ \ glAttachShader(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ vertexShader);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00090}00090\ \ \ \ \ glAttachShader(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ fragmentShader);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00091}00091\ \ \ \ \ glLinkProgram(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}});}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00093}00093\ \ \ \ \ \textcolor{comment}{//\ check\ for\ linking\ errors}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00094}00094\ \ \ \ \ \textcolor{keywordtype}{int}\ success;}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00095}00095\ \ \ \ \ \textcolor{keywordtype}{char}\ infoLog[512];}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00096}00096\ \ \ \ \ glGetProgramiv(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ GL\_LINK\_STATUS,\ \&success);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00097}00097\ \ \ \ \ \textcolor{keywordflow}{if}\ (!success)\ \{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ glGetProgramInfoLog(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ 512,\ NULL,\ infoLog);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}ERROR::SHADER::PROGRAM::LINKING\_FAILED\(\backslash\)n"{}}\ <<\ infoLog\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00101}00101\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00103}00103\ \ \ \ \ \textcolor{comment}{//\ Bind\ uniform\ blocks\ to\ binding\ points}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00104}00104\ \ \ \ \ GLuint\ ambientBlockIndex\ =\ glGetUniformBlockIndex(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ \textcolor{stringliteral}{"{}AmbientLightData"{}});}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00105}00105\ \ \ \ \ \textcolor{keywordflow}{if}\ (ambientBlockIndex\ !=\ GL\_INVALID\_INDEX)\ \{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ glUniformBlockBinding(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ ambientBlockIndex,\ 1);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00107}00107\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00109}00109\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00110}00110\ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00112}\doxymbox{\hyperlink{class_material_a1aa26e1f38cef8ef4c9f75d60ce8504f}{00112}}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_material_a1aa26e1f38cef8ef4c9f75d60ce8504f}{Material::SetDiffuseTexture}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ diffuse)}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00113}00113\ \{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00114}00114\ \ \ \ \ \doxymbox{\hyperlink{class_material_a2474ef3a4dff54228db3c09a2c1a935f}{diffuseTexture}}\ =\ diffuse;}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00115}00115\ \ \ \ \ \doxymbox{\hyperlink{class_material_a2e12475f31be3ec578d794cc24feb0a9}{useDiffuse}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00116}00116\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00117}00117\ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00119}\doxymbox{\hyperlink{class_material_afeaa4b999384a90442fa45d305b62469}{00119}}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_material_afeaa4b999384a90442fa45d305b62469}{Material::SetSpecularTexture}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ specular)}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00120}00120\ \{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00121}00121\ \ \ \ \ \doxymbox{\hyperlink{class_material_a6199200446d0baa7634321bad92a1802}{specularTexture}}\ =\ specular;}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00122}00122\ \ \ \ \ \doxymbox{\hyperlink{class_material_a5674c13333bceac6b4377fda71979be2}{useSpecular}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00123}00123\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00124}00124\ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00126}00126\ \textcolor{keywordtype}{bool}\ Material::SetBool(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{bool}\ value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00127}00127\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00128}00128\ \ \ \ \ glUniform1i(glGetUniformLocation(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ name.c\_str()),\ (\textcolor{keywordtype}{int})value);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00129}00129\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00130}00130\ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00132}\doxymbox{\hyperlink{class_material_a7c794c6ccba00644d0704123714029d2}{00132}}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_material_a7c794c6ccba00644d0704123714029d2}{Material::SetInt}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{int}\ value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00133}00133\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00134}00134\ \ \ \ \ glUniform1i(glGetUniformLocation(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ name.c\_str()),\ value);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00135}00135\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00136}00136\ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00138}\doxymbox{\hyperlink{class_material_a71b80b16d26db3ec3c06c80c4146f441}{00138}}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_material_a71b80b16d26db3ec3c06c80c4146f441}{Material::SetFloat}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{float}\ value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00139}00139\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00140}00140\ \ \ \ \ glUniform1f(glGetUniformLocation(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ name.c\_str()),\ value);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00141}00141\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00142}00142\ \}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00144}\doxymbox{\hyperlink{class_material_a787ee04c8fbad25f81c948dc2ea99736}{00144}}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_material_a787ee04c8fbad25f81c948dc2ea99736}{Material::SetVec3}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y,\ \textcolor{keywordtype}{float}\ z)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00145}00145\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00146}00146\ \ \ \ \ glUniform3f(glGetUniformLocation(\doxymbox{\hyperlink{class_material_a91b188c7205700f7341128af19ac02b1}{shaderProgram}},\ name.c\_str()),\ x,\ y,\ z);}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00147}00147\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_material_8cpp_source_l00148}00148\ \}}
+
+\end{DoxyCode}

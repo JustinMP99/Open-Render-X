@@ -1,0 +1,478 @@
+\doxysection{Camera Class Reference}
+\hypertarget{class_camera}{}\label{class_camera}\index{Camera@{Camera}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_camera_ae9f539b1ff078dab2547e4b153c5f00b}{Setup}} (glm::\+vec3 start\+Position, GLFWwindow \texorpdfstring{$\ast$}{*}new\+Window)
+\item 
+void \doxymbox{\hyperlink{class_camera_ab7464946855f48682d1640ec7c8727f5}{Update}} (float delta\+Time)
+\item 
+glm::\+vec3 \doxymbox{\hyperlink{class_camera_a7166b8466c94d0b5c127fc74c7881beb}{Get\+Position}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+glm::\+mat4 \doxymbox{\hyperlink{class_camera_aa6950b7dfc1c3b5a6d0eb95059fd3acc}{View}}
+\item 
+GLFWwindow \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_camera_a9045e1a5a610020d85b4bb9d63a82ab1}{window}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_camera_aad13dcca76c5e19b88f6a9df440a8cd2}{Process\+Input}} (float delta\+Time)
+\item 
+void \doxymbox{\hyperlink{class_camera_af20a537b7d01160021a4130ec70d72f3}{Capture\+Mouse}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+glm::\+vec3 \doxymbox{\hyperlink{class_camera_a424bcf971a87506ba6770f2c5c1073f0}{camera\+Pos}} = glm::\+vec3(0.\+0f, 0.\+0f, 10.\+0f)
+\item 
+glm::\+vec3 \doxymbox{\hyperlink{class_camera_a517042b127746997f9472d51bbae2610}{camera\+Up}} = glm::\+vec3(0.\+0f, 1.\+0f, 0.\+0f)
+\item 
+glm::\+vec3 \doxymbox{\hyperlink{class_camera_ad641b25d477900ac4f3cd859ac14e8f7}{camera\+Dir}} = glm::\+vec3(0.\+0f, 0.\+0f, -\/1.\+0f)
+\item 
+float \doxymbox{\hyperlink{class_camera_ab65727629e76f9758be5651e439b19d3}{cam\+Speed}} = 2.\+5f
+\item 
+float \doxymbox{\hyperlink{class_camera_af78e2a4b1af2d8272454093a3dbc50c2}{cam\+Fast\+Speed}} = 5.\+0f
+\item 
+bool \doxymbox{\hyperlink{class_camera_aea9c122eeb3df4c5a09f736cdac47fd1}{first\+Mouse}} = true
+\item 
+bool \doxymbox{\hyperlink{class_camera_ab82fd586f7dd12e175bf1ec7ceda5df4}{capture\+Mouse}} = false
+\item 
+bool \doxymbox{\hyperlink{class_camera_a28ba816f706ae1a471126a6aa1a5c5c2}{move\+Fast}} = false
+\item 
+double \doxymbox{\hyperlink{class_camera_a2b06f2557e4a11ac541ce5b233b64fa6}{currentX}} = 0.\+0f
+\item 
+double \doxymbox{\hyperlink{class_camera_a1ed4166207fd48b68455b91e4b4fe6fc}{currentY}} = 0.\+0f
+\item 
+double \doxymbox{\hyperlink{class_camera_a619f4bf68c48a4b5ce09e5c6d1e42eca}{lastX}} = 0
+\item 
+double \doxymbox{\hyperlink{class_camera_abe6e05381b53e2d9b4d522759338183c}{lastY}} = 0
+\item 
+float \doxymbox{\hyperlink{class_camera_ad76701b22630f2df28a0ae15f0497a3a}{yaw}} = -\/90.\+0f
+\item 
+float \doxymbox{\hyperlink{class_camera_ab56fcb39f580e8d2159cf2c9c6d9a65a}{pitch}} = 0.\+0f
+\item 
+int \doxymbox{\hyperlink{class_camera_a3953f6855e5d12ad4c1b48b161d9c2c7}{window\+Width}} = 0
+\item 
+int \doxymbox{\hyperlink{class_camera_a5ff6fce1d33a6ffc542f06bbd21ab755}{window\+Height}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00010}{10}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_camera_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_camera_af20a537b7d01160021a4130ec70d72f3}\index{Camera@{Camera}!CaptureMouse@{CaptureMouse}}
+\index{CaptureMouse@{CaptureMouse}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{CaptureMouse()}{CaptureMouse()}}
+{\footnotesize\ttfamily \label{class_camera_af20a537b7d01160021a4130ec70d72f3} 
+void Camera::\+\+Capture\+Mouse (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8cpp_source_l00078}{78}} of file \doxymbox{\hyperlink{_camera_8cpp_source}{Camera.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00079\ \{}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ glfwGetCursorPos(window,\ \&currentX,\ \&currentY);}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{if}\ (firstMouse)}
+\DoxyCodeLine{00084\ \ \ \ \ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ lastX\ =\ currentX;}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ lastY\ =\ currentY;}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ firstMouse\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00088\ \ \ \ \ \}}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{comment}{//calculate\ offset\ values}}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{float}\ xoffset\ =\ currentX\ -\/\ lastX;}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{float}\ yoffset\ =\ lastY\ -\/\ currentY;}
+\DoxyCodeLine{00093\ \ \ \ \ lastX\ =\ currentX;}
+\DoxyCodeLine{00094\ \ \ \ \ lastY\ =\ currentY;}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{comment}{//apply\ sensitivity}}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{float}\ sensitivity\ =\ 0.05f;}
+\DoxyCodeLine{00098\ \ \ \ \ xoffset\ *=\ sensitivity;}
+\DoxyCodeLine{00099\ \ \ \ \ yoffset\ *=\ sensitivity;}
+\DoxyCodeLine{00100\ \ \ \ \ }
+\DoxyCodeLine{00101\ \ \ \ \ yaw\ +=\ xoffset;}
+\DoxyCodeLine{00102\ \ \ \ \ pitch\ +=\ yoffset;}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordflow}{if}\ (pitch\ >\ 89.0f)}
+\DoxyCodeLine{00105\ \ \ \ \ \{}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ pitch\ =\ 89.0f;}
+\DoxyCodeLine{00107\ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordflow}{if}\ (pitch\ <\ -\/89.0f)}
+\DoxyCodeLine{00109\ \ \ \ \ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ pitch\ =\ -\/89.0f;}
+\DoxyCodeLine{00111\ \ \ \ \ \}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ glm::vec3\ direction;}
+\DoxyCodeLine{00114\ \ \ \ \ direction.x\ =\ cos(glm::radians(yaw))\ *\ cos(glm::radians(pitch));}
+\DoxyCodeLine{00115\ \ \ \ \ direction.y\ =\ sin(glm::radians(pitch));}
+\DoxyCodeLine{00116\ \ \ \ \ direction.z\ =\ sin(glm::radians(yaw))\ *\ cos(glm::radians(pitch));}
+\DoxyCodeLine{00117\ \ \ \ \ cameraDir\ =\ glm::normalize(direction);}
+\DoxyCodeLine{00118\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_camera_a7166b8466c94d0b5c127fc74c7881beb}\index{Camera@{Camera}!GetPosition@{GetPosition}}
+\index{GetPosition@{GetPosition}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{GetPosition()}{GetPosition()}}
+{\footnotesize\ttfamily \label{class_camera_a7166b8466c94d0b5c127fc74c7881beb} 
+glm::\+vec3 Camera::\+\+Get\+Position (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8cpp_source_l00156}{156}} of file \doxymbox{\hyperlink{_camera_8cpp_source}{Camera.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00157\ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordflow}{return}\ cameraPos;}
+\DoxyCodeLine{00159\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_camera_aad13dcca76c5e19b88f6a9df440a8cd2}\index{Camera@{Camera}!ProcessInput@{ProcessInput}}
+\index{ProcessInput@{ProcessInput}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{ProcessInput()}{ProcessInput()}}
+{\footnotesize\ttfamily \label{class_camera_aad13dcca76c5e19b88f6a9df440a8cd2} 
+void Camera::\+\+Process\+Input (\begin{DoxyParamCaption}\item[{float}]{delta\+Time}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8cpp_source_l00005}{5}} of file \doxymbox{\hyperlink{_camera_8cpp_source}{Camera.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00006\ \{}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keywordtype}{float}\ finalSpeed\ =\ 0.0f;}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordflow}{if}\ (moveFast)}
+\DoxyCodeLine{00011\ \ \ \ \ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ finalSpeed\ =\ camFastSpeed\ *\ deltaTime;}
+\DoxyCodeLine{00013\ \ \ \ \ \}}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00015\ \ \ \ \ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ finalSpeed\ =\ camSpeed\ *\ deltaTime;}
+\DoxyCodeLine{00017\ \ \ \ \ \}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{comment}{//QUIT\ APPLICATION}}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordflow}{if}\ (glfwGetKey(window,\ GLFW\_KEY\_ESCAPE)\ ==\ GLFW\_PRESS)}
+\DoxyCodeLine{00021\ \ \ \ \ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ glfwSetWindowShouldClose(window,\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00023\ \ \ \ \ \}}
+\DoxyCodeLine{00024\ \ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//MOUSE}}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordflow}{if}\ (glfwGetMouseButton(window,\ GLFW\_MOUSE\_BUTTON\_RIGHT\ )\ ==\ GLFW\_PRESS)}
+\DoxyCodeLine{00027\ \ \ \ \ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ glfwSetInputMode(window,\ GLFW\_CURSOR,\ GLFW\_CURSOR\_DISABLED);}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ captureMouse\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00030\ \ \ \ \ \}}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (glfwGetMouseButton(window,\ GLFW\_MOUSE\_BUTTON\_RIGHT\ )\ ==\ GLFW\_RELEASE)}
+\DoxyCodeLine{00032\ \ \ \ \ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ glfwSetInputMode(window,\ GLFW\_CURSOR,\ GLFW\_CURSOR\_NORMAL);}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ captureMouse\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ firstMouse\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00036\ \ \ \ \ \}}
+\DoxyCodeLine{00037\ \ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//WASD\ MOVEMENT}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{if}\ (glfwGetKey(window,\ GLFW\_KEY\_S)\ ==\ GLFW\_PRESS)}
+\DoxyCodeLine{00040\ \ \ \ \ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ cameraPos\ -\/=\ finalSpeed\ *\ cameraDir;}
+\DoxyCodeLine{00042\ \ \ \ \ \}}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordflow}{if}\ (glfwGetKey(window,\ GLFW\_KEY\_W)\ ==\ GLFW\_PRESS)}
+\DoxyCodeLine{00044\ \ \ \ \ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ cameraPos\ +=\ finalSpeed\ *\ cameraDir;}
+\DoxyCodeLine{00046\ \ \ \ \ \}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordflow}{if}\ (glfwGetKey(window,\ GLFW\_KEY\_A)\ ==\ GLFW\_PRESS)}
+\DoxyCodeLine{00048\ \ \ \ \ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ glm::vec3\ up\ =\ glm::vec3(0.0f,\ 1.0f,\ 0.0f);}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ cameraPos\ -\/=\ glm::normalize(glm::cross(cameraDir,\ up))\ *\ finalSpeed\ ;}
+\DoxyCodeLine{00051\ \ \ \ \ \}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{if}\ (glfwGetKey(window,\ GLFW\_KEY\_D)\ ==\ GLFW\_PRESS)}
+\DoxyCodeLine{00053\ \ \ \ \ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ glm::vec3\ up\ =\ glm::vec3(0.0f,\ 1.0f,\ 0.0f);}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ cameraPos\ +=\ glm::normalize(glm::cross(cameraDir,\ up))\ *\ finalSpeed;}
+\DoxyCodeLine{00056\ \ \ \ \ \}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordflow}{if}\ (glfwGetKey(window,\ GLFW\_KEY\_LEFT\_SHIFT)\ ==\ GLFW\_PRESS)}
+\DoxyCodeLine{00058\ \ \ \ \ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ moveFast\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (glfwGetKey(window,\ GLFW\_KEY\_LEFT\_SHIFT)\ ==\ GLFW\_RELEASE)}
+\DoxyCodeLine{00062\ \ \ \ \ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ moveFast\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00064\ \ \ \ \ \}}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{comment}{//UP\ \&\ DOWN}}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordflow}{if}\ (glfwGetKey(window,\ GLFW\_KEY\_E)\ ==\ GLFW\_PRESS)}
+\DoxyCodeLine{00069\ \ \ \ \ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ cameraPos\ +=\ finalSpeed\ *\ glm::vec3(0.0f,\ 1.0f,\ 0.0f);}
+\DoxyCodeLine{00071\ \ \ \ \ \}}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{if}\ (glfwGetKey(window,\ GLFW\_KEY\_Q)\ ==\ GLFW\_PRESS)}
+\DoxyCodeLine{00073\ \ \ \ \ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ cameraPos\ -\/=\ finalSpeed\ *\ glm::vec3(0.0f,\ 1.0f,\ 0.0f);}
+\DoxyCodeLine{00075\ \ \ \ \ \}}
+\DoxyCodeLine{00076\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_camera_ae9f539b1ff078dab2547e4b153c5f00b}\index{Camera@{Camera}!Setup@{Setup}}
+\index{Setup@{Setup}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{Setup()}{Setup()}}
+{\footnotesize\ttfamily \label{class_camera_ae9f539b1ff078dab2547e4b153c5f00b} 
+bool Camera::\+\+Setup (\begin{DoxyParamCaption}\item[{glm::\+vec3}]{start\+Position}{, }\item[{GLFWwindow \texorpdfstring{$\ast$}{*}}]{new\+Window}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8cpp_source_l00121}{121}} of file \doxymbox{\hyperlink{_camera_8cpp_source}{Camera.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00122\ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{//set\ window}}
+\DoxyCodeLine{00124\ \ \ \ \ window\ =\ newWindow;}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordflow}{if}\ (window\ ==\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00126\ \ \ \ \ \{}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Window\ is\ null"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00128\ \ \ \ \ \}}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ glfwGetWindowSize(window,\ \&windowWidth,\ \&windowHeight);}
+\DoxyCodeLine{00131\ \ \ \ \ lastX\ =\ windowWidth\ /\ 2;}
+\DoxyCodeLine{00132\ \ \ \ \ lastY\ =\ windowHeight\ /\ 2;}
+\DoxyCodeLine{00133\ \ \ \ \ }
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{comment}{//set\ position}}
+\DoxyCodeLine{00135\ \ \ \ \ cameraPos\ =\ startPosition;}
+\DoxyCodeLine{00136\ \ \ \ \ }
+\DoxyCodeLine{00137\ \ \ \ \ View\ =\ glm::lookAt(cameraPos,\ cameraPos\ +\ cameraDir,\ cameraUp);}
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00139\ \}}
+
+\end{DoxyCode}
+\Hypertarget{class_camera_ab7464946855f48682d1640ec7c8727f5}\index{Camera@{Camera}!Update@{Update}}
+\index{Update@{Update}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_camera_ab7464946855f48682d1640ec7c8727f5} 
+void Camera::\+\+Update (\begin{DoxyParamCaption}\item[{float}]{delta\+Time}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8cpp_source_l00141}{141}} of file \doxymbox{\hyperlink{_camera_8cpp_source}{Camera.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00142\ \{}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{comment}{//process\ input}}
+\DoxyCodeLine{00145\ \ \ \ \ ProcessInput(deltaTime);}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordflow}{if}\ (captureMouse)}
+\DoxyCodeLine{00148\ \ \ \ \ \{}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ CaptureMouse();}
+\DoxyCodeLine{00150\ \ \ \ \ \}}
+\DoxyCodeLine{00151\ \ \ \ \ }
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{comment}{//update\ view\ matrix}}
+\DoxyCodeLine{00153\ \ \ \ \ View\ =\ glm::lookAt(cameraPos,\ cameraPos\ +\ cameraDir,\ cameraUp);}
+\DoxyCodeLine{00154\ \}}
+
+\end{DoxyCode}
+
+
+\label{doc-variable-members}
+\Hypertarget{class_camera_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_camera_ad641b25d477900ac4f3cd859ac14e8f7}\index{Camera@{Camera}!cameraDir@{cameraDir}}
+\index{cameraDir@{cameraDir}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{cameraDir}{cameraDir}}
+{\footnotesize\ttfamily \label{class_camera_ad641b25d477900ac4f3cd859ac14e8f7} 
+glm::\+vec3 Camera::\+camera\+Dir = glm::\+vec3(0.\+0f, 0.\+0f, -\/1.\+0f)\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00015}{15}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+\Hypertarget{class_camera_a424bcf971a87506ba6770f2c5c1073f0}\index{Camera@{Camera}!cameraPos@{cameraPos}}
+\index{cameraPos@{cameraPos}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{cameraPos}{cameraPos}}
+{\footnotesize\ttfamily \label{class_camera_a424bcf971a87506ba6770f2c5c1073f0} 
+glm::\+vec3 Camera::\+camera\+Pos = glm::\+vec3(0.\+0f, 0.\+0f, 10.\+0f)\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00013}{13}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+\Hypertarget{class_camera_a517042b127746997f9472d51bbae2610}\index{Camera@{Camera}!cameraUp@{cameraUp}}
+\index{cameraUp@{cameraUp}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{cameraUp}{cameraUp}}
+{\footnotesize\ttfamily \label{class_camera_a517042b127746997f9472d51bbae2610} 
+glm::\+vec3 Camera::\+camera\+Up = glm::\+vec3(0.\+0f, 1.\+0f, 0.\+0f)\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00014}{14}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+\Hypertarget{class_camera_af78e2a4b1af2d8272454093a3dbc50c2}\index{Camera@{Camera}!camFastSpeed@{camFastSpeed}}
+\index{camFastSpeed@{camFastSpeed}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{camFastSpeed}{camFastSpeed}}
+{\footnotesize\ttfamily \label{class_camera_af78e2a4b1af2d8272454093a3dbc50c2} 
+float Camera::\+cam\+Fast\+Speed = 5.\+0f\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00017}{17}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+\Hypertarget{class_camera_ab65727629e76f9758be5651e439b19d3}\index{Camera@{Camera}!camSpeed@{camSpeed}}
+\index{camSpeed@{camSpeed}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{camSpeed}{camSpeed}}
+{\footnotesize\ttfamily \label{class_camera_ab65727629e76f9758be5651e439b19d3} 
+float Camera::\+cam\+Speed = 2.\+5f\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00016}{16}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+\Hypertarget{class_camera_ab82fd586f7dd12e175bf1ec7ceda5df4}\index{Camera@{Camera}!captureMouse@{captureMouse}}
+\index{captureMouse@{captureMouse}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{captureMouse}{captureMouse}}
+{\footnotesize\ttfamily \label{class_camera_ab82fd586f7dd12e175bf1ec7ceda5df4} 
+bool Camera::\+capture\+Mouse = false\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00019}{19}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+\Hypertarget{class_camera_a2b06f2557e4a11ac541ce5b233b64fa6}\index{Camera@{Camera}!currentX@{currentX}}
+\index{currentX@{currentX}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{currentX}{currentX}}
+{\footnotesize\ttfamily \label{class_camera_a2b06f2557e4a11ac541ce5b233b64fa6} 
+double Camera::\+currentX = 0.\+0f\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00021}{21}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+\Hypertarget{class_camera_a1ed4166207fd48b68455b91e4b4fe6fc}\index{Camera@{Camera}!currentY@{currentY}}
+\index{currentY@{currentY}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{currentY}{currentY}}
+{\footnotesize\ttfamily \label{class_camera_a1ed4166207fd48b68455b91e4b4fe6fc} 
+double Camera::\+currentY = 0.\+0f\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00022}{22}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+\Hypertarget{class_camera_aea9c122eeb3df4c5a09f736cdac47fd1}\index{Camera@{Camera}!firstMouse@{firstMouse}}
+\index{firstMouse@{firstMouse}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{firstMouse}{firstMouse}}
+{\footnotesize\ttfamily \label{class_camera_aea9c122eeb3df4c5a09f736cdac47fd1} 
+bool Camera::\+first\+Mouse = true\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00018}{18}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+\Hypertarget{class_camera_a619f4bf68c48a4b5ce09e5c6d1e42eca}\index{Camera@{Camera}!lastX@{lastX}}
+\index{lastX@{lastX}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{lastX}{lastX}}
+{\footnotesize\ttfamily \label{class_camera_a619f4bf68c48a4b5ce09e5c6d1e42eca} 
+double Camera::\+lastX = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00023}{23}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+\Hypertarget{class_camera_abe6e05381b53e2d9b4d522759338183c}\index{Camera@{Camera}!lastY@{lastY}}
+\index{lastY@{lastY}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{lastY}{lastY}}
+{\footnotesize\ttfamily \label{class_camera_abe6e05381b53e2d9b4d522759338183c} 
+double Camera::\+lastY = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00024}{24}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+\Hypertarget{class_camera_a28ba816f706ae1a471126a6aa1a5c5c2}\index{Camera@{Camera}!moveFast@{moveFast}}
+\index{moveFast@{moveFast}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{moveFast}{moveFast}}
+{\footnotesize\ttfamily \label{class_camera_a28ba816f706ae1a471126a6aa1a5c5c2} 
+bool Camera::\+move\+Fast = false\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00020}{20}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+\Hypertarget{class_camera_ab56fcb39f580e8d2159cf2c9c6d9a65a}\index{Camera@{Camera}!pitch@{pitch}}
+\index{pitch@{pitch}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{pitch}{pitch}}
+{\footnotesize\ttfamily \label{class_camera_ab56fcb39f580e8d2159cf2c9c6d9a65a} 
+float Camera::\+pitch = 0.\+0f\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00026}{26}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+\Hypertarget{class_camera_aa6950b7dfc1c3b5a6d0eb95059fd3acc}\index{Camera@{Camera}!View@{View}}
+\index{View@{View}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{View}{View}}
+{\footnotesize\ttfamily \label{class_camera_aa6950b7dfc1c3b5a6d0eb95059fd3acc} 
+glm::\+mat4 Camera::\+\+View}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00035}{35}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+\Hypertarget{class_camera_a9045e1a5a610020d85b4bb9d63a82ab1}\index{Camera@{Camera}!window@{window}}
+\index{window@{window}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{window}{window}}
+{\footnotesize\ttfamily \label{class_camera_a9045e1a5a610020d85b4bb9d63a82ab1} 
+GLFWwindow\texorpdfstring{$\ast$}{*} Camera::\+window}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00036}{36}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+\Hypertarget{class_camera_a5ff6fce1d33a6ffc542f06bbd21ab755}\index{Camera@{Camera}!windowHeight@{windowHeight}}
+\index{windowHeight@{windowHeight}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{windowHeight}{windowHeight}}
+{\footnotesize\ttfamily \label{class_camera_a5ff6fce1d33a6ffc542f06bbd21ab755} 
+int Camera::\+window\+Height = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00028}{28}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+\Hypertarget{class_camera_a3953f6855e5d12ad4c1b48b161d9c2c7}\index{Camera@{Camera}!windowWidth@{windowWidth}}
+\index{windowWidth@{windowWidth}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{windowWidth}{windowWidth}}
+{\footnotesize\ttfamily \label{class_camera_a3953f6855e5d12ad4c1b48b161d9c2c7} 
+int Camera::\+window\+Width = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00027}{27}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+\Hypertarget{class_camera_ad76701b22630f2df28a0ae15f0497a3a}\index{Camera@{Camera}!yaw@{yaw}}
+\index{yaw@{yaw}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{yaw}{yaw}}
+{\footnotesize\ttfamily \label{class_camera_ad76701b22630f2df28a0ae15f0497a3a} 
+float Camera::\+yaw = -\/90.\+0f\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_8h_source_l00025}{25}} of file \doxymbox{\hyperlink{_camera_8h_source}{Camera.\+h}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Content/\+\+Header/\+Camera.\+h\item 
+Content/\+\+Source/\+Camera.\+cpp\end{DoxyCompactItemize}

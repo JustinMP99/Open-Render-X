@@ -12,6 +12,7 @@ _deps
 CMakeUserPresets
 CMakePresets.json
 
+.vscode
 out
 build
 cmake-build-windows---desktop

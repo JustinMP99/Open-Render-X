@@ -1,0 +1,71 @@
+\doxysection{Scene\+Object.\+cpp}
+\hypertarget{_scene_object_8cpp_source}{}\label{_scene_object_8cpp_source}\index{Content/Source/SceneObject.cpp@{Content/Source/SceneObject.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ Justin\ Philie\ on\ 1/3/26.}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}../Header/SceneObject.h"{}}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00007}00007\ \textcolor{comment}{//PRIVATE}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00009}\doxymbox{\hyperlink{class_scene_object_a652a6fb4641909846b024d5de90aad4b}{00009}}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_scene_object_a652a6fb4641909846b024d5de90aad4b}{SceneObject::UpdateTransforms}}()}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00010}00010\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00011}00011\ \ \ \ \ \textcolor{comment}{//reset\ the\ objects\ transform\ to\ identity\ before\ applying\ position,\ rotation,\ and\ scale}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00012}00012\ \ \ \ \ transform\ =\ glm::mat4(1.0f);}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00014}00014\ \ \ \ \ transform\ =\ glm::translate(transform,\ position);}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00015}00015\ \ \ \ \ transform\ =\ glm::scale(transform,\ scale);}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00016}00016\ \ \ \ \ transform\ =\ glm::rotate(transform,\ glm::radians(rotation.x),\ glm::vec3(1.0f,\ 0.0f,\ 0.0f));}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00017}00017\ \ \ \ \ transform\ =\ glm::rotate(transform,\ glm::radians(rotation.y),\ \ glm::vec3(0.0f,\ 1.0f,\ 0.0f));}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00018}00018\ \ \ \ \ transform\ =\ glm::rotate(transform,\ glm::radians(rotation.z),\ glm::vec3(0.0f,\ 0.0f,\ 1.0f));}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00019}00019\ \}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00022}00022\ \textcolor{comment}{//PUBLLIC}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00024}00024\ SceneObject::SceneObject()}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00025}00025\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00026}00026\ \ \ \ \ \doxymbox{\hyperlink{class_scene_object_a9322d98db21a981890eccf7c65fd997b}{mesh}}\ =\ \textcolor{keyword}{new}\ \doxymbox{\hyperlink{class_mesh}{Mesh}}();}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00027}00027\ \ \ \ \ \doxymbox{\hyperlink{class_scene_object_a4d8054106181076a01056a0508cdfbd4}{material}}\ =\ \textcolor{keyword}{new}\ \doxymbox{\hyperlink{class_material}{Material}}();}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00028}00028\ \}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00030}00030\ SceneObject::\string~SceneObject()}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00031}00031\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00032}00032\ \ \ \ \ \textcolor{keyword}{delete}\ \doxymbox{\hyperlink{class_scene_object_a9322d98db21a981890eccf7c65fd997b}{mesh}};}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00033}00033\ \ \ \ \ \textcolor{keyword}{delete}\ \doxymbox{\hyperlink{class_scene_object_a4d8054106181076a01056a0508cdfbd4}{material}};}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00034}00034\ \}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00037}00037\ \textcolor{keywordtype}{void}\ SceneObject::Update(\textcolor{keywordtype}{float}\ delta)}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00038}00038\ \{}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00040}00040\ \ \ \ \ \textcolor{comment}{//==============================================================================================}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00042}00042\ \ \ \ \ \textcolor{keywordflow}{if}\ (sinSlide)}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00043}00043\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ sinMoveVal\ +=\ delta\ *\ sinSlideSpeed;}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ position.x\ =\ sin(sinMoveVal)\ *\ sinSlideFrequency;}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00046}00046\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00048}00048\ \ \ \ \ \textcolor{keywordflow}{if}\ (rotate)}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00049}00049\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ rotation.y\ +=\ delta\ *\ 20.0f;}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rotation.y\ >=\ 360.0f)}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ rotation.y\ =\ 0.0f;}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00055}00055\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00056}00056\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00057}00057\ \ \ \ \ \textcolor{comment}{//==============================================================================================}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00059}00059\ \ \ \ \ \textcolor{comment}{//Update\ Transforms}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00060}00060\ \ \ \ \ \doxymbox{\hyperlink{class_scene_object_a652a6fb4641909846b024d5de90aad4b}{UpdateTransforms}}();}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00061}00061\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00062}00062\ \ \ \ \ \textcolor{comment}{//use\ material}}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00063}00063\ \ \ \ \ \doxymbox{\hyperlink{class_scene_object_a4d8054106181076a01056a0508cdfbd4}{material}}-\/>Use();}
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{_scene_object_8cpp_source_l00065}00065\ \}}
+
+\end{DoxyCode}

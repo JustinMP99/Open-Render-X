@@ -25,6 +25,7 @@
 var NAVTREE =
 [
   [ "Open Render X", "index.html", [
+    [ "Open-Render-X", "index.html", "index" ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -42,7 +43,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_engine_8h_source.html"
+"_camera_8cpp_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

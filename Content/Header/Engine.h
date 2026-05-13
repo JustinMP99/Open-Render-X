@@ -25,7 +25,9 @@ struct AmbientLightData
 
 };
 
-
+/**************************************************************************//**
+ * The Engine class is the core piece of Open Render
+ ******************************************************************************/
 class Engine
 {
 
@@ -33,7 +35,7 @@ private:
 
     //Window Data
     GLFWwindow* window; ///< Pointer to the window that is created by GLFW
-    unsigned int width = 1290;///< The width of the window
+    unsigned int width = 1280;///< The width of the window
     unsigned int height = 720; ///< The height of the window
 
     //Additional Core Data
@@ -48,13 +50,13 @@ private:
     SceneObject* selectedSceneObject = nullptr; ///< Pointer to the currently selected SceneObject, used for the inspector window
 
     //Debug Settings
-    bool renderSceneObjects = true;
-    bool renderDebugWindow = true;
-    bool renderSceneList = true;
-    bool renderInspectorWindow = false;
-    bool renderGrid = true;
-    bool enableWireframe = false;
-    glm::vec3 clearScreenColor = glm::vec3(0.0f, 0.0f, 0.0f);
+    bool renderSceneObjects = true; ///< toggle for whether SceneObjects should be rendered
+    bool renderDebugWindow = true; ///< toggle for whether Debug Window should be rendered
+    bool renderSceneList = true; /// toggle for whether SceneList window should be rendered 
+    bool renderInspectorWindow = false; ///< toggle for whether Inspector window should be rendered
+    bool renderGrid = true; ///< toggle for whether the grid should be rendered
+    bool enableWireframe = false; ///< toggle for displaying wireframe on meshes
+    glm::vec3 clearScreenColor = glm::vec3(0.0f, 0.0f, 0.0f); ///< screen clear color
 
     //Lighting Data
     unsigned int ambientLightUBO;
@@ -101,7 +103,7 @@ private:
     const char* gridVertexPath = "/Content/Shaders/Vertex/GridVertex.vert"; ///< The path to the grid vertex shader
     const char* fallbackFragmentPath = "/Content/Shaders/Fragment/FallbackFrag.frag"; ///< The path to the fallback fragment shader
     const char* gridFragmentPath = "/Content/Shaders/Fragment/GridFrag.frag"; ///< The path to the grid fragment shader
-    const char* simpleLitFragmentPath = "/Content/Shaders/Fragment/SimpleLitFrag.frag"; ///< The path to the simple lit fragment shader
+    const char* simpleLitFragmentPath = "/Content/Shaders/Fragment/SimpleLitFrag.glsl"; ///< The path to the simple lit fragment shader
 
     //Texture Paths
     const char* containerTexturePath = "/Content/Additional/Images/container.jpg"; ///< The path to the crate texture

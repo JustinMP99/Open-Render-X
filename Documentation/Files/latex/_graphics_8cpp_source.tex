@@ -1,0 +1,123 @@
+\doxysection{Graphics.\+cpp}
+\hypertarget{_graphics_8cpp_source}{}\label{_graphics_8cpp_source}\index{Content/Source/Graphics.cpp@{Content/Source/Graphics.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}../Header/Graphics.h"{}}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00003}00003\ \textcolor{comment}{//\ PRIVATE\ }}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00005}00005\ \textcolor{keywordtype}{void}\ Graphics::ClearScreen()}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00006}00006\ \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00007}00007\ \ \ \ \ glClearColor(0.1f,\ 0.1f,\ 0.1f,\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00008}00008\ \ \ \ \ glClear(GL\_COLOR\_BUFFER\_BIT\ |\ GL\_DEPTH\_BUFFER\_BIT);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00009}00009\ \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00011}00011\ \textcolor{keywordtype}{void}\ Graphics::ClearScreen(\textcolor{keywordtype}{float}\ r,\ \textcolor{keywordtype}{float}\ g,\ \textcolor{keywordtype}{float}\ b)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00012}00012\ \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00013}00013\ \ \ \ \ glClearColor(r,\ g,\ b,\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00014}00014\ \ \ \ \ glClear(GL\_COLOR\_BUFFER\_BIT\ |\ GL\_DEPTH\_BUFFER\_BIT);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00015}00015\ \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00017}00017\ \textcolor{keywordtype}{void}\ Graphics::UpdateTransformUniforms(\doxymbox{\hyperlink{class_scene_object}{SceneObject}}*\ \textcolor{keywordtype}{object})}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00018}00018\ \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00019}00019\ \ \ \ \ \textcolor{comment}{//update\ objects\ transform\ uniform\ in\ shader}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00020}00020\ \ \ \ \ glBindBuffer(GL\_UNIFORM\_BUFFER,\ \doxymbox{\hyperlink{class_graphics_a2cdf6e18f849a5ce7da6779412bb868b}{uboMatrices}});}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00021}00021\ \ \ \ \ glBufferSubData(GL\_UNIFORM\_BUFFER,\ \textcolor{keyword}{sizeof}(glm::mat4),\ \textcolor{keyword}{sizeof}(glm::mat4),\ glm::value\_ptr(view));}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00023}00023\ \ \ \ \ glBufferSubData(GL\_UNIFORM\_BUFFER,\ 2\ *\ \textcolor{keyword}{sizeof}(glm::mat4),\ \textcolor{keyword}{sizeof}(glm::mat4),\ glm::value\_ptr(object-\/>transform));}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00024}00024\ \ \ \ \ glBindBuffer(GL\_UNIFORM\_BUFFER,\ 0);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00025}00025\ \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00027}00027\ \textcolor{keywordtype}{void}\ Graphics::UpdateViewPosition(glm::vec3\ viewPos)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00028}00028\ \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00029}00029\ \ \ \ \ \textcolor{keywordtype}{int}\ viewPosLocation\ =\ glGetUniformLocation(\doxymbox{\hyperlink{class_graphics_a2cdf6e18f849a5ce7da6779412bb868b}{uboMatrices}},\ \textcolor{stringliteral}{"{}viewPos"{}});}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00030}00030\ \ \ \ \ glUniform3f(viewPosLocation,\ viewPos.x,\ viewPos.y,\ viewPos.z);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00031}00031\ \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00033}00033\ \textcolor{comment}{//\ PUBLIC}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00034}00034\ Graphics::Graphics()}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00035}00035\ \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00037}00037\ \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00039}00039\ Graphics::Graphics(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00040}00040\ \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00041}00041\ \ \ \ \ width\ =\ width;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00042}00042\ \ \ \ \ height\ =\ height;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00043}00043\ \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00045}00045\ Graphics::\string~Graphics()}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00046}00046\ \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00048}00048\ \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00050}00050\ \textcolor{keywordtype}{bool}\ Graphics::Initialize(GLFWwindow*\ win)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00051}00051\ \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00052}00052\ \ \ \ \ window\ =\ win;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00053}00053\ \ \ \ \ glfwGetWindowSize(window,\ \&width,\ \ \&height);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00054}00054\ \ \ \ \ projection\ =\ glm::perspective(glm::radians(fov),\ (\textcolor{keywordtype}{float})width\ /\ (\textcolor{keywordtype}{float})height,\ 0.1f,\ 100.0f);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00055}00055\ \ \ \ \ SetViewport(0,\ 0,\ width,\ height);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00056}00056\ \ \ \ \ glEnable(GL\_DEPTH\_TEST);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00058}00058\ \ \ \ \ \textcolor{comment}{//Create\ Uniform\ Buffer\ Object\ for\ view\ and\ projection\ matrices}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00059}00059\ \ \ \ \ glGenBuffers(1,\ \&\doxymbox{\hyperlink{class_graphics_a2cdf6e18f849a5ce7da6779412bb868b}{uboMatrices}});}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00060}00060\ \ \ \ \ glBindBuffer(GL\_UNIFORM\_BUFFER,\ \doxymbox{\hyperlink{class_graphics_a2cdf6e18f849a5ce7da6779412bb868b}{uboMatrices}});}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00061}00061\ \ \ \ \ glBufferData(GL\_UNIFORM\_BUFFER,\ 3\ *\ \textcolor{keyword}{sizeof}(glm::mat4),\ NULL,\ GL\_STATIC\_DRAW);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00062}00062\ \ \ \ \ glBindBuffer(GL\_UNIFORM\_BUFFER,\ 0);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00064}00064\ \ \ \ \ \textcolor{comment}{//bind\ uniform\ buffer\ to\ binding\ point\ 0}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00065}00065\ \ \ \ \ glBindBufferRange(GL\_UNIFORM\_BUFFER,\ 0,\ \doxymbox{\hyperlink{class_graphics_a2cdf6e18f849a5ce7da6779412bb868b}{uboMatrices}},\ 0,\ 3\ *\ \textcolor{keyword}{sizeof}(glm::mat4));}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00067}00067\ \ \ \ \ glBindBuffer(GL\_UNIFORM\_BUFFER,\ \doxymbox{\hyperlink{class_graphics_a2cdf6e18f849a5ce7da6779412bb868b}{uboMatrices}});}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00068}00068\ \ \ \ \ glBufferSubData(GL\_UNIFORM\_BUFFER,\ 0,\ \textcolor{keyword}{sizeof}(glm::mat4),\ glm::value\_ptr(projection));}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00069}00069\ \ \ \ \ glBindBuffer(GL\_UNIFORM\_BUFFER,\ 0);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00071}00071\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00072}00072\ \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00074}00074\ \textcolor{keywordtype}{void}\ Graphics::Render()}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00075}00075\ \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00077}00077\ \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00079}00079\ \textcolor{keywordtype}{void}\ Graphics::Render(\doxymbox{\hyperlink{class_scene_object}{SceneObject}}*\ \textcolor{keywordtype}{object})}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00080}00080\ \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00081}00081\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00082}00082\ \ \ \ \ \textcolor{comment}{//update\ shader\ uniforms}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00083}00083\ \ \ \ \ UpdateTransformUniforms(\textcolor{keywordtype}{object});\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00084}00084\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00085}00085\ \ \ \ \ glBindVertexArray(object-\/>\doxymbox{\hyperlink{class_scene_object_a9322d98db21a981890eccf7c65fd997b}{mesh}}-\/>\doxymbox{\hyperlink{class_mesh_a79afa055e485fb65b1a7aa5b8eda2940}{VAO}});}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00087}00087\ \ \ \ \ \textcolor{keywordtype}{int}\ drawMode\ =\ \textcolor{keywordtype}{object}-\/>mesh-\/>GetDrawMode();}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00089}00089\ \ \ \ \ \textcolor{keywordflow}{if}\ (object-\/>\doxymbox{\hyperlink{class_scene_object_a9322d98db21a981890eccf7c65fd997b}{mesh}}-\/>\doxymbox{\hyperlink{class_mesh_a73001a4b3012b863b8058ab17bb58cf2}{useEBO}})}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00090}00090\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ glDrawElements(drawMode,\ object-\/>\doxymbox{\hyperlink{class_scene_object_a9322d98db21a981890eccf7c65fd997b}{mesh}}-\/>\doxymbox{\hyperlink{class_mesh_a0639c1d0e097c60a64bb205e0b6f4d0f}{indexCount}},\ GL\_UNSIGNED\_INT,\ 0);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00092}00092\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00093}00093\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (!object-\/>\doxymbox{\hyperlink{class_scene_object_a9322d98db21a981890eccf7c65fd997b}{mesh}}-\/>\doxymbox{\hyperlink{class_mesh_a73001a4b3012b863b8058ab17bb58cf2}{useEBO}})}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00094}00094\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ glDrawArrays(drawMode,\ 0,\ object-\/>\doxymbox{\hyperlink{class_scene_object_a9322d98db21a981890eccf7c65fd997b}{mesh}}-\/>\doxymbox{\hyperlink{class_mesh_a0639c1d0e097c60a64bb205e0b6f4d0f}{indexCount}});}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00096}00096\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00097}00097\ \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00099}00099\ \textcolor{keywordtype}{bool}\ Graphics::Shutdown()}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00100}00100\ \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00101}00101\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00102}00102\ \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00104}00104\ \textcolor{keywordtype}{void}\ Graphics::UpdateViewMatrix(glm::mat4\ viewMatrix)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00105}00105\ \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00106}00106\ \ \ \ \ view\ =\ viewMatrix;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00107}00107\ \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00109}00109\ \textcolor{keywordtype}{void}\ Graphics::SetFOV(\textcolor{keywordtype}{float}\ newFOV)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00110}00110\ \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00111}00111\ \ \ \ \ fov\ =\ newFOV;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00112}00112\ \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00114}00114\ \textcolor{keywordtype}{void}\ Graphics::SetViewport(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00115}00115\ \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00116}00116\ \ \ \ \ glViewport(x,\ y,\ width,\ height);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cpp_source_l00117}00117\ \}}
+
+\end{DoxyCode}
