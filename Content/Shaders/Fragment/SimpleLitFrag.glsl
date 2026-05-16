@@ -30,6 +30,11 @@ struct LightData
     float strength;
 };
 
+
+//Directional light
+uniform vec3 direction;
+uniform vec3 color;
+
 //Uniforms
 uniform Material material;
 uniform LightData light;
@@ -71,7 +76,6 @@ vec3 calculateSpecular(vec3 lightDir, vec3 norm)
 void main()
 {
    
-   
    if(useDiffuse)
    {
         texColor = texture(material.diffuseTexture, fs_in.texCoord);
@@ -85,8 +89,8 @@ void main()
     vec3 norm = normalize(fs_in.normal);
 
     //calculate the normalized direction of the light
-    // vec3 lightDir = normalize(lightPos - fs_in.fragPos); 
-    vec3 lightDir = normalize(light.position - fs_in.fragPos); 
+    vec3 lightDir = normalize(-direction); //calculation based on directional light direction
+    //vec3 lightDir = normalize(light.position - fs_in.fragPos); //calculation based on light position and frag position
     //calculate dot product of the normal and light direction
     ndotl = max(dot(norm, lightDir), 0.0f);
 

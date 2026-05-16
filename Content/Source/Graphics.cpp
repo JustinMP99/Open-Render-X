@@ -16,6 +16,7 @@ void Graphics::ClearScreen(float r, float g, float b)
 
 void Graphics::UpdateTransformUniforms(SceneObject* object)
 {
+    
     //update objects transform uniform in shader
     glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
     glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));

@@ -39,6 +39,7 @@ add_executable(OpenRenderX
        Content/Source/Mesh.cpp
        Content/Source/Material.cpp
        Content/Source/Camera.cpp
+       Content/Source/Light.cpp
 
         Content/Additional/include/imgui/imgui.cpp
         Content/Additional/include/imgui/imgui_demo.cpp

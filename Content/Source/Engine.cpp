@@ -217,6 +217,7 @@ void Engine::CreateInspectorWindow()
 
     }
 
+
 }
 
 void Engine::UpdateAmbient()
@@ -1334,9 +1335,15 @@ void Engine::ProcessLit()
     for (unsigned int i = 0; i < litSceneObjects.size(); i++)
     {
       litSceneObjects[i]->Update(deltaTime);
+      
       litSceneObjects[i]->material->SetVec3("light.position", lightPos.x, lightPos.y, lightPos.z);
       litSceneObjects[i]->material->SetVec3("light.color", lightColor.x, lightColor.y, lightColor.z);
       litSceneObjects[i]->material->SetFloat("light.strength", lightStrength);
+
+      litSceneObjects[i]->material->SetVec3("direction", dirLight.rotation.x, dirLight.rotation.y, dirLight.rotation.z);
+      litSceneObjects[i]->material->SetVec3("color", dirLight.color.x, dirLight.color.y, dirLight.color.z);
+
+
       renderer.Render(litSceneObjects[i]);
     }
 }
@@ -1440,6 +1447,10 @@ bool Engine::Initialize()
 
     ambientLightData.ambientColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
     ambientLightData.ambientStrength = 0.5f;
+
+    dirLight.position = glm::vec3(0.0f);
+    dirLight.rotation = glm::vec3(-1.0f, 0.0f, 0.0f);
+    dirLight.scale = glm::vec3(1.0f);
 
     //Generate Ambient Light uniform buffer
     glGenBuffers(1, &ambientLightUBO);
