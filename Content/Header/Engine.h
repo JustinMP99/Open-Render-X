@@ -1,7 +1,7 @@
 #include "SceneObject.h"
 #include "Graphics.h"
 #include "Camera.h"
-#include "Light.h"
+#include "Lights/Light.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -15,6 +15,9 @@
 #include <vector>
 #include <fstream>
 #include <filesystem>
+
+#include "Lights/DirectionalLight.h"
+#include "Lights/PointLight.h"
 
 #define GL_SILENCE_DEPRICATION
 
@@ -65,8 +68,8 @@ private:
     glm::vec4 ambientColor = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
     float ambientStrength = 1.0f;
 
-
-    Light dirLight;
+    DirectionalLight dirLight;
+    PointLight pointLight;
 
     glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
     glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, 0.0f);

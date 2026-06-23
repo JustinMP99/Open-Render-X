@@ -30,10 +30,14 @@ struct LightData
     float strength;
 };
 
-
 //Directional light
 uniform vec3 direction;
 uniform vec3 color;
+
+//Point Light
+uniform float constant;
+uniform float linear;
+uniform float quadratic;
 
 //Uniforms
 uniform Material material;
@@ -99,6 +103,13 @@ void main()
 
     //calculate ambient 
     ambient = calculateAmbient();
+
+    float distance = length(light.position - fs_in.fragPos);
+    float attenuation = 1.0f / ((constant + linear * distance + quadratic * (distance * distance)));
+
+    ambient *= attenuation;
+    specular *= attenuation;
+    diffuse *= attenuation;
 
     //specular
     if(useSpecular)

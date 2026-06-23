@@ -6,7 +6,7 @@
 #endif
 
 //PRIVATE
-void Engine::framebuffer_size_callback(GLFWwindow* window, int width, int height)
+void Engine::framebuffer_size_callback(GLFWwindow *window, int width, int height)
 {
     renderer.SetViewport(0, 0, width, height);
 }
@@ -34,25 +34,23 @@ void Engine::ProcessInput()
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     }
 
-    if(glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
     {
         renderDebugWindow = true;
     }
-    if(glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
     {
         renderDebugWindow = false;
     }
 
-    if(glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
     {
         renderSceneList = true;
     }
-    if(glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
     {
         renderSceneList = false;
     }
-
-
 }
 
 void Engine::CalculateDelta()
@@ -64,7 +62,6 @@ void Engine::CalculateDelta()
 
 void Engine::CreateDebugSettingsWindow()
 {
-
     ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
 
     ImGui::Begin("Debug Menu", nullptr, ImGuiWindowFlags_NoCollapse || ImGuiWindowFlags_AlwaysAutoResize);
@@ -84,27 +81,26 @@ void Engine::CreateDebugSettingsWindow()
         if (enableWireframe)
         {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        }
-        else
+        } else
         {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        }  
+        }
     };
-    
+
     ImGui::Spacing();
 
-    ImGui::ColorEdit3("Clear Color", (float*)&clearScreenColor);
+    ImGui::ColorEdit3("Clear Color", (float *) &clearScreenColor);
 
     ImGui::Separator();
-    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Lighting");
+    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Ambient Light");
     ImGui::SliderFloat("Ambient Strength", &ambientLightData.ambientStrength, 0.0f, 1.0f);
-    ImGui::ColorEdit3("Ambient Color", (float*)&ambientLightData.ambientColor);
+    ImGui::ColorEdit3("Ambient Color", (float *) &ambientLightData.ambientColor);
 
-     ImGui::Spacing();
-
+    ImGui::Spacing();
+    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Directional Light");
     ImGui::SliderFloat("Light Strength", &lightStrength, 0.0f, 1.0f);
-    ImGui::ColorEdit3("Light Color", (float*)&lightColor);
-    ImGui::InputFloat3("Light Position", (float*)&lightPos);
+    ImGui::ColorEdit3("Light Color", (float *) &dirLight.color);
+    ImGui::InputFloat3("Light Position", (float *) &dirLight.position);
 
     ImGui::Separator();
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Scene Object Creation");
@@ -128,8 +124,8 @@ void Engine::CreateDebugSettingsWindow()
     {
         CreateSphere();
     }
-    
-    if(ImGui::Button("Clear SceneObjects"))
+
+    if (ImGui::Button("Clear SceneObjects"))
     {
         ClearSceneObjects();
     }
@@ -139,7 +135,6 @@ void Engine::CreateDebugSettingsWindow()
 
 void Engine::CreateSceneListWindow()
 {
-
     ImGui::SetNextWindowPos(ImVec2(width / 2, height / 2), ImGuiCond_Once);
     ImGui::Begin("Scene List", nullptr, ImGuiWindowFlags_AlwaysVerticalScrollbar);
 
@@ -147,7 +142,6 @@ void Engine::CreateSceneListWindow()
 
     for (int i = 0; i < litSceneObjects.size(); i++)
     {
-
         if (ImGui::Button((litSceneObjects[i]->name).c_str()))
         {
             selectedSceneObject = litSceneObjects[count];
@@ -178,18 +172,16 @@ void Engine::CreateSceneListWindow()
 
 void Engine::CreateInspectorWindow()
 {
-
     if (selectedSceneObject != NULL)
     {
-
         ImGui::Begin("Inspector");
 
         ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Core Data");
 
         ImGui::Text("Name: %s", selectedSceneObject->name.c_str());
-        ImGui::InputFloat3("Position", (float*)&selectedSceneObject->position);
-        ImGui::InputFloat3("Rotation", (float*)&selectedSceneObject->rotation);
-        ImGui::InputFloat3("Scale", (float*)&selectedSceneObject->scale);
+        ImGui::InputFloat3("Position", (float *) &selectedSceneObject->position);
+        ImGui::InputFloat3("Rotation", (float *) &selectedSceneObject->rotation);
+        ImGui::InputFloat3("Scale", (float *) &selectedSceneObject->scale);
 
         ImGui::Spacing();
         ImGui::Checkbox("Sin Slide", &selectedSceneObject->sinSlide);
@@ -198,7 +190,7 @@ void Engine::CreateInspectorWindow()
             ImGui::SliderFloat("Slide Speed", &selectedSceneObject->sinSlideSpeed, 1.0f, 10.0f, "%.1f");
             ImGui::SliderFloat("Slide Frequency", &selectedSceneObject->sinSlideFrequency, 0.1f, 5.0f, "%.1f");
         }
-        
+
         ImGui::Checkbox("rotate", &selectedSceneObject->rotate);
 
         ImGui::Separator();
@@ -214,29 +206,24 @@ void Engine::CreateInspectorWindow()
         ImGui::Checkbox("Use Diffuse Texture", &selectedSceneObject->material->useDiffuse);
         ImGui::Checkbox("Use Specular Texture", &selectedSceneObject->material->useSpecular);
         ImGui::End();
-
     }
-
-
 }
 
 void Engine::UpdateAmbient()
 {
-
     glBindBuffer(GL_UNIFORM_BUFFER, ambientLightUBO);
     glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::vec4), glm::value_ptr(ambientLightData.ambientColor));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
     glBindBuffer(GL_UNIFORM_BUFFER, ambientLightUBO);
     glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::vec4), sizeof(float), &ambientLightData.ambientStrength);
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
 }
 
 #pragma endregion
 
 #pragma region Setup Utility Functions
 
-std::string Engine::LoadShaderAsString(const std::string& filename)
+std::string Engine::LoadShaderAsString(const std::string &filename)
 {
     std::string result = "";
     std::string line = "";
@@ -258,10 +245,10 @@ std::string Engine::LoadShaderAsString(const std::string& filename)
     return result;
 }
 
-void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, std::vector<unsigned int> &out_indices, std::string &objectName)
+void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, std::vector<unsigned int> &out_indices,
+                     std::string &objectName)
 {
-
-    FILE* file = fopen(filepath.c_str(), "r");
+    FILE *file = fopen(filepath.c_str(), "r");
     if (file == nullptr)
     {
         std::cout << "> Could not open file: " << filepath << std::endl;
@@ -275,7 +262,7 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
     std::vector<unsigned int> positionIndices;
     std::vector<unsigned int> normalIndices;
 
-    while(1)
+    while (1)
     {
         char lineHeader[128];
         int res = fscanf(file, "%s", lineHeader);
@@ -286,25 +273,25 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
             fscanf(file, "%f %f %f\n", &position.x, &position.y, &position.z);
             temp_position.push_back(position);
             //std::cout << "> Read vertex: " << "X " << position.x << " Y " << position.y << " Z " << position.z << std::endl;
-        }
-        else if( strcmp(lineHeader, "vt") == 0 )
+        } else if (strcmp(lineHeader, "vt") == 0)
         {
             glm::vec2 uv;
             fscanf(file, "%f %f\n", &uv.x, &uv.y);
             temp_uv.push_back(uv);
-        }
-        else if( strcmp(lineHeader, "vn") == 0 )
+        } else if (strcmp(lineHeader, "vn") == 0)
         {
             glm::vec3 normal;
             fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z);
             temp_normal.push_back(normal);
-        }
-        else if ( strcmp( lineHeader, "f" ) == 0 )
+        } else if (strcmp(lineHeader, "f") == 0)
         {
             std::string vertex1, vertex2, vertex3;
             unsigned int positionIndex[3], uvIndex[3], normalIndex[3];
-            int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &positionIndex[0], &uvIndex[0], &normalIndex[0], &positionIndex[1], &uvIndex[1], &normalIndex[1], &positionIndex[2], &uvIndex[2], &normalIndex[2] );
-            if (matches != 9){
+            int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &positionIndex[0], &uvIndex[0], &normalIndex[0],
+                                 &positionIndex[1], &uvIndex[1], &normalIndex[1], &positionIndex[2], &uvIndex[2],
+                                 &normalIndex[2]);
+            if (matches != 9)
+            {
                 printf("File can't be read by our simple parser -> Try exporting with other options\n");
                 break;
             }
@@ -321,17 +308,12 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
             normalIndices.push_back(normalIndex[0]);
             normalIndices.push_back(normalIndex[1]);
             normalIndices.push_back(normalIndex[2]);
-
-
-        }
-        else if(strcmp(lineHeader, "o") == 0)
+        } else if (strcmp(lineHeader, "o") == 0)
         {
             char name[128];
             fscanf(file, "%s\n", name);
             objectName = name;
-
-        }
-        else
+        } else
         {
             // Probably a comment, eat up the rest of the line
             char stupidBuffer[1000];
@@ -356,13 +338,12 @@ void Engine::ReadOBJ(std::string filepath, std::vector<Vertex> &out_vertices, st
         out_indices.push_back(i);
         out_vertices.push_back(vert);
     }
-
 }
 
 bool Engine::CreateVertexShader(unsigned int &shader, const char *shaderPath)
 {
     std::string vertexShader = LoadShaderAsString(shaderPath);
-    const char* vShader = vertexShader.c_str();
+    const char *vShader = vertexShader.c_str();
     int success;
     char infoLog[512];
 
@@ -382,7 +363,7 @@ bool Engine::CreateVertexShader(unsigned int &shader, const char *shaderPath)
 bool Engine::CreateFragmentShader(unsigned int &shader, const char *shaderPath)
 {
     std::string fragShader = LoadShaderAsString(shaderPath);
-    const char* fShader = fragShader.c_str();
+    const char *fShader = fragShader.c_str();
     int success;
     char infoLog[512];
     shader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -399,9 +380,8 @@ bool Engine::CreateFragmentShader(unsigned int &shader, const char *shaderPath)
     return true;
 }
 
-bool Engine::CreateTexture(const char* filepath, unsigned int &texture)
+bool Engine::CreateTexture(const char *filepath, unsigned int &texture)
 {
-
     int width;
     int height;
     int nrChannels;
@@ -423,28 +403,24 @@ bool Engine::CreateTexture(const char* filepath, unsigned int &texture)
 
     //load passed in texture image
     unsigned char *data = stbi_load(filepath, &width, &height, &nrChannels, 0);
-    
+
     if (data)
     {
-
         GLenum format;
         if (nrChannels == 1)
         {
             format = GL_RED;
-        }
-        else if(nrChannels == 3)
+        } else if (nrChannels == 3)
         {
             format = GL_RGB;
-        }
-        else if(nrChannels == 4)
+        } else if (nrChannels == 4)
         {
             format = GL_RGBA;
         }
-        
+
         glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
+    } else
     {
         std::cout << "Error Loading Texture..." << std::endl;
         return false;
@@ -454,9 +430,8 @@ bool Engine::CreateTexture(const char* filepath, unsigned int &texture)
     return true;
 }
 
-bool Engine::CreateWindow(int width, int height, const char* title)
+bool Engine::CreateWindow(int width, int height, const char *title)
 {
-
     if (!glfwInit())
     {
         std::cout << "Failed to initialize GLFW!" << std::endl;
@@ -477,12 +452,13 @@ bool Engine::CreateWindow(int width, int height, const char* title)
 
     glfwMakeContextCurrent(window);
     glfwSetWindowUserPointer(window, this);
-    glfwSetFramebufferSizeCallback(window, [](GLFWwindow* win, int width, int height) {
-        Engine* engine = static_cast<Engine*>(glfwGetWindowUserPointer(win));
+    glfwSetFramebufferSizeCallback(window, [](GLFWwindow *win, int width, int height)
+    {
+        Engine *engine = static_cast<Engine *>(glfwGetWindowUserPointer(win));
         engine->framebuffer_size_callback(win, width, height);
     });
 
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD!" << std::endl;
         return false;
@@ -493,13 +469,13 @@ bool Engine::CreateWindow(int width, int height, const char* title)
 
 void Engine::SetVertexAttributePointers()
 {
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void *) 0);
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)(3 * sizeof(GL_FLOAT)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void *) (3 * sizeof(GL_FLOAT)));
     glEnableVertexAttribArray(1);
 
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)(6 * sizeof(GL_FLOAT)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void *) (6 * sizeof(GL_FLOAT)));
     glEnableVertexAttribArray(2);
 }
 
@@ -507,12 +483,13 @@ void Engine::ImGuiSetup()
 {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    ImGuiIO &io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 
     // Setup Platform/Renderer backends
-    ImGui_ImplGlfw_InitForOpenGL(window, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
     ImGui_ImplOpenGL3_Init();
 }
 
@@ -522,7 +499,6 @@ void Engine::ImGuiSetup()
 
 bool Engine::CreateGrid()
 {
-
     //Create SceneObject
     grid = new SceneObject();
 
@@ -532,10 +508,9 @@ bool Engine::CreateGrid()
     //Horizonal lines
     for (size_t i = 0; i < gridHorizontal; i++)
     {
-
         if (z != 0.0f)
         {
-             //vertices one
+            //vertices one
             Vertex vertOne;
             vertOne.position = glm::vec3(-100.0f, 0.0f, z);
             vertOne.normal = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -587,7 +562,8 @@ bool Engine::CreateGrid()
     //Create and bind VBO
     glGenBuffers(1, &grid->mesh->VBO);
     glBindBuffer(GL_ARRAY_BUFFER, grid->mesh->VBO);
-    glBufferData(GL_ARRAY_BUFFER, grid->mesh->vertices.size() * sizeof(Vertex), &grid->mesh->vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, grid->mesh->vertices.size() * sizeof(Vertex), &grid->mesh->vertices[0],
+                 GL_STATIC_DRAW);
     SetVertexAttributePointers();
     grid->mesh->SetDrawMode(DrawMode::LINES);
 
@@ -607,7 +583,6 @@ bool Engine::CreateGrid()
 
 bool Engine::CreateRays()
 {
-
     xRay = new SceneObject();
     yRay = new SceneObject();
     zRay = new SceneObject();
@@ -638,11 +613,13 @@ bool Engine::CreateRays()
 
     glGenBuffers(1, &xRay->mesh->VBO);
     glBindBuffer(GL_ARRAY_BUFFER, xRay->mesh->VBO);
-    glBufferData(GL_ARRAY_BUFFER, xRay->mesh->vertices.size() * sizeof(Vertex), &xRay->mesh->vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, xRay->mesh->vertices.size() * sizeof(Vertex), &xRay->mesh->vertices[0],
+                 GL_STATIC_DRAW);
 
     glGenBuffers(1, &xRay->mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, xRay->mesh->EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, xRay->mesh->indices.size() * sizeof(unsigned int), &xRay->mesh->indices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, xRay->mesh->indices.size() * sizeof(unsigned int), &xRay->mesh->indices[0],
+                 GL_STATIC_DRAW);
 
     SetVertexAttributePointers();
 
@@ -681,11 +658,13 @@ bool Engine::CreateRays()
 
     glGenBuffers(1, &yRay->mesh->VBO);
     glBindBuffer(GL_ARRAY_BUFFER, yRay->mesh->VBO);
-    glBufferData(GL_ARRAY_BUFFER, yRay->mesh->vertices.size() * sizeof(Vertex), &yRay->mesh->vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, yRay->mesh->vertices.size() * sizeof(Vertex), &yRay->mesh->vertices[0],
+                 GL_STATIC_DRAW);
 
     glGenBuffers(1, &yRay->mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, yRay->mesh->EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, yRay->mesh->indices.size() * sizeof(unsigned int), &yRay->mesh->indices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, yRay->mesh->indices.size() * sizeof(unsigned int), &yRay->mesh->indices[0],
+                 GL_STATIC_DRAW);
 
     SetVertexAttributePointers();
 
@@ -724,11 +703,13 @@ bool Engine::CreateRays()
 
     glGenBuffers(1, &zRay->mesh->VBO);
     glBindBuffer(GL_ARRAY_BUFFER, zRay->mesh->VBO);
-    glBufferData(GL_ARRAY_BUFFER, zRay->mesh->vertices.size() * sizeof(Vertex), &zRay->mesh->vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, zRay->mesh->vertices.size() * sizeof(Vertex), &zRay->mesh->vertices[0],
+                 GL_STATIC_DRAW);
 
     glGenBuffers(1, &zRay->mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, zRay->mesh->EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, zRay->mesh->indices.size() * sizeof(unsigned int), &zRay->mesh->indices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, zRay->mesh->indices.size() * sizeof(unsigned int), &zRay->mesh->indices[0],
+                 GL_STATIC_DRAW);
 
     SetVertexAttributePointers();
 
@@ -790,7 +771,8 @@ bool Engine::CreateTriangle()
     //create, bind and fill ebo
     glGenBuffers(1, &tri->mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tri->mesh->EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, tri->mesh->indices.size() * sizeof(unsigned int), &tri->mesh->indices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, tri->mesh->indices.size() * sizeof(unsigned int), &tri->mesh->indices[0],
+                 GL_STATIC_DRAW);
 
     //set vertex attribute layout
     SetVertexAttributePointers();
@@ -816,7 +798,6 @@ bool Engine::CreateTriangle()
 
 bool Engine::CreateQuad()
 {
-
     SceneObject *quad = new SceneObject();
 
     quad->name = "Quad " + std::to_string(litSceneObjects.size());
@@ -866,12 +847,14 @@ bool Engine::CreateQuad()
     //Create and bind VBO
     glGenBuffers(1, &quad->mesh->VBO);
     glBindBuffer(GL_ARRAY_BUFFER, quad->mesh->VBO);
-    glBufferData(GL_ARRAY_BUFFER, quad->mesh->vertices.size() * sizeof(Vertex), &quad->mesh->vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, quad->mesh->vertices.size() * sizeof(Vertex), &quad->mesh->vertices[0],
+                 GL_STATIC_DRAW);
 
     //Create EBO
     glGenBuffers(1, &quad->mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quad->mesh->EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, quad->mesh->indices.size() * sizeof(unsigned int), &quad->mesh->indices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, quad->mesh->indices.size() * sizeof(unsigned int), &quad->mesh->indices[0],
+                 GL_STATIC_DRAW);
 
     //Set vertex attribute pointers
     SetVertexAttributePointers();
@@ -897,12 +880,10 @@ bool Engine::CreateQuad()
     litSceneObjects.push_back(quad);
 
     return true;
-
 }
 
 bool Engine::CreateCube_Old()
 {
-
     //Create SceneObject
     SceneObject *cube = new SceneObject();
 
@@ -938,7 +919,7 @@ bool Engine::CreateCube_Old()
     topLeftBack.uv = glm::vec2(0.0f, 1.0f);
 
     Vertex topRightBack;
-    topRightBack.position = glm::vec3(0.5f, 0.5f, -0.5f );
+    topRightBack.position = glm::vec3(0.5f, 0.5f, -0.5f);
     topRightBack.normal = glm::vec3(0.0f, 0.0f, -1.0f);
     topRightBack.uv = glm::vec2(1.0f, 1.0f);
 
@@ -1145,12 +1126,14 @@ bool Engine::CreateCube_Old()
     //create vbo
     glGenBuffers(1, &cube->mesh->VBO);
     glBindBuffer(GL_ARRAY_BUFFER, cube->mesh->VBO);
-    glBufferData(GL_ARRAY_BUFFER, cube->mesh->vertices.size() * sizeof(Vertex), &cube->mesh->vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, cube->mesh->vertices.size() * sizeof(Vertex), &cube->mesh->vertices[0],
+                 GL_STATIC_DRAW);
 
     //create ebo
     glGenBuffers(1, &cube->mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cube->mesh->EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, cube->mesh->indices.size() * sizeof(unsigned int), &cube->mesh->indices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, cube->mesh->indices.size() * sizeof(unsigned int), &cube->mesh->indices[0],
+                 GL_STATIC_DRAW);
 
     SetVertexAttributePointers();
 
@@ -1196,10 +1179,11 @@ bool Engine::CreateSphere()
     glBindBuffer(GL_ARRAY_BUFFER, obj->mesh->VBO);
     glBufferData(GL_ARRAY_BUFFER, obj->mesh->vertices.size() * sizeof(Vertex), &obj->mesh->vertices[0], GL_STATIC_DRAW);
 
-       //Create EBO
+    //Create EBO
     glGenBuffers(1, &obj->mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj->mesh->EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj->mesh->indexCount * sizeof(unsigned int), &obj->mesh->indices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj->mesh->indexCount * sizeof(unsigned int), &obj->mesh->indices[0],
+                 GL_STATIC_DRAW);
 
     //Set vertex attribute pointers
     SetVertexAttributePointers();
@@ -1216,14 +1200,12 @@ bool Engine::CreateSphere()
     litSceneObjects.push_back(obj);
 
     return true;
-
 }
 
 bool Engine::CreateCube()
 {
-
     SceneObject *obj = new SceneObject();
- 
+
 
     ReadOBJ((projectDirectory + cubeMeshPath).c_str(), obj->mesh->vertices, obj->mesh->indices, obj->name);
 
@@ -1241,7 +1223,8 @@ bool Engine::CreateCube()
     //Create EBO
     glGenBuffers(1, &obj->mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj->mesh->EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj->mesh->indexCount * sizeof(unsigned int), &obj->mesh->indices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj->mesh->indexCount * sizeof(unsigned int), &obj->mesh->indices[0],
+                 GL_STATIC_DRAW);
 
     //Set vertex attribute pointers
     SetVertexAttributePointers();
@@ -1260,9 +1243,8 @@ bool Engine::CreateCube()
     return true;
 }
 
-bool Engine::CreateSceneObject(const char* objPath)
+bool Engine::CreateSceneObject(const char *objPath)
 {
-
     SceneObject *obj = new SceneObject();
 
     obj->mesh = new Mesh();
@@ -1289,7 +1271,8 @@ bool Engine::CreateSceneObject(const char* objPath)
     //Create EBO
     glGenBuffers(1, &obj->mesh->EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj->mesh->EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj->mesh->indexCount * sizeof(unsigned int), &obj->mesh->indices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj->mesh->indexCount * sizeof(unsigned int), &obj->mesh->indices[0],
+                 GL_STATIC_DRAW);
 
     //Set vertex attribute pointers
     SetVertexAttributePointers();
@@ -1313,7 +1296,6 @@ bool Engine::CreateSceneObject(const char* objPath)
 
 void Engine::ClearSceneObjects()
 {
-
     renderInspectorWindow = false;
     selectedSceneObject = NULL;
 
@@ -1334,26 +1316,37 @@ void Engine::ProcessLit()
 {
     for (unsigned int i = 0; i < litSceneObjects.size(); i++)
     {
-      litSceneObjects[i]->Update(deltaTime);
-      
-      litSceneObjects[i]->material->SetVec3("light.position", lightPos.x, lightPos.y, lightPos.z);
-      litSceneObjects[i]->material->SetVec3("light.color", lightColor.x, lightColor.y, lightColor.z);
-      litSceneObjects[i]->material->SetFloat("light.strength", lightStrength);
+        litSceneObjects[i]->Update(deltaTime);
 
-      litSceneObjects[i]->material->SetVec3("direction", dirLight.rotation.x, dirLight.rotation.y, dirLight.rotation.z);
-      litSceneObjects[i]->material->SetVec3("color", dirLight.color.x, dirLight.color.y, dirLight.color.z);
+        // litSceneObjects[i]->material->SetVec3("light.position", dirLight.position.x, dirLight.position.y, dirLight.position.z);
+        // litSceneObjects[i]->material->SetVec3("light.color", dirLight.color.x, dirLight.color.y, dirLight.color.z);
+        // litSceneObjects[i]->material->SetFloat("light.strength", lightStrength);
+        //
+        // litSceneObjects[i]->material->SetVec3("direction", dirLight.rotation.x, dirLight.rotation.y, dirLight.rotation.z);
+        // litSceneObjects[i]->material->SetVec3("color", dirLight.color.x, dirLight.color.y, dirLight.color.z);
+
+        litSceneObjects[i]->material->SetVec3("light.position", pointLight.position.x, pointLight.position.y, pointLight.position.z);
+        litSceneObjects[i]->material->SetVec3("light.color", pointLight.color.x, pointLight.color.y, pointLight.color.z);
+        litSceneObjects[i]->material->SetFloat("light.strength", lightStrength);
+
+        litSceneObjects[i]->material->SetVec3("direction", pointLight.rotation.x, pointLight.rotation.y,pointLight.rotation.z);
+        litSceneObjects[i]->material->SetVec3("color", pointLight.color.x, pointLight.color.y, pointLight.color.z);
+
+        litSceneObjects[i]->material->SetFloat("linear", pointLight.linear);
+        litSceneObjects[i]->material->SetFloat("constant", pointLight.constant);
+        litSceneObjects[i]->material->SetFloat("quadratic", pointLight.quadratic);
 
 
-      renderer.Render(litSceneObjects[i]);
+        renderer.Render(litSceneObjects[i]);
     }
 }
 
 void Engine::ProcessUnlit()
 {
     for (unsigned int i = 0; i < sceneObjects.size(); i++)
-      {
+    {
         renderer.Render(sceneObjects[i]);
-      }
+    }
 }
 
 void Engine::ProcessUI()
@@ -1385,32 +1378,31 @@ void Engine::ProcessUI()
 
 bool Engine::Initialize()
 {
+#ifdef Platform_Linux
+    if (!CreateWindow(width, height, linuxTitle))
+    {
+        std::cout << "Failed to create window!" << std::endl;
+        return false;
+    }
+#endif
 
-    #ifdef Platform_Linux
-        if (!CreateWindow(width,  height,  linuxTitle))
-        {
-            std::cout << "Failed to create window!" << std::endl;
-            return false;
-        }
-    #endif
-
-    #ifdef Platform_Apple
-        if (!CreateWindow(width,  height, appleTitle))
-        {
-            std::cout << "Failed to create window!" << std::endl;
-            return false;
-        }
-
-    #endif
-
-    #ifdef Platform_Windows
-    if (!CreateWindow(width,  height, windowsTitle))
+#ifdef Platform_Apple
+    if (!CreateWindow(width, height, appleTitle))
     {
         std::cout << "Failed to create window!" << std::endl;
         return false;
     }
 
-    #endif
+#endif
+
+#ifdef Platform_Windows
+    if (!CreateWindow(width, height, windowsTitle))
+    {
+        std::cout << "Failed to create window!" << std::endl;
+        return false;
+    }
+
+#endif
 
     renderer = Graphics(width, height);
     renderer.SetFOV(60.0f);
@@ -1423,7 +1415,7 @@ bool Engine::Initialize()
 
     camera = Camera();
     camera.Setup(glm::vec3(0.0f, 1.0f, 5.0f), window);
-    
+
     std::cout << projectDirectory << std::endl;
 
     //create shaders
@@ -1441,16 +1433,25 @@ bool Engine::Initialize()
     //create Grid
     CreateGrid();
     CreateRays();
-  
+
     //Setup ImGui
     ImGuiSetup();
 
     ambientLightData.ambientColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
     ambientLightData.ambientStrength = 0.5f;
 
-    dirLight.position = glm::vec3(0.0f);
-    dirLight.rotation = glm::vec3(-1.0f, 0.0f, 0.0f);
+    dirLight.position = glm::vec3(0.0f, 0.0f, 0.0f);
+    dirLight.rotation = glm::vec3(0.0f, 0.0f, -1.0f);
     dirLight.scale = glm::vec3(1.0f);
+    dirLight.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+
+    pointLight.position = glm::vec3(0.0f, 0.0f, 0.0f);
+    pointLight.rotation = glm::vec3(0.0f, 0.0f, -1.0f);
+    pointLight.scale = glm::vec3(1.0f);
+    pointLight.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+    pointLight.constant = 1.0f;
+    pointLight.linear = 0.09f;
+    pointLight.quadratic = 0.032f;
 
     //Generate Ambient Light uniform buffer
     glGenBuffers(1, &ambientLightUBO);
@@ -1470,7 +1471,6 @@ void Engine::Loop()
 {
     while (glfwWindowShouldClose(window) == false)
     {
-
         glfwPollEvents();
 
         CalculateDelta();
