@@ -29,25 +29,25 @@ float Engine::GetRandomFloat(float min, float max)
 
 void Engine::ProcessInput()
 {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    if (glfwGetKey(displayHandler.GetWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
     {
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
+        glfwSetWindowShouldClose(displayHandler.GetWindow(), GLFW_TRUE);
     }
 
-    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+    if (glfwGetKey(displayHandler.GetWindow(), GLFW_KEY_1) == GLFW_PRESS)
     {
         renderDebugWindow = true;
     }
-    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+    if (glfwGetKey(displayHandler.GetWindow(), GLFW_KEY_1) == GLFW_PRESS && glfwGetKey(displayHandler.GetWindow(), GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
     {
         renderDebugWindow = false;
     }
 
-    if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+    if (glfwGetKey(displayHandler.GetWindow(), GLFW_KEY_2) == GLFW_PRESS)
     {
         renderSceneList = true;
     }
-    if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+    if (glfwGetKey(displayHandler.GetWindow(), GLFW_KEY_2) == GLFW_PRESS && glfwGetKey(displayHandler.GetWindow(), GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
     {
         renderSceneList = false;
     }
@@ -432,37 +432,37 @@ bool Engine::CreateTexture(const char *filepath, unsigned int &texture)
 
 bool Engine::CreateWindow(int width, int height, const char *title)
 {
-    if (!glfwInit())
-    {
-        std::cout << "Failed to initialize GLFW!" << std::endl;
-        return false;
-    }
-
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    window = glfwCreateWindow(width, height, title, nullptr, nullptr);
-    if (!window)
-    {
-        std::cout << "Failed to create GLFW window!" << std::endl;
-        glfwTerminate();
-        return false;
-    }
-
-    glfwMakeContextCurrent(window);
-    glfwSetWindowUserPointer(window, this);
-    glfwSetFramebufferSizeCallback(window, [](GLFWwindow *win, int width, int height)
-    {
-        Engine *engine = static_cast<Engine *>(glfwGetWindowUserPointer(win));
-        engine->framebuffer_size_callback(win, width, height);
-    });
-
-    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD!" << std::endl;
-        return false;
-    }
+    // if (!glfwInit())
+    // {
+    //     std::cout << "Failed to initialize GLFW!" << std::endl;
+    //     return false;
+    // }
+    //
+    // glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    // glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    //
+    // window = glfwCreateWindow(width, height, title, nullptr, nullptr);
+    // if (!window)
+    // {
+    //     std::cout << "Failed to create GLFW window!" << std::endl;
+    //     glfwTerminate();
+    //     return false;
+    // }
+    //
+    // glfwMakeContextCurrent(window);
+    // glfwSetWindowUserPointer(window, this);
+    // glfwSetFramebufferSizeCallback(window, [](GLFWwindow *win, int width, int height)
+    // {
+    //     Engine *engine = static_cast<Engine *>(glfwGetWindowUserPointer(win));
+    //     engine->framebuffer_size_callback(win, width, height);
+    // });
+    //
+    // if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
+    // {
+    //     std::cout << "Failed to initialize GLAD!" << std::endl;
+    //     return false;
+    // }
 
     return true;
 }
@@ -488,7 +488,8 @@ void Engine::ImGuiSetup()
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 
     // Setup Platform/Renderer backends
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    // ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplGlfw_InitForOpenGL(displayHandler.GetWindow(), true);
     // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
     ImGui_ImplOpenGL3_Init();
 }
@@ -1318,6 +1319,7 @@ void Engine::ProcessLit()
     {
         litSceneObjects[i]->Update(deltaTime);
 
+        //Directional Light
         // litSceneObjects[i]->material->SetVec3("light.position", dirLight.position.x, dirLight.position.y, dirLight.position.z);
         // litSceneObjects[i]->material->SetVec3("light.color", dirLight.color.x, dirLight.color.y, dirLight.color.z);
         // litSceneObjects[i]->material->SetFloat("light.strength", lightStrength);
@@ -1325,6 +1327,7 @@ void Engine::ProcessLit()
         // litSceneObjects[i]->material->SetVec3("direction", dirLight.rotation.x, dirLight.rotation.y, dirLight.rotation.z);
         // litSceneObjects[i]->material->SetVec3("color", dirLight.color.x, dirLight.color.y, dirLight.color.z);
 
+        //Point Light
         litSceneObjects[i]->material->SetVec3("light.position", pointLight.position.x, pointLight.position.y, pointLight.position.z);
         litSceneObjects[i]->material->SetVec3("light.color", pointLight.color.x, pointLight.color.y, pointLight.color.z);
         litSceneObjects[i]->material->SetFloat("light.strength", lightStrength);
@@ -1336,6 +1339,19 @@ void Engine::ProcessLit()
         litSceneObjects[i]->material->SetFloat("constant", pointLight.constant);
         litSceneObjects[i]->material->SetFloat("quadratic", pointLight.quadratic);
 
+        //Spot Light
+        // litSceneObjects[i]->material->SetVec3("light.position", spotLight.position.x, spotLight.position.y, spotLight.position.z);
+        // litSceneObjects[i]->material->SetVec3("light.color", spotLight.color.x, spotLight.color.y, spotLight.color.z);
+        // litSceneObjects[i]->material->SetFloat("light.strength", lightStrength);
+        //
+        // litSceneObjects[i]->material->SetVec3("direction", spotLight.rotation.x, spotLight.rotation.y,spotLight.rotation.z);
+        // litSceneObjects[i]->material->SetVec3("color", spotLight.color.x, spotLight.color.y, spotLight.color.z);
+        //
+        // litSceneObjects[i]->material->SetFloat("cutoff", spotLight.cutOff);
+        //
+        // litSceneObjects[i]->material->SetFloat("linear", pointLight.linear);
+        // litSceneObjects[i]->material->SetFloat("constant", pointLight.constant);
+        // litSceneObjects[i]->material->SetFloat("quadratic", pointLight.quadratic);
 
         renderer.Render(litSceneObjects[i]);
     }
@@ -1378,43 +1394,75 @@ void Engine::ProcessUI()
 
 bool Engine::Initialize()
 {
-#ifdef Platform_Linux
-    if (!CreateWindow(width, height, linuxTitle))
+// #ifdef Platform_Linux
+//     if (!CreateWindow(width, height, linuxTitle))
+//     {
+//         std::cout << "Failed to create window!" << std::endl;
+//         return false;
+//     }
+// #endif
+//
+// #ifdef Platform_Apple
+//     if (!CreateWindow(width, height, appleTitle))
+//     {
+//         std::cout << "Failed to create window!" << std::endl;
+//         return false;
+//     }
+//
+// #endif
+//
+// #ifdef Platform_Windows
+//     if (!CreateWindow(width, height, windowsTitle))
+//     {
+//         std::cout << "Failed to create window!" << std::endl;
+//         return false;
+//     }
+//
+// #endif
+
+    displayHandler = DisplayHandler();
+
+    //Set desired window resolution
+    displayHandler.SetWindowSize(1280, 720);
+
+    //set the desired display mode
+    displayHandler.SetDisplayMode(DisplayMode::GLFW);
+
+    //initialize DisplayHandler
+    displayHandler.Initialize();
+
+    displayHandler.CreateWindow();
+
+
+    glfwSetFramebufferSizeCallback(displayHandler.GetWindow(), [](GLFWwindow *win, int width, int height)
+   {
+       Engine *engine = static_cast<Engine *>(glfwGetWindowUserPointer(win));
+       engine->framebuffer_size_callback(win, width, height);
+   });
+
+    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
     {
-        std::cout << "Failed to create window!" << std::endl;
+        std::cout << "Failed to initialize GLAD!" << std::endl;
         return false;
     }
-#endif
-
-#ifdef Platform_Apple
-    if (!CreateWindow(width, height, appleTitle))
-    {
-        std::cout << "Failed to create window!" << std::endl;
-        return false;
-    }
-
-#endif
-
-#ifdef Platform_Windows
-    if (!CreateWindow(width, height, windowsTitle))
-    {
-        std::cout << "Failed to create window!" << std::endl;
-        return false;
-    }
-
-#endif
 
     renderer = Graphics(width, height);
     renderer.SetFOV(60.0f);
 
-    if (!renderer.Initialize(window))
+    // if (!renderer.Initialize(window))
+    // {
+    //     std::cout << "Failed to initialize renderer!" << std::endl;
+    //     return false;
+    // }
+
+    if (!renderer.Initialize(displayHandler.GetWindow()))
     {
         std::cout << "Failed to initialize renderer!" << std::endl;
         return false;
     }
 
     camera = Camera();
-    camera.Setup(glm::vec3(0.0f, 1.0f, 5.0f), window);
+    camera.Setup(glm::vec3(0.0f, 1.0f, 5.0f), displayHandler.GetWindow());
 
     std::cout << projectDirectory << std::endl;
 
@@ -1453,6 +1501,12 @@ bool Engine::Initialize()
     pointLight.linear = 0.09f;
     pointLight.quadratic = 0.032f;
 
+    spotLight.position = glm::vec3(0.0f, 0.0f, 0.0f);
+    spotLight.rotation = glm::vec3(0.0f, 0.0f, -1.0f);
+    spotLight.scale = glm::vec3(1.0f);
+    spotLight.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+    spotLight.cutOff = glm::cos(glm::radians(12.5f));
+
     //Generate Ambient Light uniform buffer
     glGenBuffers(1, &ambientLightUBO);
     //bind buffer
@@ -1469,7 +1523,8 @@ bool Engine::Initialize()
 
 void Engine::Loop()
 {
-    while (glfwWindowShouldClose(window) == false)
+    // while (glfwWindowShouldClose(window) == false)
+    while (displayHandler.ShouldClose() == false)
     {
         glfwPollEvents();
 
@@ -1508,7 +1563,8 @@ void Engine::Loop()
 
         ProcessUI();
 
-        glfwSwapBuffers(window);
+        displayHandler.SwapBuffers();
+        //glfwSwapBuffers(window);
     }
 }
 
@@ -1540,6 +1596,8 @@ bool Engine::Shutdown()
 
     ClearSceneObjects();
 
-    glfwDestroyWindow(window);
+    displayHandler.Shutdown();
+
+    //glfwDestroyWindow(window);
     return true;
 }

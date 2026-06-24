@@ -52,6 +52,10 @@ add_executable(OpenRenderX
         Content/Source/Lights/DirectionalLight.cpp
         Content/Source/Lights/PointLight.cpp
         Content/Header/Lights/PointLight.h
+        Content/Source/Lights/SpotLight.cpp
+        Content/Header/Lights/SpotLight.h
+        Content/Source/DisplayHandler.cpp
+        Content/Header/DisplayHandler.h
 )
 
 target_compile_definitions(OpenRenderX PRIVATE

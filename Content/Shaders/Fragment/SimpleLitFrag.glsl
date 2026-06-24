@@ -39,6 +39,9 @@ uniform float constant;
 uniform float linear;
 uniform float quadratic;
 
+//Spot Light
+uniform float cutoff;
+
 //Uniforms
 uniform Material material;
 uniform LightData light;
@@ -104,12 +107,26 @@ void main()
     //calculate ambient 
     ambient = calculateAmbient();
 
+    //Point light calculations
     float distance = length(light.position - fs_in.fragPos);
     float attenuation = 1.0f / ((constant + linear * distance + quadratic * (distance * distance)));
-
     ambient *= attenuation;
     specular *= attenuation;
     diffuse *= attenuation;
+
+    //Spotlight calculations
+//    float theta = dot(lightDir, normalize(-lightDir));
+//    float epsilon = cutoff - 17.5f;
+//    float intensity = clamp((theta - 17.5f) / epsilon, 0.0f, 1.0f);
+//
+//    diffuse *= intensity;
+//    specular *= intensity;
+//
+//    float distance = length(light.position - fs_in.fragPos);
+//    float attenuation = 1.0f / ((constant + linear * distance + quadratic * (distance * distance)));
+//    ambient *= attenuation;
+//    specular *= attenuation;
+//    diffuse *= attenuation;
 
     //specular
     if(useSpecular)

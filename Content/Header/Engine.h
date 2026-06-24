@@ -2,6 +2,7 @@
 #include "Graphics.h"
 #include "Camera.h"
 #include "Lights/Light.h"
+#include "DisplayHandler.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -18,6 +19,7 @@
 
 #include "Lights/DirectionalLight.h"
 #include "Lights/PointLight.h"
+#include "Lights/SpotLight.h"
 
 #define GL_SILENCE_DEPRICATION
 
@@ -38,11 +40,12 @@ class Engine
 private:
 
     //Window Data
-    GLFWwindow* window; ///< Pointer to the window that is created by GLFW
+    //GLFWwindow* window; ///< Pointer to the window that is created by GLFW
     unsigned int width = 1280;///< The width of the window
     unsigned int height = 720; ///< The height of the window
 
-    //Additional Core Data
+    //Core Data
+    DisplayHandler displayHandler;
     Graphics renderer;
     Camera camera;
 
@@ -70,6 +73,7 @@ private:
 
     DirectionalLight dirLight;
     PointLight pointLight;
+    SpotLight spotLight;
 
     glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
     glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, 0.0f);
