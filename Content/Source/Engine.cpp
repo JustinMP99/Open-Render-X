@@ -99,13 +99,13 @@ void Engine::CreateDebugSettingsWindow()
 
     ImGui::Spacing();
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Directional Light");
-    ImGui::SliderFloat("Directional Strength", &lightStrength, 0.0f, 1.0f);
+    ImGui::SliderFloat("Directional Strength", &dirLight.strength, 0.0f, 1.0f);
     ImGui::ColorEdit3("Directional Color", (float *) &dirLight.color);
-    ImGui::InputFloat3("Direction", (float *) &dirLight.rotation);
+    ImGui::InputFloat3("Direction", (float *) &dirLight.direction);
 
     ImGui::Spacing();
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Point Light");
-    ImGui::SliderFloat("Point Strength", &lightStrength, 0.0f, 1.0f);
+    ImGui::SliderFloat("Point Strength", &pointLight.strength, 0.0f, 1.0f);
     ImGui::ColorEdit3("Point Color", (float *) &pointLight.color);
     ImGui::InputFloat3("Point Position", (float *) &pointLight.position);
 
@@ -148,7 +148,7 @@ void Engine::CreateDebugSettingsWindow()
 
 void Engine::CreateSceneListWindow()
 {
-    ImGui::SetNextWindowPos(ImVec2(displayHandler.GetWindowWidth() / 2, displayHandler.GetWindowHeight() / 2), ImGuiCond_Once);
+    ImGui::SetNextWindowPos(ImVec2(displayHandler.GetWindowWidth() - 200, 200), ImGuiCond_Once);
     ImGui::Begin("Scene List", nullptr, ImGuiWindowFlags_AlwaysVerticalScrollbar);
 
     int count = 0;
@@ -1333,23 +1333,26 @@ void Engine::ProcessLit()
 
         //Directional Light
         litSceneObjects[i]->material->SetVec3("dirLight.color", dirLight.color.x, dirLight.color.y, dirLight.color.z);
-        litSceneObjects[i]->material->SetVec3("dirLight.direction", dirLight.rotation.x, dirLight.rotation.y, dirLight.rotation.z);
+        litSceneObjects[i]->material->SetVec3("dirLight.direction", dirLight.direction.x, dirLight.direction.y, dirLight.direction.z);
+        litSceneObjects[i]->material->SetFloat("dirLight.strength", dirLight.strength);
 
         //Point Light
         litSceneObjects[i]->material->SetVec3("pointLights[0].position", pointLight.position.x, pointLight.position.y, pointLight.position.z);
         litSceneObjects[i]->material->SetVec3("pointLights[0].color", pointLight.color.x, pointLight.color.y, pointLight.color.z);
+        litSceneObjects[i]->material->SetFloat("pointLights[0].strength", pointLight.strength);
         litSceneObjects[i]->material->SetFloat("pointLights[0].linear", pointLight.linear);
         litSceneObjects[i]->material->SetFloat("pointLights[0].constant", pointLight.constant);
         litSceneObjects[i]->material->SetFloat("pointLights[0].quadratic", pointLight.quadratic);
 
         //Spot Light
-        // litSceneObjects[i]->material->SetVec3("spotLights[0].position", spotLight.position.x, spotLight.position.y, spotLight.position.z);
-        // litSceneObjects[i]->material->SetVec3("spotLights[0].color", spotLight.color.x, spotLight.color.y, spotLight.color.z);
-        // litSceneObjects[i]->material->SetFloat("spotLights[0].linear", spotLight.linear);
-        // litSceneObjects[i]->material->SetFloat("spotLights[0].constant", spotLight.constant);
-        // litSceneObjects[i]->material->SetFloat("spotLights[0].quadratic", spotLight.quadratic);
-        // litSceneObjects[i]->material->SetFloat("spotLights[0].minCutoff", spotLight.minCutoff);
-        // litSceneObjects[i]->material->SetFloat("spotLights[0].maxCutoff", spotLight.maxCutoff);
+        litSceneObjects[i]->material->SetVec3("spotLights[0].position", spotLight.position.x, spotLight.position.y, spotLight.position.z);
+        litSceneObjects[i]->material->SetVec3("spotLights[0].color", spotLight.color.x, spotLight.color.y, spotLight.color.z);
+        litSceneObjects[i]->material->SetFloat("spotLights[0].strength", spotLight.strength);
+        litSceneObjects[i]->material->SetFloat("spotLights[0].linear", spotLight.linear);
+        litSceneObjects[i]->material->SetFloat("spotLights[0].constant", spotLight.constant);
+        litSceneObjects[i]->material->SetFloat("spotLights[0].quadratic", spotLight.quadratic);
+        litSceneObjects[i]->material->SetFloat("spotLights[0].minCutoff", spotLight.minCutoff);
+        litSceneObjects[i]->material->SetFloat("spotLights[0].maxCutoff", spotLight.maxCutoff);
 
         renderer.Render(litSceneObjects[i]);
     }
@@ -1392,33 +1395,11 @@ void Engine::ProcessUI()
 
 bool Engine::Initialize()
 {
-// #ifdef Platform_Linux
-//     if (!CreateWindow(width, height, linuxTitle))
-//     {
-//         std::cout << "Failed to create window!" << std::endl;
-//         return false;
-//     }
-// #endif
-//
-// #ifdef Platform_Apple
-//     if (!CreateWindow(width, height, appleTitle))
-//     {
-//         std::cout << "Failed to create window!" << std::endl;
-//         return false;
-//     }
-//
-// #endif
-//
-// #ifdef Platform_Windows
-//     if (!CreateWindow(width, height, windowsTitle))
-//     {
-//         std::cout << "Failed to create window!" << std::endl;
-//         return false;
-//     }
-//
-// #endif
 
     displayHandler = DisplayHandler();
+
+    //initialize DisplayHandler
+    displayHandler.Initialize();
 
     //Set desired window resolution
     displayHandler.SetWindowSize(1280, 720);
@@ -1426,17 +1407,14 @@ bool Engine::Initialize()
     //set the desired display mode
     displayHandler.SetDisplayMode(DisplayMode::GLFW);
 
-    //initialize DisplayHandler
-    displayHandler.Initialize();
-
+    //create the window
     displayHandler.CreateWindow();
 
-
     glfwSetFramebufferSizeCallback(displayHandler.GetWindow(), [](GLFWwindow *win, int width, int height)
-   {
-       Engine *engine = static_cast<Engine *>(glfwGetWindowUserPointer(win));
-       engine->framebuffer_size_callback(win, width, height);
-   });
+    {
+        Engine *engine = static_cast<Engine *>(glfwGetWindowUserPointer(win));
+        engine->framebuffer_size_callback(win, width, height);
+    });
 
     if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
     {
@@ -1446,12 +1424,6 @@ bool Engine::Initialize()
 
     renderer = Graphics(displayHandler.GetWindowWidth(), displayHandler.GetWindowHeight());
     renderer.SetFOV(60.0f);
-
-    // if (!renderer.Initialize(window))
-    // {
-    //     std::cout << "Failed to initialize renderer!" << std::endl;
-    //     return false;
-    // }
 
     if (!renderer.Initialize(displayHandler.GetWindow()))
     {
@@ -1486,23 +1458,25 @@ bool Engine::Initialize()
     ambientLightData.ambientColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
     ambientLightData.ambientStrength = 0.5f;
 
-    dirLight.position = glm::vec3(0.0f, 0.0f, 0.0f);
-    dirLight.rotation = glm::vec3(0.0f, 0.0f, 1.0f);
-    dirLight.scale = glm::vec3(1.0f);
+    //dirLight.position = glm::vec3(0.0f, 0.0f, 0.0f);
+    dirLight.direction = glm::vec3(0.0f, 0.0f, 1.0f);
+    dirLight.strength = 1.0f;
+    //dirLight.scale = glm::vec3(1.0f);
     dirLight.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
     pointLight.position = glm::vec3(0.0f, 0.0f, 0.0f);
-    pointLight.rotation = glm::vec3(0.0f, 0.0f, -1.0f);
-    pointLight.scale = glm::vec3(1.0f);
+    //pointLight.rotation = glm::vec3(0.0f, 0.0f, -1.0f);
+    //pointLight.scale = glm::vec3(1.0f);
     pointLight.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+    pointLight.strength = 1.0f;
     pointLight.constant = 1.0f;
     pointLight.linear = 0.09f;
     pointLight.quadratic = 0.032f;
 
     spotLight.position = glm::vec3(0.0f, 0.0f, 0.0f);
     spotLight.rotation = glm::vec3(0.0f, 0.0f, -1.0f);
-    spotLight.scale = glm::vec3(1.0f);
     spotLight.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+    spotLight.strength = 1.0f;
     spotLight.constant = 1.0f;
     spotLight.linear = 0.09f;
     spotLight.quadratic = 0.032f;

@@ -2,6 +2,10 @@
 // Created by Justin Philie on 6/24/26.
 //
 
+#ifdef Platform_Apple
+//#include <AppKit/AppKit.h>
+#endif
+
 #ifndef OPENRENDERX_DISPLAYHANDLER_H
 #define OPENRENDERX_DISPLAYHANDLER_H
 #include <GLFW/glfw3.h>
@@ -23,6 +27,9 @@ private:
     unsigned int window_height;
     GLFWwindow *window;
     std::vector<GLFWwindow *> windows;
+
+#ifdef Platform_Apple
+#endif
 
     const char* windowsTitle = "Open Render X - OpenGL - Windows";
     const char* appleTitle = "Open Render X - OpenGL - MacOS";

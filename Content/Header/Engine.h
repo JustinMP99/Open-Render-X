@@ -1,7 +1,7 @@
 #include "SceneObject.h"
 #include "Graphics.h"
 #include "Camera.h"
-#include "Lights/Light.h"
+// #include "Lights/Light.h"
 #include "DisplayHandler.h"
 
 #include "imgui.h"
@@ -17,9 +17,11 @@
 #include <fstream>
 #include <filesystem>
 
-#include "Lights/DirectionalLight.h"
-#include "Lights/PointLight.h"
-#include "Lights/SpotLight.h"
+// #include "Lights/DirectionalLight.h"
+// #include "Lights/PointLight.h"
+// #include "Lights/SpotLight.h"
+
+#include "Lights.h"
 
 #define GL_SILENCE_DEPRICATION
 

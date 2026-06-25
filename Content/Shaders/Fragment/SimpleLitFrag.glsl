@@ -30,6 +30,7 @@ struct DirectionalLight
 {
     vec3 direction;
     vec3 color;
+    float strength;
 };
 
 struct PointLight
@@ -37,6 +38,7 @@ struct PointLight
     vec3 position;
     vec3 color;
 
+    float strength;
     float constant;
     float linear;
     float quadratic;
@@ -44,10 +46,11 @@ struct PointLight
 
 struct SpotLight
 {
-    vec3 direction;
+    vec3 rotation;
     vec3 position;
     vec3 color;
 
+    float strength;
     float constant;
     float linear;
     float quadratic;
@@ -55,28 +58,14 @@ struct SpotLight
     float maxCutoff;
 };
 
-
 //Lights
 
 uniform DirectionalLight dirLight;
 uniform PointLight pointLights[NR_POINT_LIGHTS];
 uniform SpotLight spotLights[NR_SPOT_LIGHTS];
 
-////Directional light
-//uniform vec3 direction;
-//uniform vec3 color;
-//
-////Point Light
-//uniform float constant;
-//uniform float linear;
-//uniform float quadratic;
-//
-////Spot Light
-//uniform float cutoff;
-
 //Uniforms
 uniform Material material;
-//uniform LightData light;
 uniform vec3 viewPos; //camera position
 uniform bool useDiffuse;
 uniform bool useSpecular;
@@ -124,7 +113,7 @@ vec3 CalculateDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir
     ndotl = max(dot(normal, lightDir), 0.0f);
 
     //calculate diffuse
-    diffuse = ndotl * light.color * vec3(1.0f);
+    diffuse = ndotl * light.color * light.strength;
 
     //calculate specular
     //vec4 specSample = texture(material.specularTexture, fs_in.texCoord);
@@ -157,7 +146,7 @@ vec3 CalculatePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewD
     ndotl = max(dot(normal, lightDir), 0.0f);
 
     //calculate diffuse
-    diffuse = ndotl * light.color * vec3(1.0f);
+    diffuse = ndotl * light.color * light.strength;
 
     //calculate specular
     vec3 reflectDir = reflect(-lightDir, normal);
@@ -186,7 +175,7 @@ vec3 CalculateSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir
     ndotl = max(dot(normal, lightDir), 0.0f);
 
     //calculate diffuse
-    diffuse = ndotl * light.color * vec3(1.0f);
+    diffuse = ndotl * light.color * light.strength;
 
     //calculate specular
     vec3 reflectDir = reflect(-lightDir, normal);

@@ -36,6 +36,11 @@ bool DisplayHandler::CreateGLFWWindow()
 
 bool DisplayHandler::CreateNativeWindow()
 {
+
+#ifdef Platform_Apple
+    
+#endif
+
 }
 
 //PUBLIC
@@ -50,14 +55,7 @@ DisplayHandler::~DisplayHandler()
 
 bool DisplayHandler::Initialize()
 {
-    // bool success;
-    //
-    // success = CreateWindow();
-    //
-    // if (!success)
-    // {
-    //     std::cout << "Failed to create window" << std::endl;
-    // }
+
 
     return true;
 }

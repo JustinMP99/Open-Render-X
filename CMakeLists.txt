@@ -14,6 +14,7 @@ set(OpenGL_GL_PREFERENCE GLVND)
 if (APPLE)
     find_package(glfw3 REQUIRED)
     find_package(OpenGL REQUIRED)
+    #find_library(AppKit_FRAMEWORK AppKit)
     add_compile_definitions(Platform_Apple)
 
 elseif (LINUX)
@@ -29,16 +30,20 @@ endif ()
 
 # Add Source Files
 add_executable(OpenRenderX
+
+#        Content/window_test.mm
+#        Content/main.mm
+
+        Content/main.cpp
         Content/Source/glad.c
         Content/Source/Vertex.cpp
         Content/Source/Engine.cpp
         Content/Source/Graphics.cpp
-        Content/main.cpp
+
         Content/Source/SceneObject.cpp
         Content/Source/Mesh.cpp
         Content/Source/Material.cpp
         Content/Source/Camera.cpp
-        Content/Source/Lights/Light.cpp
 
         Content/Additional/include/imgui/imgui.cpp
         Content/Additional/include/imgui/imgui_demo.cpp
@@ -48,15 +53,9 @@ add_executable(OpenRenderX
 
         Content/Additional/include/imgui/backends/imgui_impl_glfw.cpp
         Content/Additional/include/imgui/backends/imgui_impl_opengl3.cpp
-        Content/Header/Lights/DirectionalLight.h
-        Content/Source/Lights/DirectionalLight.cpp
-        Content/Source/Lights/PointLight.cpp
-        Content/Header/Lights/PointLight.h
-        Content/Source/Lights/SpotLight.cpp
-        Content/Header/Lights/SpotLight.h
         Content/Source/DisplayHandler.cpp
         Content/Header/DisplayHandler.h
-        Content/Header/Lights/Lights.h
+        Content/Header/Lights.h
 )
 
 target_compile_definitions(OpenRenderX PRIVATE
@@ -73,6 +72,7 @@ target_include_directories(OpenRenderX PRIVATE
 )
 
 if (APPLE)
+    #target_link_libraries(OpenRenderX PRIVATE ${AppKit_FRAMEWORK})
     target_link_libraries(OpenRenderX PRIVATE glfw OpenGL::GL)
 elseif (LINUX)
 
