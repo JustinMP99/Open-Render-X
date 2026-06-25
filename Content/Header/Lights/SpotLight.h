@@ -11,7 +11,12 @@ class SpotLight : public Light
 
     public:
 
-    float cutOff;
+    float constant;
+    float linear;
+    float quadratic;
+
+    float minCutoff;
+    float maxCutoff;
 
 };
 

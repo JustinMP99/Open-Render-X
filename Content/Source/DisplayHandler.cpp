@@ -4,8 +4,7 @@
 
 #include "../Header/DisplayHandler.h"
 
-
-//Private
+//PRIVATE
 
 bool DisplayHandler::CreateGLFWWindow()
 {
@@ -39,7 +38,7 @@ bool DisplayHandler::CreateNativeWindow()
 {
 }
 
-//Public
+//PUBLIC
 
 DisplayHandler::DisplayHandler()
 {
@@ -104,6 +103,16 @@ int DisplayHandler::ShouldClose()
 GLFWwindow *DisplayHandler::GetWindow()
 {
     return window;
+}
+
+int DisplayHandler::GetWindowWidth()
+{
+    return window_width;
+}
+
+int DisplayHandler::GetWindowHeight()
+{
+    return window_height;
 }
 
 void DisplayHandler::SetWindowSize(unsigned int width, unsigned int height)

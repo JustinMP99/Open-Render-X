@@ -13,6 +13,8 @@ class Light
 private:
 
 public:
+
+    float strength; //how strong the light is
     glm::mat4 transform;
     glm::vec3 position;
     glm::vec3 rotation; //direction on spotlight

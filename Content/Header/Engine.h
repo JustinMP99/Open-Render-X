@@ -41,8 +41,8 @@ private:
 
     //Window Data
     //GLFWwindow* window; ///< Pointer to the window that is created by GLFW
-    unsigned int width = 1280;///< The width of the window
-    unsigned int height = 720; ///< The height of the window
+    // unsigned int width = 1280;///< The width of the window
+    // unsigned int height = 720; ///< The height of the window
 
     //Core Data
     DisplayHandler displayHandler;

@@ -6,6 +6,7 @@
 #endif
 
 //PRIVATE
+
 void Engine::framebuffer_size_callback(GLFWwindow *window, int width, int height)
 {
     renderer.SetViewport(0, 0, width, height);
@@ -98,9 +99,21 @@ void Engine::CreateDebugSettingsWindow()
 
     ImGui::Spacing();
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Directional Light");
-    ImGui::SliderFloat("Light Strength", &lightStrength, 0.0f, 1.0f);
-    ImGui::ColorEdit3("Light Color", (float *) &dirLight.color);
-    ImGui::InputFloat3("Light Position", (float *) &dirLight.position);
+    ImGui::SliderFloat("Directional Strength", &lightStrength, 0.0f, 1.0f);
+    ImGui::ColorEdit3("Directional Color", (float *) &dirLight.color);
+    ImGui::InputFloat3("Direction", (float *) &dirLight.rotation);
+
+    ImGui::Spacing();
+    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Point Light");
+    ImGui::SliderFloat("Point Strength", &lightStrength, 0.0f, 1.0f);
+    ImGui::ColorEdit3("Point Color", (float *) &pointLight.color);
+    ImGui::InputFloat3("Point Position", (float *) &pointLight.position);
+
+    // ImGui::Spacing();
+    // ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Directional Light");
+    // ImGui::SliderFloat("Light Strength", &lightStrength, 0.0f, 1.0f);
+    // ImGui::ColorEdit3("Light Color", (float *) &dirLight.color);
+    // ImGui::InputFloat3("Light Position", (float *) &dirLight.position);
 
     ImGui::Separator();
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Scene Object Creation");
@@ -135,7 +148,7 @@ void Engine::CreateDebugSettingsWindow()
 
 void Engine::CreateSceneListWindow()
 {
-    ImGui::SetNextWindowPos(ImVec2(width / 2, height / 2), ImGuiCond_Once);
+    ImGui::SetNextWindowPos(ImVec2(displayHandler.GetWindowWidth() / 2, displayHandler.GetWindowHeight() / 2), ImGuiCond_Once);
     ImGui::Begin("Scene List", nullptr, ImGuiWindowFlags_AlwaysVerticalScrollbar);
 
     int count = 0;
@@ -165,7 +178,6 @@ void Engine::CreateSceneListWindow()
 
         count++;
     }
-
 
     ImGui::End();
 }
@@ -1320,38 +1332,24 @@ void Engine::ProcessLit()
         litSceneObjects[i]->Update(deltaTime);
 
         //Directional Light
-        // litSceneObjects[i]->material->SetVec3("light.position", dirLight.position.x, dirLight.position.y, dirLight.position.z);
-        // litSceneObjects[i]->material->SetVec3("light.color", dirLight.color.x, dirLight.color.y, dirLight.color.z);
-        // litSceneObjects[i]->material->SetFloat("light.strength", lightStrength);
-        //
-        // litSceneObjects[i]->material->SetVec3("direction", dirLight.rotation.x, dirLight.rotation.y, dirLight.rotation.z);
-        // litSceneObjects[i]->material->SetVec3("color", dirLight.color.x, dirLight.color.y, dirLight.color.z);
+        litSceneObjects[i]->material->SetVec3("dirLight.color", dirLight.color.x, dirLight.color.y, dirLight.color.z);
+        litSceneObjects[i]->material->SetVec3("dirLight.direction", dirLight.rotation.x, dirLight.rotation.y, dirLight.rotation.z);
 
         //Point Light
-        litSceneObjects[i]->material->SetVec3("light.position", pointLight.position.x, pointLight.position.y, pointLight.position.z);
-        litSceneObjects[i]->material->SetVec3("light.color", pointLight.color.x, pointLight.color.y, pointLight.color.z);
-        litSceneObjects[i]->material->SetFloat("light.strength", lightStrength);
-
-        litSceneObjects[i]->material->SetVec3("direction", pointLight.rotation.x, pointLight.rotation.y,pointLight.rotation.z);
-        litSceneObjects[i]->material->SetVec3("color", pointLight.color.x, pointLight.color.y, pointLight.color.z);
-
-        litSceneObjects[i]->material->SetFloat("linear", pointLight.linear);
-        litSceneObjects[i]->material->SetFloat("constant", pointLight.constant);
-        litSceneObjects[i]->material->SetFloat("quadratic", pointLight.quadratic);
+        litSceneObjects[i]->material->SetVec3("pointLights[0].position", pointLight.position.x, pointLight.position.y, pointLight.position.z);
+        litSceneObjects[i]->material->SetVec3("pointLights[0].color", pointLight.color.x, pointLight.color.y, pointLight.color.z);
+        litSceneObjects[i]->material->SetFloat("pointLights[0].linear", pointLight.linear);
+        litSceneObjects[i]->material->SetFloat("pointLights[0].constant", pointLight.constant);
+        litSceneObjects[i]->material->SetFloat("pointLights[0].quadratic", pointLight.quadratic);
 
         //Spot Light
-        // litSceneObjects[i]->material->SetVec3("light.position", spotLight.position.x, spotLight.position.y, spotLight.position.z);
-        // litSceneObjects[i]->material->SetVec3("light.color", spotLight.color.x, spotLight.color.y, spotLight.color.z);
-        // litSceneObjects[i]->material->SetFloat("light.strength", lightStrength);
-        //
-        // litSceneObjects[i]->material->SetVec3("direction", spotLight.rotation.x, spotLight.rotation.y,spotLight.rotation.z);
-        // litSceneObjects[i]->material->SetVec3("color", spotLight.color.x, spotLight.color.y, spotLight.color.z);
-        //
-        // litSceneObjects[i]->material->SetFloat("cutoff", spotLight.cutOff);
-        //
-        // litSceneObjects[i]->material->SetFloat("linear", pointLight.linear);
-        // litSceneObjects[i]->material->SetFloat("constant", pointLight.constant);
-        // litSceneObjects[i]->material->SetFloat("quadratic", pointLight.quadratic);
+        // litSceneObjects[i]->material->SetVec3("spotLights[0].position", spotLight.position.x, spotLight.position.y, spotLight.position.z);
+        // litSceneObjects[i]->material->SetVec3("spotLights[0].color", spotLight.color.x, spotLight.color.y, spotLight.color.z);
+        // litSceneObjects[i]->material->SetFloat("spotLights[0].linear", spotLight.linear);
+        // litSceneObjects[i]->material->SetFloat("spotLights[0].constant", spotLight.constant);
+        // litSceneObjects[i]->material->SetFloat("spotLights[0].quadratic", spotLight.quadratic);
+        // litSceneObjects[i]->material->SetFloat("spotLights[0].minCutoff", spotLight.minCutoff);
+        // litSceneObjects[i]->material->SetFloat("spotLights[0].maxCutoff", spotLight.maxCutoff);
 
         renderer.Render(litSceneObjects[i]);
     }
@@ -1446,7 +1444,7 @@ bool Engine::Initialize()
         return false;
     }
 
-    renderer = Graphics(width, height);
+    renderer = Graphics(displayHandler.GetWindowWidth(), displayHandler.GetWindowHeight());
     renderer.SetFOV(60.0f);
 
     // if (!renderer.Initialize(window))
@@ -1489,7 +1487,7 @@ bool Engine::Initialize()
     ambientLightData.ambientStrength = 0.5f;
 
     dirLight.position = glm::vec3(0.0f, 0.0f, 0.0f);
-    dirLight.rotation = glm::vec3(0.0f, 0.0f, -1.0f);
+    dirLight.rotation = glm::vec3(0.0f, 0.0f, 1.0f);
     dirLight.scale = glm::vec3(1.0f);
     dirLight.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -1505,7 +1503,11 @@ bool Engine::Initialize()
     spotLight.rotation = glm::vec3(0.0f, 0.0f, -1.0f);
     spotLight.scale = glm::vec3(1.0f);
     spotLight.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-    spotLight.cutOff = glm::cos(glm::radians(12.5f));
+    spotLight.constant = 1.0f;
+    spotLight.linear = 0.09f;
+    spotLight.quadratic = 0.032f;
+    spotLight.minCutoff = glm::cos(glm::radians(12.5f));
+    spotLight.maxCutoff = glm::sin(glm::radians(17.5f));
 
     //Generate Ambient Light uniform buffer
     glGenBuffers(1, &ambientLightUBO);

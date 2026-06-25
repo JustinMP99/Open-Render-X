@@ -24,7 +24,6 @@ private:
     GLFWwindow *window;
     std::vector<GLFWwindow *> windows;
 
-
     const char* windowsTitle = "Open Render X - OpenGL - Windows";
     const char* appleTitle = "Open Render X - OpenGL - MacOS";
     const char* linuxTitle = "Open Render X - OpenGL - Linux";
@@ -51,6 +50,10 @@ public:
     int ShouldClose();
 
     GLFWwindow *GetWindow();
+
+    int GetWindowWidth();
+
+    int GetWindowHeight();
 
     void SetWindowSize(unsigned int width, unsigned int height);
 
