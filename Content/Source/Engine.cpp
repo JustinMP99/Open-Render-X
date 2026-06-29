@@ -109,11 +109,11 @@ void Engine::CreateDebugSettingsWindow()
     ImGui::ColorEdit3("Point Color", (float *) &pointLight.color);
     ImGui::InputFloat3("Point Position", (float *) &pointLight.position);
 
-    // ImGui::Spacing();
-    // ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Directional Light");
-    // ImGui::SliderFloat("Light Strength", &lightStrength, 0.0f, 1.0f);
-    // ImGui::ColorEdit3("Light Color", (float *) &dirLight.color);
-    // ImGui::InputFloat3("Light Position", (float *) &dirLight.position);
+    ImGui::Spacing();
+    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Spot Light");
+    ImGui::SliderFloat("Spot Strength", &spotLight.strength, 0.0f, 1.0f);
+    ImGui::ColorEdit3("Spot Color", (float *) &spotLight.color);
+    ImGui::InputFloat3("Spot Position", (float *) &spotLight.position);
 
     ImGui::Separator();
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Scene Object Creation");
@@ -1346,6 +1346,7 @@ void Engine::ProcessLit()
 
         //Spot Light
         litSceneObjects[i]->material->SetVec3("spotLights[0].position", spotLight.position.x, spotLight.position.y, spotLight.position.z);
+        litSceneObjects[i]->material->SetVec3("spotLights[0].rotation", spotLight.direction.x, spotLight.direction.y, spotLight.direction.z);
         litSceneObjects[i]->material->SetVec3("spotLights[0].color", spotLight.color.x, spotLight.color.y, spotLight.color.z);
         litSceneObjects[i]->material->SetFloat("spotLights[0].strength", spotLight.strength);
         litSceneObjects[i]->material->SetFloat("spotLights[0].linear", spotLight.linear);
@@ -1458,15 +1459,11 @@ bool Engine::Initialize()
     ambientLightData.ambientColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
     ambientLightData.ambientStrength = 0.5f;
 
-    //dirLight.position = glm::vec3(0.0f, 0.0f, 0.0f);
     dirLight.direction = glm::vec3(0.0f, 0.0f, 1.0f);
     dirLight.strength = 1.0f;
-    //dirLight.scale = glm::vec3(1.0f);
     dirLight.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
     pointLight.position = glm::vec3(0.0f, 0.0f, 0.0f);
-    //pointLight.rotation = glm::vec3(0.0f, 0.0f, -1.0f);
-    //pointLight.scale = glm::vec3(1.0f);
     pointLight.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
     pointLight.strength = 1.0f;
     pointLight.constant = 1.0f;
@@ -1474,14 +1471,16 @@ bool Engine::Initialize()
     pointLight.quadratic = 0.032f;
 
     spotLight.position = glm::vec3(0.0f, 0.0f, 0.0f);
-    spotLight.rotation = glm::vec3(0.0f, 0.0f, -1.0f);
+    spotLight.direction = glm::vec3(0.0f, 0.0f, -1.0f);
     spotLight.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
     spotLight.strength = 1.0f;
     spotLight.constant = 1.0f;
     spotLight.linear = 0.09f;
     spotLight.quadratic = 0.032f;
-    spotLight.minCutoff = glm::cos(glm::radians(12.5f));
-    spotLight.maxCutoff = glm::sin(glm::radians(17.5f));
+    // spotLight.minCutoff = glm::cos(glm::radians(12.5f));
+    // spotLight.maxCutoff = glm::sin(glm::radians(17.5f));
+    spotLight.minCutoff = glm::cos(glm::radians(5.5f));
+    spotLight.maxCutoff = glm::sin(glm::radians(7.0f));
 
     //Generate Ambient Light uniform buffer
     glGenBuffers(1, &ambientLightUBO);

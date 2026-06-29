@@ -29,7 +29,7 @@ struct PointLight : public Light
 
 struct SpotLight : public Light
 {
-    glm::vec3 rotation;
+    glm::vec3 direction;
     glm::vec3 position;
 
     float constant;
