@@ -76,6 +76,9 @@ vec3 diffuse;
 vec3 specular;
 vec3 ambient;
 vec4 texColor;
+float theta;
+float epsilon;
+float intensity;
 
 vec3 viewDir; //the direction from the viewPos to the fragments position
 vec3 normalizedNormal; //the normalized normal of the vertex
@@ -266,7 +269,7 @@ void main()
     //calculate specular
     if(useSpecular)
     {
-        vec3 reflectDir = reflect(-dirLight.direction, normalizedNormal);
+        vec3 reflectDir = reflect(-lightDir, normalizedNormal);
         float spec = pow(max(dot(viewDir, reflectDir), 0.0f), material.shininess);
         specular = dirLight.color * (spec * specular);
     }
@@ -315,7 +318,7 @@ void main()
     //=========================================================================================================
     //Spot Lights
 
-    for(int i = 0; i < NR_POINT_LIGHTS; i++)
+    for(int i = 0; i < NR_SPOT_LIGHTS; i++)
     {
         //calculate the normalized direction of the light
         lightDir = normalize(spotLights[i].position - fs_in.fragPos); //calculation based on directional light direction
@@ -336,6 +339,13 @@ void main()
 
         //calculate ambient
         ambient = ambientColor.rgb * ambientStrength;
+
+        theta = dot(lightDir, normalize(-spotLights[i].rotation));
+        epsilon = spotLights[i].minCutoff - spotLights[i].maxCutoff;
+        intensity = clamp((theta - spotLights[i].maxCutoff) / epsilon, 0.0f, 1.0f);
+
+        diffuse *= intensity;
+        specular *= intensity;
 
         float distance = length(spotLights[i].position - fs_in.fragPos);
         float attenuation = 1.0f / ((spotLights[i].constant + spotLights[i].linear * distance + spotLights[i].quadratic * (distance * distance)));
