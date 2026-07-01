@@ -88,17 +88,6 @@ vec3 lightDir; //the normalized inverse light direction (rotation)
 //output value
 out vec4 FragColor;
 
-vec3 calculateAmbient()
-{
-    return ambientColor.rgb * ambientStrength;
-}
-
-vec3 calculateDiffuse()
-{
-      return ndotl * dirLight.color * 1.0f;
-//    return ndotl * light.color * light.strength;
-}
-
 vec3 calculateSpecular(vec3 lightDir, vec3 norm, vec3 lightColor)
 {
     vec4 specSample = texture(material.specularTexture, fs_in.texCoord);
@@ -228,30 +217,8 @@ vec3 CalculateSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir
     return (ambient + diffuse + specular);
 }
 
-//refactored main
-void main()
+void CalculateLights()
 {
-
-    //calculate view direction
-    viewDir = normalize(viewPos - fs_in.fragPos);
-
-    //normalize normal
-    normalizedNormal = normalize(fs_in.normal);
-
-    //sample diffuse
-    texColor = texture(material.diffuseTexture, fs_in.texCoord);
-
-    //sample specular
-    if (useSpecular)
-    {
-        //specular = calculateSpecular(lightDir, normal, light.color);
-        specular = texture(material.specularTexture, fs_in.texCoord).rgb;
-    }
-    else
-    {
-        specular = vec3(0.0f);
-    }
-
     //calculate ambient
     ambient = ambientColor.rgb * ambientStrength;
 
@@ -359,6 +326,35 @@ void main()
 
     //=========================================================================================================
 
+}
+
+//refactored main
+void main()
+{
+
+    //calculate view direction
+    viewDir = normalize(viewPos - fs_in.fragPos);
+
+    //normalize normal
+    normalizedNormal = normalize(fs_in.normal);
+
+    //sample diffuse
+    texColor = texture(material.diffuseTexture, fs_in.texCoord);
+
+    //sample specular
+    if (useSpecular)
+    {
+        //specular = calculateSpecular(lightDir, normal, light.color);
+        specular = texture(material.specularTexture, fs_in.texCoord).rgb;
+    }
+    else
+    {
+        specular = vec3(0.0f);
+    }
+
+    //calculate lights
+    CalculateLights();
+
     //combine values
     if(useDiffuse)
     {
@@ -373,49 +369,3 @@ void main()
     FragColor = vec4(finalOutput, 1.0f);
 
 }
-
-//original working version
-//void main()
-//{
-//
-//    //calculate view direction
-//    vec3 viewDir = normalize(viewPos - fs_in.fragPos);
-//
-//    //normalize normal
-//    vec3 norm = normalize(fs_in.normal);
-//
-//    finalOutput = CalculateDirectionalLight(dirLight, norm, viewDir);
-//
-//    for(int i = 0; i < NR_POINT_LIGHTS; i++)
-//    {
-//        if(pointLights[i].strength == 0.0f)
-//        {
-//            continue;
-//        }
-//        finalOutput += CalculatePointLight(pointLights[i], norm, fs_in.fragPos, viewDir);
-//    }
-//
-//    for(int i = 0; i < NR_SPOT_LIGHTS; i++)
-//    {
-////        if(spotLights[i].strength == 0.0f)
-////        {
-////            continue;
-////        }
-//        finalOutput += CalculateSpotLight(spotLights[i], norm, fs_in.fragPos, viewDir);
-//    }
-//
-//    if(useDiffuse)
-//    {
-//        texColor = texture(material.diffuseTexture, fs_in.texCoord);
-//    }
-//    else
-//    {
-//        texColor = vec4(0.1f);
-//    }
-//
-//    finalOutput *= texColor.rgb;
-//
-//    //Return sampled texture
-//    FragColor = vec4(finalOutput, 1.0f);
-//
-//}
